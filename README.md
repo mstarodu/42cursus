@@ -1,2 +1,4 @@
 Hello
-how are you?
+how are you
+
+added new quick fix?
