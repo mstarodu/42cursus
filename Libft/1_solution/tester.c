@@ -4,6 +4,7 @@
 #include "ft_isdigit.c"
 #include "ft_isalnum.c"
 #include "ft_isascii.c"
+#include "ft_isprint.c"
 
 
 int	main(void)
@@ -65,6 +66,29 @@ int	main(void)
 				ft_isascii(data[i]),
 				isascii(data[i]),
 				(ft_isascii(data[i]) == isascii(data[i])) ? "OK!" : "FAIL!");
+	}
+	
+	{
+	printf("=== ft_ispring ===\n");
+	const char data[] = {
+	    0,    // Null character
+	    'a',  // Lowercase ASCII
+	    'Z',  // Uppercase ASCII
+	    '0',  // Digit ASCII
+	    31,   // Control character (non-printable ASCII)
+	    127,  // Delete (non-printable ASCII)
+	    128,  // First non-ASCII character
+	    255,  // Last byte value (non-ASCII)
+	    -1,   // Negative value, typically represents non-ASCII
+	    200   // Another non-ASCII character
+	};
+	const int number = sizeof(data)/sizeof(data[0]);
+	for (int i = 0; i < number; i++)
+		printf("var: %3i | ft: %i, std: %i - %s\n",
+				data[i],
+				ft_isprint(data[i]),
+				isprint(data[i]),
+				(ft_isprint(data[i]) == isprint(data[i])) ? "OK!" : "FAIL!");
 	}
 	return 0;
 }
