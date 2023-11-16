@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 #include "ft_isalpha.c"
 #include "ft_isdigit.c"
 #include "ft_isalnum.c"
 #include "ft_isascii.c"
 #include "ft_isprint.c"
-
+#include "ft_strlen.c"
 
 int	main(void)
 {
@@ -61,7 +62,7 @@ int	main(void)
 	};
 	const int number = sizeof(data)/sizeof(data[0]);
 	for (int i = 0; i < number; i++)
-		printf("var: %3i | ft: %i, std: %i - %s\n",
+		printf("var: %4i | ft: %i, std: %i - %s\n",
 				data[i],
 				ft_isascii(data[i]),
 				isascii(data[i]),
@@ -84,11 +85,28 @@ int	main(void)
 	};
 	const int number = sizeof(data)/sizeof(data[0]);
 	for (int i = 0; i < number; i++)
-		printf("var: %3i | ft: %i, std: %i - %s\n",
+		printf("var: %4i | ft: %i, std: %i - %s\n",
 				data[i],
 				ft_isprint(data[i]),
 				isprint(data[i]),
 				(ft_isprint(data[i]) == isprint(data[i])) ? "OK!" : "FAIL!");
+	}
+	
+	{
+	printf("=== ft_strlen ===\n");
+	char *data[] = {
+	"hello",
+	"hi",
+	"",
+	"sdfds ds"
+	};
+	const int number = sizeof(data)/sizeof(data[0]);
+	for (int i = 0; i < number; i++)
+		printf("var: %10s | ft: %lu, std: %lu - %s\n",
+				data[i],
+				ft_strlen(data[i]),
+				strlen(data[i]),
+				(ft_strlen(data[i]) == strlen(data[i])) ? "OK!" : "FAIL!");
 	}
 	return 0;
 }
