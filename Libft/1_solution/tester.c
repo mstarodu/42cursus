@@ -7,6 +7,7 @@
 #include "ft_isascii.c"
 #include "ft_isprint.c"
 #include "ft_strlen.c"
+#include "ft_memset.c"
 
 int	main(void)
 {
@@ -70,7 +71,7 @@ int	main(void)
 	}
 	
 	{
-	printf("=== ft_ispring ===\n");
+	printf("=== ft_isprint ===\n");
 	const char data[] = {
 	    0,    // Null character
 	    'a',  // Lowercase ASCII
@@ -107,6 +108,18 @@ int	main(void)
 				ft_strlen(data[i]),
 				strlen(data[i]),
 				(ft_strlen(data[i]) == strlen(data[i])) ? "OK!" : "FAIL!");
+	}
+	
+	{
+	printf("=== ft_memset ===\n");
+	int n = 3;
+	char ft_data[] = "hello";
+	char data[] = "hello";
+	ft_memset(ft_data, 'd', n);
+	memset(data, 'd', n);
+
+	for (int i = 0; i < n+1; i++)
+		printf("ft: %c, std: %c\n", ft_data[i], data[i]);	
 	}
 	return 0;
 }
