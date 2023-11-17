@@ -1,23 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/16 22:25:25 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/11/17 15:22:51 by mstarodu         ###   ########.fr       */
+/*   Created: 2023/11/17 15:32:25 by mstarodu          #+#    #+#             */
+/*   Updated: 2023/11/17 15:42:17 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
-
-void	*ft_memset(void *b, int c, size_t len)
+size_t	ft_strlcpy(char * restrict dst, const char * restrict src, size_t dstsize)
 {
-	unsigned char	*temp;
 
-	temp = (unsigned char *)b;
-	while(len--)
-		*temp++ = (unsigned char)c;
-	return (b);
 }

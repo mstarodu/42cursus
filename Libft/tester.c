@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include "ft_isalpha.c"
-#include "ft_isdigit.c"
-#include "ft_isalnum.c"
-#include "ft_isascii.c"
-#include "ft_isprint.c"
-#include "ft_strlen.c"
-#include "ft_memset.c"
+#include "1_solution/ft_isalpha.c"
+#include "1_solution/ft_isdigit.c"
+#include "1_solution/ft_isalnum.c"
+#include "1_solution/ft_isascii.c"
+#include "1_solution/ft_isprint.c"
+#include "1_solution/ft_strlen.c"
+#include "1_solution/ft_memset.c"
+#include "1_solution/ft_bzero.c"
+#include "1_solution/ft_memcpy.c"
+#include "1_solution/ft_memmove.c"
 
 int	main(void)
 {
@@ -21,6 +24,7 @@ int	main(void)
 				ft_isalpha(data[i]),
 				isalpha(data[i]),
 				(ft_isalpha(data[i]) == isalpha(data[i])) ? "OK!" : "FAIL!");
+	printf("\n\n\n");
 	}
 
 	{
@@ -33,6 +37,7 @@ int	main(void)
 				ft_isdigit(data[i]),
 				isdigit(data[i]),
 				(ft_isdigit(data[i]) == isdigit(data[i])) ? "OK!" : "FAIL!");
+	printf("\n\n\n");
 	}
 
 	{
@@ -45,6 +50,7 @@ int	main(void)
 				ft_isalnum(data[i]),
 				isalnum(data[i]),
 				(ft_isalnum(data[i]) == isalnum(data[i])) ? "OK!" : "FAIL!");
+	printf("\n\n\n");
 	}
 
 	{
@@ -68,6 +74,7 @@ int	main(void)
 				ft_isascii(data[i]),
 				isascii(data[i]),
 				(ft_isascii(data[i]) == isascii(data[i])) ? "OK!" : "FAIL!");
+	printf("\n\n\n");
 	}
 	
 	{
@@ -91,6 +98,7 @@ int	main(void)
 				ft_isprint(data[i]),
 				isprint(data[i]),
 				(ft_isprint(data[i]) == isprint(data[i])) ? "OK!" : "FAIL!");
+	printf("\n\n\n");
 	}
 	
 	{
@@ -108,6 +116,7 @@ int	main(void)
 				ft_strlen(data[i]),
 				strlen(data[i]),
 				(ft_strlen(data[i]) == strlen(data[i])) ? "OK!" : "FAIL!");
+	printf("\n\n\n");
 	}
 	
 	{
@@ -118,8 +127,83 @@ int	main(void)
 	ft_memset(ft_data, 'd', n);
 	memset(data, 'd', n);
 
-	for (int i = 0; i < n+1; i++)
-		printf("ft: %c, std: %c\n", ft_data[i], data[i]);	
+	for (int i = 0; i < sizeof(ft_data) - 1; i++)
+		printf("ft: %c, std: %c - %s\n", ft_data[i], data[i], (ft_data[i] == data[i]) ? "OK!" : "FAIL!");	
+	printf("\n\n\n");
 	}
+
+
+	{
+	printf("=== ft_bzero ===\n");
+	int n = 3;
+	char ft_data[] = "hello";
+	char data[] = "hello";
+	ft_bzero(ft_data, n);
+	bzero(data, n);
+
+	for (int i = 0; i < sizeof(ft_data) - 1; i++)
+		printf("ft: %c, std: %c - %s\n", ft_data[i], data[i], (ft_data[i] == data[i]) ? "OK!" : "FAIL!");	
+	printf("\n\n\n");
+	}
+
+	{
+	printf("=== ft_memcpy ===\n");
+	int n = 3;
+	char ft_src[] = "hello";
+	char src[] = "hello";
+	char ft_dst[4];
+	char dst[4];
+	ft_memcpy(ft_dst, ft_src, n);
+	memcpy(dst, src, n);
+	for (int i = 0; i < sizeof(ft_dst) - 1; i++)
+		printf("ft: %c, std: %c - %s\n", ft_dst[i], dst[i], (ft_dst[i] == dst[i]) ? "OK!" : "FAIL!");	
+	printf("\n\n\n");
+	}
+
+	{
+	printf("=== ft_memmove ===\n");
+	printf("dest > src\n");
+	int n = 10;
+
+	char ft_origin[] = "hello world";
+	char *ft_overlap = ft_origin + 2;
+	
+	char origin[] = "hello world";
+	char *overlap = origin + 2;
+	
+	ft_memmove(ft_overlap, ft_origin, n);
+	memmove(overlap, origin, n);
+	
+	for (int i = 0; i < sizeof(ft_origin) - 1; i++)
+		printf("ft: %c, std: %c - %s\n", ft_origin[i], origin[i], (ft_origin[i] == origin[i]) ? "OK!" : "FAIL!");
+	}
+
+
+	{
+   		printf("\ndest < src\n");
+    		int n = 10;
+
+    		char ft_buf[20];
+		bzero(ft_buf, 20);
+	
+		char *ft_src = ft_buf + 5;
+		char *ft_dst = ft_buf;
+		
+		strcpy(ft_src, "Hello");
+		ft_memmove(ft_dst, ft_src,7);
+
+		char buf[20];
+		bzero(buf, 20);
+	
+		char *src = buf + 5;
+		char *dst = buf;
+		
+		strcpy(src, "Hello");
+		memmove(dst, src,7);
+
+    		for (int i = 0; i < sizeof(buf) - 1; i++)
+		printf("ft: %c, std: %c - %s\n", ft_buf[i], buf[i], (ft_buf[i] == buf[i]) ? "OK!" : "FAIL!");
+	}	
+	
 	return 0;
 }
