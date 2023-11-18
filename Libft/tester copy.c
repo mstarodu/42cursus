@@ -1,16 +1,6 @@
 #include <stdio.h>
 #include <ctype.h>
-#include <string.h>
-#include "1_solution/ft_isalpha.c"
-#include "1_solution/ft_isdigit.c"
-#include "1_solution/ft_isalnum.c"
-#include "1_solution/ft_isascii.c"
-#include "1_solution/ft_isprint.c"
-#include "1_solution/ft_strlen.c"
-#include "1_solution/ft_memset.c"
-#include "1_solution/ft_bzero.c"
-#include "1_solution/ft_memcpy.c"
-#include "1_solution/ft_memmove.c"
+#include "libft.h"
 
 int	main(void)
 {
@@ -126,8 +116,9 @@ int	main(void)
 	char data[] = "hello";
 	ft_memset(ft_data, 'd', n);
 	memset(data, 'd', n);
+	int data_size = (int)(sizeof(ft_data) - 1);
 
-	for (int i = 0; i < sizeof(ft_data) - 1; i++)
+	for (int i = 0; i < data_size; i++)
 		printf("ft: %c, std: %c - %s\n", ft_data[i], data[i], (ft_data[i] == data[i]) ? "OK!" : "FAIL!");	
 	printf("\n\n\n");
 	}
@@ -141,7 +132,9 @@ int	main(void)
 	ft_bzero(ft_data, n);
 	bzero(data, n);
 
-	for (int i = 0; i < sizeof(ft_data) - 1; i++)
+	int data_size = (int)(sizeof(ft_data) - 1);
+
+	for (int i = 0; i < data_size; i++)
 		printf("ft: %c, std: %c - %s\n", ft_data[i], data[i], (ft_data[i] == data[i]) ? "OK!" : "FAIL!");	
 	printf("\n\n\n");
 	}
@@ -155,6 +148,9 @@ int	main(void)
 	char dst[4];
 	ft_memcpy(ft_dst, ft_src, n);
 	memcpy(dst, src, n);
+	int data_size = (int)(sizeof(ft_data) - 1);
+
+	for (int i = 0; i < data_size; i++)
 	for (int i = 0; i < sizeof(ft_dst) - 1; i++)
 		printf("ft: %c, std: %c - %s\n", ft_dst[i], dst[i], (ft_dst[i] == dst[i]) ? "OK!" : "FAIL!");	
 	printf("\n\n\n");
@@ -174,6 +170,9 @@ int	main(void)
 	ft_memmove(ft_overlap, ft_origin, n);
 	memmove(overlap, origin, n);
 	
+	int data_size = (int)(sizeof(ft_data) - 1);
+
+	for (int i = 0; i < data_size; i++)
 	for (int i = 0; i < sizeof(ft_origin) - 1; i++)
 		printf("ft: %c, std: %c - %s\n", ft_origin[i], origin[i], (ft_origin[i] == origin[i]) ? "OK!" : "FAIL!");
 	}
@@ -181,7 +180,6 @@ int	main(void)
 
 	{
    		printf("\ndest < src\n");
-    		int n = 10;
 
     		char ft_buf[20];
 		bzero(ft_buf, 20);
@@ -201,9 +199,37 @@ int	main(void)
 		strcpy(src, "Hello");
 		memmove(dst, src,7);
 
+	int data_size = (int)(sizeof(ft_data) - 1);
+
+	for (int i = 0; i < data_size; i++)
     		for (int i = 0; i < sizeof(buf) - 1; i++)
 		printf("ft: %c, std: %c - %s\n", ft_buf[i], buf[i], (ft_buf[i] == buf[i]) ? "OK!" : "FAIL!");
+	}
+
+	{
+		int ds = 15;
+		int ss = 0;
+
+	{
+		printf("=== strlcpy  ===\n");
+		
+		char *src = "big big ring";
+		char dst[ds];
+		size_t size = ss;
+
+		printf("var: %s, std: %lu\n", dst, strlcpy(dst, src, size));
 	}	
 	
+	{
+		printf("=== ft_strlcpy  ===\n");
+		
+		char *src = "big big ring";
+		char dst[ds];
+		size_t size = ss;
+
+		printf("var: %s, ft: %lu\n", dst, ft_strlcpy(dst, src, size));
+	}
+	printf("\n");
+	}
 	return 0;
 }

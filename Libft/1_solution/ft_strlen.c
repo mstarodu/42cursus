@@ -6,18 +6,18 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 10:01:31 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/11/17 00:46:19 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/11/18 01:35:27 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft.h"
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(const char *s)
 {
-	const char	*end;
+	size_t	i;
 
-	end = str;
-	while (*end)
-		end++;
-	return (end - str);
+	i = 0;
+	while (*s++)
+		i++;
+	return (i);
 }
