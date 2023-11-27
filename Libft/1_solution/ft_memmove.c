@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 09:51:17 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/11/18 01:11:40 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/11/25 02:09:05 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	d = (unsigned char *)dst;
 	s = (const unsigned char *)src;
 	i = 0;
+
+	if (dst == NULL && src == NULL)
+		return (dst);
 	if (d < s)
 		while (i++ < len)
 			*d++ = *s++;

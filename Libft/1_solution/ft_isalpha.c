@@ -6,16 +6,13 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 22:24:31 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/11/15 22:56:08 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/11/21 01:17:41 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_isalpha(int c)
 {
-	char	uc;
-
-	uc = (char)c;
-	if ((uc >= 'A' && uc <= 'Z') || (uc >= 'a' && uc <= 'z'))
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
 		return (1);
 	return (0);
 }

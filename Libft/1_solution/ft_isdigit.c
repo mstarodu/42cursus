@@ -6,16 +6,13 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 00:34:29 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/11/16 00:40:46 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/11/21 01:18:50 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_isdigit(int c)
 {
-	unsigned char	uc;
-
-	uc = (unsigned char)c;
-	if (uc >= '0' && uc <= '9')
+	if (c >= '0' && c <= '9')
 		return (1);
 	return (0);
 }

@@ -6,16 +6,13 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 01:39:03 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/11/16 01:45:19 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/11/21 01:12:28 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_isascii(int c)
 {
-	unsigned char	uc;
-
-	uc = (unsigned char)c;
-	if (uc >= 0 && uc <= 127)
+	if (c >= 0 && c <= 127)
 		return (1);
 	return (0);
 }
