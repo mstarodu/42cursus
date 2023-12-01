@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 15:32:25 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/11/27 00:25:19 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/11/28 01:34:31 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,126 +14,64 @@
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	//return (strlcpy(dst,src, dstsize));
 	size_t	srcsize;
-	size_t r;
 
 	srcsize = ft_strlen(src);
-
-	if (!dstsize)
-		return (srcsize);
-
-	r = srcsize;	 
-	while (srcsize-- && --dstsize)
-		*dst++ = *src++;
-	*dst = '\0';
-	return (r);
+	if (dstsize != 0)
+	{
+		if (dstsize - 1 >= srcsize)
+			ft_memmove(dst, src, srcsize + 1);
+		else
+		{
+			ft_memmove(dst, src, dstsize - 1);
+			*(dst + dstsize - 1) = '\0';
+		}
+	}
+	return (srcsize);
 }
+
 /*
-#define ARRSIZE 10
 #include <stdio.h>
+
 int	main(void)
 {
+	typedef	struct s_tests {
+		int	dst_len;
+		size_t	dstsize;
+		char	*src;
+	} t_test;
+
+	t_test test[] = {
+		{20, 6, "Hello"},
+		{20, 13, "Hello, how"},
+		{20, 1222, "Hello darling how are you?"},
+		{20, 20, "Hello"},
+		{2, 5, "Helloooooo"},
+		{20, 5, ""},
+		{20, 0, "Hello"},
+		{0, 5, "Hello"},
+		{0, 0, "Hello"},
+	};
+
+	for (int i = 0; i < (int)(sizeof(test) / sizeof(test[0])); i++)
 	{
-		printf("BASIC: ");
-		char dst[10];
-		size_t dstsize = sizeof(dst) / sizeof(*dst);
-		size_t cpysize;
-		char *src = "Hello";
-		bzero(dst, ARRSIZE);
+		char dest[test[i].dst_len];
+		//bzero(dest, test[i].dst_len);
+		char ft_dest[test[i].dst_len];
+		//bzero(ft_dest, test[i].dst_len);
+		char *src = test[i].src;
+		size_t	dstsize = test[i].dstsize;;
+		size_t	std;
+		size_t	ft;
 
-		cpysize = strlcpy(dst, src, dstsize);
-		printf("%s | %lu", dst, cpysize);
+		std = strlcpy(dest, src, dstsize);
+		ft = ft_strlcpy(ft_dest, src, dstsize);
+		printf("%lu : %lu | %s : %s - ", std, ft, dest, ft_dest);
+		printf( std == ft && !strcmp(dest, ft_dest) ? "Ok!" : "FAIL!");
+		printf("\n");
 
-		printf(" --- ");
-		bzero(dst, ARRSIZE);
+	}	
 
-		cpysize = ft_strlcpy(dst, src, dstsize);
-		printf("%s | %lu\n", dst, cpysize);
-	}
-	{
-		printf("dstsize 0: ");
-		char dst[10];
-		size_t dstsize = 0;
-		size_t cpysize;
-		char *src = "Hello";
-		bzero(dst, ARRSIZE);
-
-		cpysize = strlcpy(dst, src, dstsize);
-		printf("%s | %lu", dst, cpysize);
-
-		printf(" --- ");
-		bzero(dst, ARRSIZE);
-
-		cpysize = ft_strlcpy(dst, src, dstsize);
-		printf("%s | %lu\n", dst, cpysize);
-	}
-	{
-		printf("dstsize < srcsize: ");
-		char dst[10];
-		size_t dstsize = 3;
-		size_t cpysize;
-		char *src = "Hello";
-		bzero(dst, ARRSIZE);
-
-		cpysize = strlcpy(dst, src, dstsize);
-		printf("%s | %lu", dst, cpysize);
-
-		printf(" --- ");
-		bzero(dst, ARRSIZE);
-
-		cpysize = ft_strlcpy(dst, src, dstsize);
-		printf("%s | %lu\n", dst, cpysize);
-	}
-	{
-		printf("dstsize == srcsize - No place for NULL terminator: ");
-		char dst[10];
-		size_t dstsize = sizeof(dst) / sizeof(*dst);
-		size_t cpysize;
-		char *src = "Hello67890";
-		bzero(dst, ARRSIZE);
-
-		cpysize = strlcpy(dst, src, dstsize);
-		printf("%s | %lu", dst, cpysize);
-
-		printf(" --- ");
-		bzero(dst, ARRSIZE);
-
-		cpysize = ft_strlcpy(dst, src, dstsize);
-		printf("%s | %lu\n", dst, cpysize);
-	}
-	{
-		printf("dstsize == srcsize (inc null): ");
-		char dst[10];
-		size_t dstsize = sizeof(dst) / sizeof(*dst);
-		size_t cpysize;
-		char *src = "Hello6789";
-		bzero(dst, ARRSIZE);
-
-		cpysize = strlcpy(dst, src, dstsize);
-		printf("%s | %lu", dst, cpysize);
-
-		printf(" --- ");
-		bzero(dst, ARRSIZE);
-
-		cpysize = ft_strlcpy(dst, src, dstsize);
-		printf("%s | %lu\n", dst, cpysize);
-	}
-	{
-		printf("dstsize < srcsize: ");
-		char dst[10];
-		size_t dstsize = sizeof(dst) / sizeof(*dst);
-		size_t cpysize;
-		char *src = "Hello678901234";
-		bzero(dst, ARRSIZE);
-
-		cpysize = strlcpy(dst, src, dstsize);
-		printf("%s | %lu", dst, cpysize);
-
-		printf(" --- ");
-		bzero(dst, ARRSIZE);
-
-		cpysize = ft_strlcpy(dst, src, dstsize);
-		printf("%s | %lu\n", dst, cpysize);
-	}
-}*/
+	return (0);
+}
+*/

@@ -1,0 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/28 16:54:10 by mstarodu          #+#    #+#             */
+/*   Updated: 2023/11/28 22:15:06 by mstarodu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+char	*ft_strrchr(const char *s, int c)
+{
+	int	slen;
+	char	chr;
+
+	slen = (int)ft_strlen(s);
+	chr = (char)c;
+	while (slen >= 0)
+		if (*(s+(slen--)) == chr)
+			return ((char*)(s + slen + 1));
+	return (NULL);
+}
+/*
+#include <stdio.h>
+
+int	main(void)
+{
+	char	*text = "Hello world! How are you?";
+	int	c[] = {
+		1,2,3,4,5,6,44,56,244, '\0', '0', 0, 134, 'w', 'y', '?', 'H'
+	};
+
+	printf("strrchr\n");
+	for(size_t i = 0; i < sizeof(c)/sizeof(c[0]); i++)
+	{
+		printf("%p: %p --- ", strrchr(text, c[i]), ft_strrchr(text, c[i]));
+		printf(strrchr(text, c[i]) == ft_strrchr(text, c[i]) ? "OK!\n" : "FAIL!\n");
+		
+	}
+	return (0);
+}
+*/
