@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 16:54:10 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/11/28 22:15:06 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:16:28 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int	slen;
 	char	chr;
+	int		slen;
 
 	slen = (int)ft_strlen(s);
 	chr = (char)c;
 	while (slen >= 0)
-		if (*(s+(slen--)) == chr)
-			return ((char*)(s + slen + 1));
+		if (*(s + (slen--)) == chr)
+			return ((char *)(s + slen + 1));
 	return (NULL);
 }
 /*

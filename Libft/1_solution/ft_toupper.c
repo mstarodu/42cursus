@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 13:07:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/11/28 13:22:58 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:10:48 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_toupper(int c)
 {
-	if(c >= 'a' && c <= 'z')
-		return(c + 'A' - 'a');
+	if (c >= 'a' && c <= 'z')
+		return (c + 'A' - 'a');
 	return (c);
 }
 /*

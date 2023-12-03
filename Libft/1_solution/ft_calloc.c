@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mstarodu <mstarodu@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/16 23:53:01 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/12/01 17:11:12 by mstarodu         ###   ########.fr       */
+/*   Created: 2023/12/02 18:36:57 by mstarodu          #+#    #+#             */
+/*   Updated: 2023/12/03 12:34:00 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	unsigned char		*d;
-	const unsigned char	*s;
+	void	*p;
 
-	d = (unsigned char *)dst;
-	s = (const unsigned char *)src;
-	if (dst == NULL && src == NULL)
-		n = 0;
-	while (n--)
-		*d++ = (unsigned char)*s++;
-	return (dst);
+	if (nmemb == 0 || size == 0)
+		return (malloc(0));
+	p = malloc(nmemb * size);
+	if (p == NULL)
+		return (NULL);
+	ft_bzero(p, nmemb * size);
+	return (p);
 }

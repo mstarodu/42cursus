@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 17:52:30 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/11/28 19:14:08 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:08:34 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		++s2;
 		--n;
 	}
-	if(n == 0)
+	if (n == 0)
 		return (0);
 	return ((unsigned char)*s1 - (unsigned char)*s2);
 }

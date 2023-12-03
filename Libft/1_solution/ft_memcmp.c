@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 00:53:42 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/11/29 01:03:23 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:05:09 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
 	while (n--)
-		if(*(unsigned char *)s1++ != *(unsigned char *)s2++)
+		if (*(unsigned char *)s1++ != *(unsigned char *)s2++)
 			return (*(unsigned char *)(s1 - 1) - *(unsigned char *)(s2 - 1));
 	return (0);
 }

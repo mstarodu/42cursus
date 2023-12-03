@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mstarodu <mstarodu@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/16 00:46:21 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/12/01 14:00:34 by mstarodu         ###   ########.fr       */
+/*   Created: 2023/12/03 15:24:02 by mstarodu          #+#    #+#             */
+/*   Updated: 2023/12/03 15:36:25 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-int	ft_isalnum(int c)
+char *ft_strtrim(char const *s1, char const *set)
 {
-	return (ft_isalpha(c) || ft_isdigit(c));
+
 }
