@@ -14,10 +14,8 @@
 
 static int	ft_isspace(char c)
 {
-	if (c == ' ' || c == '\f' || c == '\n'
-		|| c == '\r' || c == '\t' || c == '\v')
-		return (1);
-	return (0);
+	return (c == ' ' || c == '\f' || c == '\n'
+		|| c == '\r' || c == '\t' || c == '\v');
 }
 
 int	ft_atoi(const char *nptr)
@@ -30,11 +28,8 @@ int	ft_atoi(const char *nptr)
 	while (ft_isspace(*nptr))
 		nptr++;
 	if (*nptr == '-' || *nptr == '+')
-	{
-		if (*nptr == '-')
+		if (*nptr++ == '-')
 			sign = -1;
-		nptr++;
-	}
 	while (ft_isdigit(*nptr))
 		nbr = nbr * 10 + (*nptr++ - '0');
 	return (nbr * sign);

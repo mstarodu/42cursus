@@ -16,16 +16,18 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
 	size_t	srclen;
 	size_t	dstlen;
-	size_t	i;
 
 	srclen = ft_strlen(src);
 	dstlen = ft_strlen(dst);
-	i = dstlen;
 	if (dstlen >= dstsize || dstsize == 0)
 		return (dstsize + srclen);
-	while (i < dstsize - 1 && *src)
-		dst[i++] = *src++;
-	dst[i] = '\0';
+	if (dstsize - dstlen > srclen)
+		ft_memcpy(dst + dstlen, src, srclen + 1);
+	else
+	{
+		ft_memcpy(dst + dstlen, src, dstsize - dstlen - 1);
+		dst[dstsize - 1] = '\0';
+	}
 	return (dstlen + srclen);
 }
 

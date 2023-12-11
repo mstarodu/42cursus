@@ -6,7 +6,7 @@ CFLAGS=-Wall -Wextra -Werror
 NAME=libft.a
 
 # Source and object files
-SRC= $(filter-out tester.c, $(wildcard *.c))
+SRC= $(wildcard *.c)
 
 OBJ=$(SRC:.c=.o)
 

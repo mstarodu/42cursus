@@ -15,15 +15,18 @@
 char	*ft_strrchr(const char *s, int c)
 {
 	char	chr;
-	int		slen;
+	int		i;
 
-	slen = (int)ft_strlen(s);
-	chr = (char)c;
-	while (slen >= 0)
-		if (*(s + (slen--)) == chr)
-			return ((char *)(s + slen + 1));
-	return (NULL);
+	chr = (char) c;
+	i = (int) ft_strlen(s);
+	while (*(s + i) != chr)
+		if (i == 0)
+			return (NULL);
+		else
+			--i;
+	return ((char *)(s + i));
 }
+
 /*
 #include <stdio.h>
 
