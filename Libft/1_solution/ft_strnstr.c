@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 01:45:20 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/11/30 00:46:50 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/12/11 22:01:31 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	size_t  needle_len;
+	size_t	needle_len;
 
 	if (!*needle)
 		return ((char *) haystack);
-
 	needle_len = ft_strlen(needle);
 	while (*haystack && len >= needle_len)
 	{
-		if(*haystack == *needle && ft_memcmp(haystack, needle, needle_len) == 0)
+		if (*haystack == *needle
+			&& ft_memcmp(haystack, needle, needle_len) == 0)
 			return ((char *)haystack);
 		++haystack;
 		--len;

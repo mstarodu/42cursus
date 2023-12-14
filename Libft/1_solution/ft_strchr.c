@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 13:27:24 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/12/01 17:15:40 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/12/11 21:58:25 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ char	*ft_strchr(const char *s, int c)
 
 	chr = (char) c;
 	while (*s != chr)
+	{
 		if (*s == '\0')
 			return (NULL);
-		else
-			++s;
+		++s;
+	}
 	return ((char *) s);
 }
 /*
@@ -37,8 +38,11 @@ int	main(void)
 	printf("strchr\n");
 	for(size_t i = 0; i < sizeof(c)/sizeof(c[0]); i++)
 	{
-		printf("%p: %p --- ", strchr(text, c[i]), ft_strchr(text, c[i]));
-		printf(strchr(text, c[i]) == ft_strchr(text, c[i]) ? "OK!\n" : "FAIL!\n ");
+		printf("%p: %p --- ", 
+			strchr(text, c[i]),
+			ft_strchr(text, c[i]));
+		printf(strchr(text, c[i]) == ft_strchr(text, c[i])
+		? "OK!\n" : "FAIL!\n ");
 	}
 	return (0);
 }

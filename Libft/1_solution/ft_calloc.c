@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 18:36:57 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/12/03 12:34:00 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/12/11 21:53:38 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	void	*p;
 
 	if (nmemb && size > SIZE_MAX / nmemb)
-		return NULL;
+		return (NULL);
 	p = malloc(nmemb * size);
 	if (p == NULL)
 		return (NULL);

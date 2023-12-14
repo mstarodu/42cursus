@@ -1,33 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/28 13:07:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/12/13 18:52:02 by mstarodu         ###   ########.fr       */
+/*   Created: 2023/12/13 18:11:39 by mstarodu          #+#    #+#             */
+/*   Updated: 2023/12/13 19:08:23 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_toupper(int c)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	if (c >= 'a' && c <= 'z')
-		return (c + ('A' - 'a'));
-	return (c);
+	unsigned int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		f(i, s + i);
+		++i;
+	}
+	return ;
 }
 /*
 #include <stdio.h>
-#include <ctype.h>
+
+void	myfunc(unsigned int i, char *s)
+{
+	s[i] = ft_toupper(s[i]);
+	return ;
+}
+
 int	main(void)
 {
-	char	tests[] = {
-		'a', 'A', ' ', '\0', '	', 'e', 'Z', 'z'
-	};
-	for (size_t i = 0; i < sizeof(tests)/sizeof(tests[0]); i++)
-		printf(toupper(tests[i]) == ft_toupper(tests[i]) ? "OK! " : "FAIL! ");
-	return (0);
+	char s[] = "kljkljklj hello";
+	ft_striteri(s, myfunc);
+	printf("%s\n", s);
 }
 */

@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/28 13:07:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/12/13 18:52:02 by mstarodu         ###   ########.fr       */
+/*   Created: 2023/12/13 18:13:16 by mstarodu          #+#    #+#             */
+/*   Updated: 2023/12/13 21:17:02 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_toupper(int c)
+void	ft_putnbr_fd(int n, int fd)
 {
-	if (c >= 'a' && c <= 'z')
-		return (c + ('A' - 'a'));
-	return (c);
+	if (n == -2147483648)
+		ft_putstr_fd("-2147483648", fd);
+	else if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		ft_putnbr_fd(-n, fd);
+	}
+	else if (n < 10)
+		ft_putchar_fd(n + '0', fd);
+	else
+	{
+		ft_putnbr_fd(n / 10, fd);
+		ft_putchar_fd(n % 10 + '0', fd);
+	}
 }
 /*
-#include <stdio.h>
-#include <ctype.h>
-int	main(void)
+int	main (void)
 {
-	char	tests[] = {
-		'a', 'A', ' ', '\0', '	', 'e', 'Z', 'z'
-	};
-	for (size_t i = 0; i < sizeof(tests)/sizeof(tests[0]); i++)
-		printf(toupper(tests[i]) == ft_toupper(tests[i]) ? "OK! " : "FAIL! ");
-	return (0);
+	ft_putnbr_fd(-2147483648, 1);
 }
 */

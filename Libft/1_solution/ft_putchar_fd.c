@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/28 13:07:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/12/13 18:52:02 by mstarodu         ###   ########.fr       */
+/*   Created: 2023/12/13 18:11:57 by mstarodu          #+#    #+#             */
+/*   Updated: 2023/12/13 20:15:41 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_toupper(int c)
+void	ft_putchar_fd(char c, int fd)
 {
-	if (c >= 'a' && c <= 'z')
-		return (c + ('A' - 'a'));
-	return (c);
+	write(fd, &c, 1);
 }
-/*
-#include <stdio.h>
-#include <ctype.h>
-int	main(void)
-{
-	char	tests[] = {
-		'a', 'A', ' ', '\0', '	', 'e', 'Z', 'z'
-	};
-	for (size_t i = 0; i < sizeof(tests)/sizeof(tests[0]); i++)
-		printf(toupper(tests[i]) == ft_toupper(tests[i]) ? "OK! " : "FAIL! ");
-	return (0);
-}
-*/

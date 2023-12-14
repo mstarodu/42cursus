@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 00:20:06 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/11/28 13:03:40 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/12/11 22:04:00 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int	main(void)
 
 	printf("Function: strlcat\n");
 	
-	for(int i = 0; i < (int)(sizeof(tests)/sizeof(tests[0])); i++)
+	for(int i = 0; i < (int)(sizeof(tests) /
+		sizeof(tests[0])); i++)
 	{
 		char dst[tests[i].dstlen];
 		char ft_dst[tests[i].dstlen];
@@ -86,7 +87,8 @@ int	main(void)
 	
 		printf("%lu : %lu | ", cpysize, ft_cpysize);
 
-		printf((!strcmp(dst, ft_dst) && cpysize == ft_cpysize) ? "OK!" : "FAIL!");
+		printf((!strcmp(dst, ft_dst)
+			&& cpysize == ft_cpysize) ? "OK!" : "FAIL!");
 		printf("\n");
 	}
 }
