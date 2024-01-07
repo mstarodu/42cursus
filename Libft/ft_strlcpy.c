@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 15:32:25 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/12/15 13:04:55 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/11/28 01:34:31 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	}
 	return (srcsize);
 }
+
 /*
 #include <stdio.h>
 

@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 00:20:06 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/12/15 13:04:40 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/12/11 22:04:00 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	}
 	return (dstlen + srclen);
 }
+
 /*
 #include <stdio.h>
 int	main(void)

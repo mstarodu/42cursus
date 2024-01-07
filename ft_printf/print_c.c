@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 22:50:26 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/07 17:23:04 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/01/07 19:12:26 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int	print_c(char c)
 {
-	return(ft_putchar_fd(c, 1), 1);
+	return (ft_putchar_fd(c, 1), 1);
 }

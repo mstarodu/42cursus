@@ -6,13 +6,13 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 22:44:33 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/12/15 13:02:39 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/12/13 00:44:07 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	nbrlen(long int ln)
+int	nbrlen(long int ln)
 {
 	int	nlen;
 
@@ -31,7 +31,7 @@ static int	nbrlen(long int ln)
 	return (nlen);
 }
 
-static char	*nstr(char *d, int nlen, long int ln)
+char	*nstr(char *d, int nlen, long int ln)
 {
 	int	edge;
 

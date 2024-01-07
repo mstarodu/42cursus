@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 22:57:14 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/12/15 13:04:11 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/12/12 00:22:40 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	return (allocate_words(s, c, words, arr));
 }
+
 /*
 #include <stdio.h>
 int	main (void)

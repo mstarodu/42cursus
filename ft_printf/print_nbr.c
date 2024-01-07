@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 13:39:17 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/07 17:31:20 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/01/07 19:13:28 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,10 @@
 
 int	print_nbr(int nbr)
 {
-	int	i;
+	char	*s_nbr;
+	int		len;
 
-	i = 0;
-	ft_putnbr_fd(nbr, 1);
-	if (nbr < 0)
-		++i;
-	while (nbr > 0)
-	{
-		++i;
-		nbr /= 10;
-	}
-	return (i);
+	s_nbr = ft_itoa(nbr);
+	len = ft_strlen(s_nbr);
+	return (ft_putstr_fd(s_nbr, 1), free(s_nbr), len);
 }
