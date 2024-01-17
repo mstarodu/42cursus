@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   print_p.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/22 13:36:21 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/12 23:02:26 by mstarodu         ###   ########.fr       */
+/*   Created: 2024/01/12 22:41:56 by mstarodu          #+#    #+#             */
+/*   Updated: 2024/01/13 00:55:48 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include "./libft/libft.h"
-# include <stdarg.h>
+static char	*convert_p_to_hex_str(unsigned long long p)
+{
+	p -= p;
+	return ("dddD");
+}
 
-int	print_c(char c);
-int	print_nbr(int nbr);
-int	print_str(char *s);
-int	print_arg(char *c, va_list arg);
-int	print_p(unsigned long long p);
-int	ft_printf(const char *s, ...);
+int	print_p(unsigned long long p)
+{
+	int	len;
+	char	*str;
 
-#endif
+	str = convert_p_to_hex_str(p);
+	ft_putstr_fd(str, 1);
+	len = ft_strlen(str);
+	return (len);
+}

@@ -6,9 +6,11 @@ int	main(void)
 	char	*str = NULL;
 	int	d = 5;
 	char	*five = "five";
-	int	std = printf("STD: Hello! Hi %d(%s)! You are 100%% cool! %s - is not a number\n", d, five, str);
-	int	ft = ft_printf(" FT: Hello! Hi %d(%s)! You are 100%% cool! %s - is not a number\n", d, five, str);
+	int	std = printf("STD: Hello! Hi %d(%s)! You are 100%% cool! %s - is not a number. Pointer has to point to %p\n", d, five, str, &str);
+	int	ft = ft_printf(" FT: Hello! Hi %d(%s)! You are 100%% cool! %s - is not a number. Pointer has to point to %p\n", d, five, str, &str);
 	printf("\n");
 	printf("%d - %d", std, ft);
 	printf("\n");
+
+	printf("%p\n", &"f");
 }
