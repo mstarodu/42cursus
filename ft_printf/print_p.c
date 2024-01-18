@@ -6,25 +6,32 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 22:41:56 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/13 00:55:48 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/01/18 00:57:17 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char	*convert_p_to_hex_str(unsigned long long p)
+static int	print_hex(uintptr_t p)
 {
-	p -= p;
-	return ("dddD");
+	int		count;
+	char	*hex;
+
+	hex = HEX;
+	if (p == 0)
+		return (0);
+	else
+		count = print_hex(p / 16);
+	return (ft_putchar_fd(hex[p % 16], 1), 1 + count);
 }
 
-int	print_p(unsigned long long p)
+int	print_p(uintptr_t p)
 {
-	int	len;
-	char	*str;
+	char	*null;
 
-	str = convert_p_to_hex_str(p);
-	ft_putstr_fd(str, 1);
-	len = ft_strlen(str);
-	return (len);
+	ft_putstr_fd("0x", 1);
+	null = "0";
+	if (!p)
+		return (ft_putstr_fd(null, 1), 3);
+	return (print_hex(p) + 2);
 }

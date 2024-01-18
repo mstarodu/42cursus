@@ -3,7 +3,7 @@
 
 int	main(void)
 {
-	char	*str = NULL;
+	char	*str = 0;
 	int	d = 5;
 	char	*five = "five";
 	int	std = printf("STD: Hello! Hi %d(%s)! You are 100%% cool! %s - is not a number. Pointer has to point to %p\n", d, five, str, &str);
@@ -11,6 +11,4 @@ int	main(void)
 	printf("\n");
 	printf("%d - %d", std, ft);
 	printf("\n");
-
-	printf("%p\n", &"f");
 }
