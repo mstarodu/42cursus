@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:58:23 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/18 01:13:36 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/01/19 00:31:24 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	print_arg(char *c, va_list arg)
 	else if (*c == 'X')
 		len = print_nbr((long)va_arg(arg, unsigned int), HEX_UPPER);
 	else
-		len = (ft_putchar_fd(*c, 1), 1);
+		len = print_c(*c);
 	return (len);
 }
 
@@ -39,15 +39,25 @@ int	ft_printf(const char *s, ...)
 {
 	va_list	args;
 	int		printflen;
+	int		len;
 
 	printflen = 0;
 	va_start (args, s);
 	while (*s)
 	{
 		if (*s == '%')
-			printflen += print_arg((char *)++s, args);
+		{
+			len = print_arg((char *)++s, args);
+			if (len == -1)
+				return (va_end(args), -1);
+			printflen += len;
+		}
 		else
-			printflen += (ft_putchar_fd(*s, 1), 1);
+		{
+			if (print_c(*s) == -1)
+				return (va_end(args), -1);
+			++printflen;
+		}
 		++s;
 	}
 	va_end(args);

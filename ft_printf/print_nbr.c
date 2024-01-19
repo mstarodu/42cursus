@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 13:39:17 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/18 01:10:24 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/01/19 01:44:04 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,27 @@
 
 int	print_nbr(long nbr, char *base)
 {
-	size_t	count;
 	long	base_len;
+	int		count;
+	int		result;
 
 	base_len = (long)ft_strlen(base);
 	count = 0;
 	if (nbr < 0)
 	{
-		ft_putchar_fd('-', 1);
+		if (print_c('-') == -1)
+			return (-1);
 		++count;
 		nbr = -nbr;
 	}
 	if (nbr >= base_len)
-		count += print_nbr(nbr / base_len, base);
-	return (ft_putchar_fd(base[nbr % base_len], 1), 1 + count);
+	{
+		result = print_nbr(nbr / base_len, base);
+		if (result == -1)
+			return (-1);
+		count += result;
+	}
+	if (print_c(base[nbr % base_len]) == -1)
+		return (-1);
+	return (1 + count);
 }

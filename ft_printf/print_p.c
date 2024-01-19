@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 22:41:56 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/18 00:57:17 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/01/19 01:35:04 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,30 @@ static int	print_hex(uintptr_t p)
 	if (p == 0)
 		return (0);
 	else
+	{
 		count = print_hex(p / 16);
-	return (ft_putchar_fd(hex[p % 16], 1), 1 + count);
+		if (count == -1)
+			return (-1);
+	}
+	if (print_c(hex[p % 16]) == -1)
+		return (-1);
+	return (1 + count);
 }
 
 int	print_p(uintptr_t p)
 {
-	char	*null;
+	int	result;
 
-	ft_putstr_fd("0x", 1);
-	null = "0";
 	if (!p)
-		return (ft_putstr_fd(null, 1), 3);
-	return (print_hex(p) + 2);
+	{
+		if (print_str("0x0") == -1)
+			return (-1);
+		return (3);
+	}
+	if (print_str("0x") == -1)
+		return (-1);
+	result = print_hex(p);
+	if (result == -1)
+		return (-1);
+	return (result + 2);
 }
