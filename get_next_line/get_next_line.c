@@ -6,67 +6,117 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 01:55:26 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/24 02:38:47 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/01/27 15:26:22 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "libft/libft.h"
+
 /*
-int	has_no_newline(t_list *list)
-{
-	if(list == NULL)
-		return (0)
-	while (list->next_line != NULL)
-		list = list->next_line;
-	while(list->buffer != '\n')
-
-}
-
-t_list	parse(int fd) 
-{
-	t_list	*list;
-	while (has_no_newline)
-	{
-	
-	}
-
-	return (list);
-}
+ * 1. Input: We have a file with text
+ * 2. Get buffer
+ * 3. Check for \n
+ * 4. Allocate remainder and buffer in full or just before \n
+ * 5. Allocate remainder
+ * 6. Output: line
+ *
+ * additinal:
+ * 	protect malloc
+ * 	check for NULL cases
+ * 	other possible erros
 */
+
+#include <string.h>
+#include <stdio.h>
+
+size_t	ft_strlen(const char *s)
+{
+	const char	*p;
+	
+	if (!s)
+		return(0);
+	p = s;
+	while (*p)
+		++p;
+	return (p - s);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*ns;
+	size_t	s1_len;
+	size_t	s2_len;
+
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	ns = (char *)malloc(s1_len + s2_len + 1);
+	if (ns == NULL)
+		return (free(s1),NULL);
+	memcpy(ns, s1, s1_len);
+	memcpy(ns + s1_len + 1, s2, s1_len + 1);
+	return (free(s1), ns);
+}
 
 char	*get_next_line(int fd)
 {
-	static char	*remainder;
 	char	buffer[BUFFER_SIZE + 1];
-	ssize_t	bytes_read;
+	ssize_t	byte_size;
+	ssize_t	i;
+	static char	*remainder;
 	char	*line;
-	char	*old_line;
+	int	nl;
 
-	if (fd < 0 || BUFFER_SIZE < 1)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	bytes_read = read(fd, buffer, BUFFER_SIZE);
-	if (remainder)
-		line = ft_strdup(remainder);
-	else
+
+	
+	byte_size = read(fd, &buffer, BUFFER_SIZE);
+	nl = 0;
+	while (nl < 1)
 	{
-	line = malloc(sizeof(char));
-	*line = '\0';
-	}
-	while (bytes_read > 0)
-	{
-		buffer[bytes_read] = '\0';
-		old_line = line;
-		remainder = ft_strchr(buffer, '\n');		
-		if (remainder)
+		if (byte_size == -1)
+			return (NULL);
+		buffer[byte_size] = '\0';
+		i = 0;
+		while(i <= byte_size)
 		{
-			remainder = (*remainder = '\0', ft_strdup(remainder + 1));
-			line = ft_strjoin(line, buffer);	
-			break;
+			if (buffer[i++] != '\n') 
+				continue;
+			buffer[i-1] = '\0';
+			line  = (char *)malloc(sizeof(char) * (i - 1 + ft_strlen(remainder) + ft_strlen(pline)));
+			if (!line)
+				return(NULL);
+			if (ft_strlen(remainder) > 0)
+			{
+				memcpy(line, remainder, ft_strlen(remainder));
+				memcpy(&line[ft_strlen(remainder)], buffer, i - 1);	
+				free(remainder);
+			}
+			else
+				memcpy(line, buffer, i - 1);
+			remainder = (char *)malloc(sizeof(char) * (byte_size - i));
+			if (!remainder)
+				return (NULL);
+			memcpy(remainder, &buffer[i], byte_size - i);	
+			return (line);
 		}
-		line = ft_strjoin(line, buffer);	
-		free(old_line);
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		
+		if (i == byte_size)
+		{
+			buffer[i] = '\0';
+			line  = (char *)malloc(sizeof(char) * (i + ft_strlen(remainder)));
+			if (!line)
+				return(NULL);
+			if (ft_strlen(remainder) > 0)
+			{
+				memcpy(line, remainder, ft_strlen(remainder));
+				memcpy(&line[ft_strlen(remainder)], buffer, i);	
+				free(remainder);
+			}
+			else
+				memcpy(line, buffer, i);
+			byte_size = read(fd, &buffer, BUFFER_SIZE);
+		}
 	}
 	return (line);
 }
