@@ -1,31 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 22:47:14 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/28 02:13:47 by mstarodu         ###   ########.fr       */
+/*   Created: 2024/01/19 01:56:42 by mstarodu          #+#    #+#             */
+/*   Updated: 2024/01/26 00:06:23 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "../get_next_line/get_next_line.h"
-
-int	main(void)
-{
-	int	fd;
-	char	*line;
-	int	i;
-
-	fd = open("read_error.txt", O_RDONLY);
-
-	i = 1;
-	line = get_next_line(fd);
-	while (line)
-	{
-		printf("%i - %s\n", i++, line); 	
-		line = get_next_line(fd);
-	}
-}
+#include "get_next_line.h"
