@@ -1,5 +1,6 @@
 CC 		:= cc
-CFLAGS		:= -Wall -Wextra -Werror -g
+CFLAGS		:= -Wall -Wextra -Werror
+GNLFLAGS	:= -g -D BUFFER_SIZE=23
 
 FT_PRINTF	:= ft_printf.out
 LIBFTPRINTF_DIR	:= ../ft_printf
@@ -8,7 +9,7 @@ FT_PRINTF_SRCS	:= ft_printf.c
 FT_PRINTF_OBJS	:= $(FT_PRINTF_SRCS:.c=.o )
 
 GNL_NAME	:= get_next_line.out
-GNL_FILES	:= get_next_line.c
+GNL_FILES	:= get_next_line.c get_next_line_utils.c
 GNL_PATH	:= ../get_next_line
 GNL_PATHS	:= $(addprefix $(GNL_PATH)/,$(GNL_FILES))
 
@@ -21,17 +22,16 @@ lftprintf:
 	$(MAKE) -C $(LIBFTPRINTF_DIR)
 
 get_next_line:
-	$(CC) $(CFLAGS) get_next_line.c -o $(GNL_NAME) $(GNL_PATHS)
+	$(CC) $(CFLAGS) $(GNLFLAGS) get_next_line.c -o $(GNL_NAME) $(GNL_PATHS)
 
 clean:
 	rm -f $(wildcard *.o)
 	$(MAKE) clean -C $(LIBFTPRINTF_DIR)
-	$(MAKE) clean -C $(GNL_LIBFT_DIR)
 
 fclean: clean
 	rm -f $(wildcard *.out)
+	rm -r $(wildcard *.dSYM)
 	$(MAKE) fclean -C $(LIBFTPRINTF_DIR)
-	$(MAKE) fclean -C $(GNL_LIBFT_DIR)
 
 re: fclean all
 
