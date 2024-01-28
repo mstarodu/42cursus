@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 22:47:14 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/28 03:07:26 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/01/28 03:44:52 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(void)
 	char	*line;
 	int	i;
 
-	fd = open("multiple_nl.txt", O_RDONLY);
+	fd = open("lines_around_10.txt", O_RDONLY);
 	i = 1;
 	line = get_next_line(fd);
 	while (line)

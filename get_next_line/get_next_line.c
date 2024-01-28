@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 01:55:26 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/28 03:35:13 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/01/28 03:40:20 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,22 @@ char	*ft_strjoin(char *s1, char *s2)
 
 char	*parse(char type, char *line)
 {
-	char	*p;
+	size_t	i;
+	size_t	llen;
 
 	if (!line)
 		return (NULL);
-	p = line;
-	while(*p)
+	llen = ft_strlen(line);
+	i =  0;
+	while(i < llen)
 	{
-		if (*p++ == '\n')
+		if (line[i++] == '\n')
 			break;
 	}
 	if (type == 'l')
-		return (ft_substr(line, 0, p - line));
+		return (ft_substr(line, 0, i));
 	if (type == 'r')
-		return (ft_substr(line, p - line, p - line + ft_strlen(line)));
+		return (ft_substr(line, i, llen));
 	return (NULL);
 }
 
