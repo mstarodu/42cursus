@@ -21,8 +21,6 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
 	full_line = read_line(fd, residue);
-	if (!full_line)
-		return (free(residue), NULL);
 	line = parse('l', full_line);
 	residue = parse('r', full_line);
 	return (free(full_line), line);
@@ -49,8 +47,6 @@ char	*read_line(int fd, char *full_line)
 				return (ft_strjoin(full_line, buffer));
 		}
 		full_line = ft_strjoin(full_line, buffer);
-		if (!full_line)
-			return (full_line);
 	}
 }
 
