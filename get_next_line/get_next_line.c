@@ -17,18 +17,21 @@ char	*get_next_line(int fd)
 	char		*full_line;
 	char		*line;
 	static char	*residue;
+	char		*buffer;
 
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
-	full_line = read_line(fd, residue);
+	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (!buffer)
+		return (free(residue), NULL);
+	full_line = read_line(fd, residue, buffer);
 	line = parse('l', full_line);
 	residue = parse('r', full_line);
-	return (free(full_line), line);
+	return (free(buffer), free(full_line), line);
 }
 
-char	*read_line(int fd, char *full_line)
+char	*read_line(int fd, char *full_line, char *buffer)
 {
-	char	buffer[BUFFER_SIZE + 1];
 	ssize_t	i;
 	ssize_t	bytes_read;
 

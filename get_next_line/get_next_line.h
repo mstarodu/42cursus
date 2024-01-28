@@ -28,7 +28,7 @@ void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char *s1, char *s2);
 char	*parse(char type, char *line);
-char	*read_line(int fd, char *full_line);
+char	*read_line(int fd, char *full_line, char *buffer);
 char	*get_next_line(int fd);
 
 #endif
