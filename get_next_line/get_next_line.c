@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 01:55:26 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/28 02:24:15 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/01/28 03:35:13 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ size_t	ft_strlen(const char *s)
 	const char	*p;
 	
 	if (!s)
-		return(0);
+		return (0);
 	p = s;
 	while (*p)
 		++p;
@@ -31,7 +31,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 {
 	char	*ns;
 
-	if (!s || start == len)
+	if (!s || start == len )
 		return (NULL);
 	ns = (char *)malloc((len + 1) * sizeof(char));
 	if (!ns)
@@ -47,21 +47,20 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	s1_len;
 	size_t	s2_len;
 
-	if (!s1)
-	{
-		s1 = (char *)malloc(1);
-		if(!s1)
-			return (NULL);
-		*s1 = '\0';
-	}
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	ns = (char *)malloc(s1_len + s2_len + 1);
-	if (ns == NULL)
-		return (free(s1), NULL);
+	if (!ns)
+	{
+		if (s1)
+			free(s1);
+		return ( NULL);
+	}
 	memcpy(ns, s1, s1_len);
 	memcpy(ns + s1_len, s2, s2_len + 1);
-	return (free(s1), ns);
+	if (s1)
+		free(s1);
+	return (ns);
 }
 
 
@@ -80,7 +79,7 @@ char	*parse(char type, char *line)
 	if (type == 'l')
 		return (ft_substr(line, 0, p - line));
 	if (type == 'r')
-		return (ft_substr(line, p - line, line + ft_strlen(line) - p));
+		return (ft_substr(line, p - line, p - line + ft_strlen(line)));
 	return (NULL);
 }
 
@@ -94,7 +93,7 @@ char	*read_line(int fd, char *full_line)
 	while (1)
 	{
 		if (bytes_read < 0)
-			return (free(full_line), NULL);
+			return (free(full_line),NULL);
 		if (bytes_read == 0)
 			return (full_line);
 		buffer[bytes_read] = '\0';
