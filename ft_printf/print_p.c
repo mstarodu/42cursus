@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 22:41:56 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/19 01:35:04 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/01/30 13:57:12 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int	print_p(uintptr_t p)
 
 	if (!p)
 	{
-		if (print_str("0x0") == -1)
+		if (print_str("(nil)") == -1)
 			return (-1);
-		return (3);
+		return (5);
 	}
 	if (print_str("0x") == -1)
 		return (-1);
