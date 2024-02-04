@@ -6,12 +6,12 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 22:47:14 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/28 16:45:36 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/02/04 18:41:36 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "../get_next_line/get_next_line.h"
+#include "../../get_next_line/get_next_line.h"
 
 int	main(int argc, char *argv[])
 {

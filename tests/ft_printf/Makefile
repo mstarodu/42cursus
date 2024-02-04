@@ -20,7 +20,7 @@ all: $(NAME)
 
 $(NAME): lftprintf $(FT_PRINTF_OBJS) 
 	$(CC) $(CFLAGS) $(FT_PRINTF_OBJS) -o $(NAME) $(LIBFTPRINTF)
-	@echo "$(GREEN)$(DASHES) Testing function is compiled$(NC)"
+	@echo "$(GREEN)$(DASHES) ft_printf testing function is compiled$(NC)"
 
 lftprintf:
 	$(MAKE) -C $(LIBFTPRINTF_DIR)
@@ -29,12 +29,12 @@ lftprintf:
 clean:
 	rm -f $(wildcard *.o)
 	$(MAKE) clean -C $(LIBFTPRINTF_DIR)
-	@echo "$(RED)$(DASHES) clean is done$(NC)"
+	@echo "$(RED)$(DASHES) ft_printf clean is done$(NC)"
 
 fclean: clean
 	rm -f $(wildcard *.out)
 	$(MAKE) fclean -C $(LIBFTPRINTF_DIR)
-	@echo "$(RED)$(DASHES) fclean is done$(NC)"
+	@echo "$(RED)$(DASHES) ft_printf fclean is done$(NC)"
 
 re: fclean all
 
