@@ -1,6 +1,7 @@
 RED		:= \033[0;31m
 GREEN		:= \033[0;32m
 NC		:= \033[0m
+DASHES		:= ---------
 
 CC 		:= cc
 CFLAGS		:= -Wall -Wextra -Werror
@@ -17,30 +18,29 @@ FT_PRINTF_OBJS	:= $(FT_PRINTF_SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): lftprintf
-	@echo "$(GREEN)Compliling ft_printf testing main$(NC)"
+$(NAME): lftprintf $(FT_PRINTF_OBJS) 
 	$(CC) $(CFLAGS) $(FT_PRINTF_OBJS) -o $(NAME) $(LIBFTPRINTF)
+	@echo "$(GREEN)$(DASHES) Testing function is compiled$(NC)"
 
 lftprintf:
-	@echo "$(GREEN)Making inside ft_printf$(NC)"
 	$(MAKE) -C $(LIBFTPRINTF_DIR)
+	@echo "$(GREEN)$(DASHES) lftprinf is done$(NC)"
 
 clean:
-	@echo "$(RED)Cleaning .o files$(NC)"
 	rm -f $(wildcard *.o)
-	@echo "$(RED)Executing clean inside ft_printf folder$(NC)"
 	$(MAKE) clean -C $(LIBFTPRINTF_DIR)
+	@echo "$(RED)$(DASHES) clean is done$(NC)"
 
 fclean: clean
-	@echo "$(RED)Cleaning the .out file$(NC)"
 	rm -f $(wildcard *.out)
-	@echo "$(RED)Executing fclean inside ft_printf folder$(NC)"
 	$(MAKE) fclean -C $(LIBFTPRINTF_DIR)
+	@echo "$(RED)$(DASHES) fclean is done$(NC)"
 
 re: fclean all
 
 run: all
 	clear
 	@./$(NAME)
+	@echo "$(RED)$(DASHES) Testing function is executed$(NC)"
 
 .PHONY: all re clean fclean
