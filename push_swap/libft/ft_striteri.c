@@ -1,23 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/16 10:01:31 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/02 18:41:55 by mstarodu         ###   ########.fr       */
+/*   Created: 2023/12/13 18:11:39 by mstarodu          #+#    #+#             */
+/*   Updated: 2023/12/13 19:08:23 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	const char	*p;
+	unsigned int	i;
 
-	p = s;
-	while (*p)
-		++p;
-	return (p - s);
+	i = 0;
+	while (s[i])
+	{
+		f(i, s + i);
+		++i;
+	}
+	return ;
 }
+/*
+#include <stdio.h>
+
+void	myfunc(unsigned int i, char *s)
+{
+	s[i] = ft_toupper(s[i]);
+	return ;
+}
+
+int	main(void)
+{
+	char s[] = "kljkljklj hello";
+	ft_striteri(s, myfunc);
+	printf("%s\n", s);
+}
+*/

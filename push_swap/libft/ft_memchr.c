@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 22:04:09 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/12/15 13:03:13 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/11/29 00:19:33 by myko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	}
 	return (NULL);
 }
+
 /*
 #include <stdio.h>
 #include <string.h>

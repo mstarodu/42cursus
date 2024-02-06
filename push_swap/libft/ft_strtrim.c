@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 15:24:02 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/12/15 13:05:45 by mstarodu         ###   ########.fr       */
+/*   Updated: 2023/12/12 00:08:22 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 		--end;
 	return (ft_substr(s1, start, end - start));
 }
+
 /*
 #include <stdio.h>
 

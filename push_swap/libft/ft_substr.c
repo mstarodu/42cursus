@@ -1,36 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/03 15:24:02 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/12/15 13:05:45 by mstarodu         ###   ########.fr       */
+/*   Created: 2023/12/03 12:55:15 by mstarodu          #+#    #+#             */
+/*   Updated: 2023/12/03 15:20:20 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	start;
-	size_t	end;
+	size_t	s_len;
+	char	*ns;
 
-	start = 0;
-	end = ft_strlen(s1);
-	while (start < end && ft_strchr(set, s1[start]))
-		++start;
-	while (end > start && ft_strchr(set, s1[end - 1]))
-		--end;
-	return (ft_substr(s1, start, end - start));
+	if (!s)
+		return (NULL);
+	s_len = ft_strlen(s);
+	if (start >= s_len)
+		return (ft_strdup(""));
+	if (len > s_len - start)
+		len = s_len - start;
+	ns = (char *)ft_calloc(len + 1, sizeof(char));
+	if (ns == NULL)
+		return (NULL);
+	ft_strlcpy(ns, s + start, len + 1);
+	return (ns);
 }
 /*
 #include <stdio.h>
 
 int	main(void)
 {
-	printf("%s\n", ft_strtrim("dd ddd dddd", " d"));
-	return (0);
+	char *s = "Hellodfksjfjdfjdfgfdaa";
+
+	printf("%s\n", ft_substr(s, 2, 5));
 }
 */

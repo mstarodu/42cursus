@@ -1,33 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/28 13:07:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/12 23:58:47 by mstarodu         ###   ########.fr       */
+/*   Created: 2023/12/13 16:13:49 by mstarodu          #+#    #+#             */
+/*   Updated: 2023/12/13 18:10:53 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_toupper(int c)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	if (c >= 'a' && c <= 'z')
-		return (c + ('A' - 'a'));
-	return (c);
+	char			*d;
+	unsigned int	i;
+
+	if (!s || !f)
+		return (NULL);
+	d = (char *)ft_calloc((ft_strlen(s) + 1), sizeof(char));
+	if (!d)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		d[i] = f(i, s[i]);
+		i++;
+	}
+	return (d);
 }
 /*
 #include <stdio.h>
-#include <ctype.h>
-int	main(void)
+
+char	my_func(unsigned int s, char c)
 {
-	char	tests[] = {
-		'a', 'A', ' ', '\0', '	', 'e', 'Z', 'z'
-	};
-	for (size_t i = 0; i < sizeof(tests)/sizeof(tests[0]); i++)
-		printf(toupper(tests[i]) == ft_toupper(tests[i]) ? "OK! " : "FAIL! ");
-	return (0);
+	s++;
+	s--;
+	return (ft_toupper(c));
 }
-*/
+
+int	main()
+{
+	printf("%s\n", ft_strmapi("hello world!", my_func));	
+}*/

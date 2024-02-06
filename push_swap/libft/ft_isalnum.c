@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/16 10:01:31 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/02 18:41:55 by mstarodu         ###   ########.fr       */
+/*   Created: 2023/11/16 00:46:21 by mstarodu          #+#    #+#             */
+/*   Updated: 2023/12/01 14:00:34 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_isalnum(int c)
 {
-	const char	*p;
-
-	p = s;
-	while (*p)
-		++p;
-	return (p - s);
+	return (ft_isalpha(c) || ft_isdigit(c));
 }

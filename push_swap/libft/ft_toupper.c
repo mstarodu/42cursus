@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/16 10:01:31 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/02 18:41:55 by mstarodu         ###   ########.fr       */
+/*   Created: 2023/11/28 13:07:18 by mstarodu          #+#    #+#             */
+/*   Updated: 2023/12/13 18:52:02 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_toupper(int c)
 {
-	const char	*p;
-
-	p = s;
-	while (*p)
-		++p;
-	return (p - s);
+	if (c >= 'a' && c <= 'z')
+		return (c + ('A' - 'a'));
+	return (c);
 }
+/*
+#include <stdio.h>
+#include <ctype.h>
+int	main(void)
+{
+	char	tests[] = {
+		'a', 'A', ' ', '\0', '	', 'e', 'Z', 'z'
+	};
+	for (size_t i = 0; i < sizeof(tests)/sizeof(tests[0]); i++)
+		printf(toupper(tests[i]) == ft_toupper(tests[i]) ? "OK! " : "FAIL! ");
+	return (0);
+}
+*/

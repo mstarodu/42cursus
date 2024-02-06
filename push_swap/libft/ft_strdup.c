@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mstarodu <mstarodu@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/16 10:01:31 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/02 18:41:55 by mstarodu         ###   ########.fr       */
+/*   Created: 2023/12/03 12:36:02 by mstarodu          #+#    #+#             */
+/*   Updated: 2023/12/03 12:54:43 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+char	*ft_strdup(const char *s)
 {
-	const char	*p;
+	char	*d;
 
-	p = s;
-	while (*p)
-		++p;
-	return (p - s);
+	d = (char *)ft_calloc(ft_strlen(s) + 1, sizeof(char));
+	if (d == NULL)
+		return (NULL);
+	ft_strlcpy(d, s, ft_strlen(s) + 1);
+	return (d);
 }

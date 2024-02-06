@@ -1,33 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/28 13:07:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/12 23:58:47 by mstarodu         ###   ########.fr       */
+/*   Created: 2023/11/28 17:52:30 by mstarodu          #+#    #+#             */
+/*   Updated: 2023/12/01 17:08:34 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_toupper(int c)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	if (c >= 'a' && c <= 'z')
-		return (c + ('A' - 'a'));
-	return (c);
+	while (n && *s1 && *s1 == *s2)
+	{
+		++s1;
+		++s2;
+		--n;
+	}
+	if (n == 0)
+		return (0);
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }
 /*
 #include <stdio.h>
-#include <ctype.h>
+
 int	main(void)
 {
-	char	tests[] = {
-		'a', 'A', ' ', '\0', '	', 'e', 'Z', 'z'
+	const char *s1 = "Hello";
+	const char *s2 = "Heleo";
+	size_t n[] = {
+		0,1,2,3,4,5,6,7,8,9,10
 	};
-	for (size_t i = 0; i < sizeof(tests)/sizeof(tests[0]); i++)
-		printf(toupper(tests[i]) == ft_toupper(tests[i]) ? "OK! " : "FAIL! ");
+
+	for(size_t i = 0; i < sizeof(n)/sizeof(n[0]); i++)
+			printf("%i = %i\n", strncmp(s1, s2, n[i]), ft_strncmp(s1, s2, n[i]));
 	return (0);
 }
 */

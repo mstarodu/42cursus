@@ -1,53 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/28 22:04:09 by mstarodu          #+#    #+#             */
-/*   Updated: 2023/12/15 13:03:13 by mstarodu         ###   ########.fr       */
+/*   Created: 2023/11/28 13:27:24 by mstarodu          #+#    #+#             */
+/*   Updated: 2023/12/11 21:58:25 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memchr(const void *s, int c, size_t n)
+char	*ft_strchr(const char *s, int c)
 {
-	unsigned char	*p;
-	unsigned char	chr;
+	char	chr;
 
-	p = (unsigned char *) s;
-	chr = (unsigned char) c;
-	while (n--)
+	chr = (char) c;
+	while (*s != chr)
 	{
-		if (*p == chr)
-			return ((void *) p);
-		p++;
+		if (*s == '\0')
+			return (NULL);
+		++s;
 	}
-	return (NULL);
+	return ((char *) s);
 }
 /*
 #include <stdio.h>
-#include <string.h>
 
 int	main(void)
 {
 	char	*text = "Hello world! How are you?";
 	int	c[] = {
-		1,2,356,244, '\0', '0', 0, 'l', 'w', 'y', '?', 'H'
+		1,2,3,4,5,6,44,56,244, '\0', '0', 0, 134, 'a', '!'
 	};
-	size_t	n = 50;
 
-	printf("memchr\n");
+	printf("strchr\n");
 	for(size_t i = 0; i < sizeof(c)/sizeof(c[0]); i++)
 	{
-		printf("%s: %s --- ",
-			(char*)memchr(text, c[i], n),
-			(char*)ft_memchr(text, c[i], n));
-		printf(memchr(text, c[i], n) == ft_memchr(text, c[i], n)
-		? "OK!\n:w" : "FAIL!\n");
-		
+		printf("%p: %p --- ", 
+			strchr(text, c[i]),
+			ft_strchr(text, c[i]));
+		printf(strchr(text, c[i]) == ft_strchr(text, c[i])
+		? "OK!\n" : "FAIL!\n ");
 	}
 	return (0);
 }
