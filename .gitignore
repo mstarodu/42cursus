@@ -1,5 +1,5 @@
 /playground
-a.out
+*.out
 *.o
 *.d
 *.a
