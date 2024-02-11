@@ -1,5 +1,5 @@
 GREEN		:= \033[0;32m
-RED		:= \033[0;31m
+YELLOW		:= \033[0;33m
 NC		:= \033[0m
 DASHES		:= ---------
 
@@ -26,7 +26,7 @@ clean:
 
 fclean: clean
 	rm -f $(wildcard *.out)
-	@echo "$(RED)$(DASHES) get_next_line fclean is done$(NC)"
+	@echo "$(YELLOW)$(DASHES) get_next_line fclean is done$(NC)"
 
 re: fclean all
 

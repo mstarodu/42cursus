@@ -1,4 +1,4 @@
-RED		:= \033[0;31m
+YELLOW		:= \033[0;33m
 GREEN		:= \033[0;32m
 NC		:= \033[0m
 DASHES		:= ---------
@@ -29,18 +29,18 @@ lftprintf:
 clean:
 	rm -f $(wildcard *.o)
 	$(MAKE) clean -C $(LIBFTPRINTF_DIR)
-	@echo "$(RED)$(DASHES) ft_printf clean is done$(NC)"
+	@echo "$(YELLOW)$(DASHES) ft_printf clean is done$(NC)"
 
 fclean: clean
 	rm -f $(wildcard *.out)
 	$(MAKE) fclean -C $(LIBFTPRINTF_DIR)
-	@echo "$(RED)$(DASHES) ft_printf fclean is done$(NC)"
+	@echo "$(YELLOW)$(DASHES) ft_printf fclean is done$(NC)"
 
 re: fclean all
 
 run: all
 	clear
 	@./$(NAME)
-	@echo "$(RED)$(DASHES) Testing function is executed$(NC)"
+	@echo "$(YELLOW)$(DASHES) Testing function is executed$(NC)"
 
 .PHONY: all re clean fclean
