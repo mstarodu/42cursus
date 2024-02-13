@@ -16,13 +16,14 @@
 #define DUMMY 0
 #define PLUS 1
 #define MINUS -1
-#define	OK 0
+#define OK 0
 #define FAIL -1
 #define TRUE 1
 #define FALSE 0
 
-typedef int t_status
-typedef int t_bool
+typedef int	t_result;
+typedef int	t_bool;
+typedef char*	t_string;
 
 typedef struct s_node
 {
@@ -37,9 +38,8 @@ typedef struct s_stack
 }	t_stack;
 
 // Check is the list has duplicates
-// Check if atoi is succsesful
 
-size_t	st_strlen(char *s)
+size_t	st_strlen(t_string s)
 {
 	size_t	len;
 
@@ -51,9 +51,9 @@ size_t	st_strlen(char *s)
 	return (len);
 }
 
-t_status	st_putstr_fd(char *s, int fd)
+t_result	st_putstr_fd(t_string s, int fd)
 {
-	if (write(fd, s, ft_strlen(s)) == FAIL)
+	if (write(fd, s, st_strlen(s)) == FAIL)
 		return (FAIL);
 	return (OK);
 }
@@ -71,50 +71,45 @@ t_bool	st_isspace(char c)
 		|| c == '\r' || c == '\t' || c == '\v');
 }
 
-t_status	st_atoi(const char *nptr, int *nbr)
+t_result	st_atoi(t_string nptr, int *nbr)
 {
-	int	sign;
+	int		sign;
 	long	lnbr;
-	
+
 	sign = PLUS;
 	lnbr = 0;
-	while (ft_isspace(*nptr) == TRUE)
+	while (st_isspace(*nptr) == TRUE)
 		nptr++;
 	if (*nptr == '-' || *nptr == '+')
 		if (*nptr++ == '-')
 			sign = MINUS;
-	if (ft_isdigit(*nptr) == FALSE)
+	if (st_isdigit(*nptr) == FALSE)
 		return (FAIL);
-	while (ft_isdigit(*nptr) == TRUE)
+	while (st_isdigit(*nptr) == TRUE)
 		lnbr = lnbr * 10 + (*nptr++ - '0');
-	if (lnbr < INT_MIN && lnbr > INT_MAX)
+	lnbr *= sign;
+	if (lnbr < INT_MIN || lnbr > INT_MAX)
 		return (FAIL);
-	*nbr = (int) lnbr * sign;
+	*nbr = (int) lnbr;
 	return (OK);
 }
 
-t_status	*create_node(t_node *node, int nbr)
+t_result	create_node(t_node **node, int nbr)
 {
-	node = (t_node *) malloc(sizeof(t_node));
-	if (node == NULL)
-		return (st_putstr_fd("Error\n", STDERR_FILENO), FAIL);
-	node->nbr = nbr;
-	node->next = NULL;
+	*node = (t_node *) malloc(sizeof(t_node));
+	if (*node == NULL)
+		return (FAIL);
+	(*node)->nbr = nbr;
+	(*node)->next = NULL;
 	return (OK);
 }
 
-t_status	create_stacks(t_stack *a, t_stack *b)
+t_result	create_stacks(t_stack *a, t_stack *b)
 {
-	t_node	*tmp;
-
-	if (create_node(tmp, DUMMY) = FAIL)
-		return (ft_putstr_fd("Error\n", STDERR_FILENO), FAIL);
-	a->head = tmp;
-	a->tail = tmp;
-	if (create_node(tmp, DUMMY) = FAIL)
-		return (free(a->head), ft_putstr_fd("Error\n", STDERR_FILENO), FAIL);
-	b->head = tmp;
-	b->tail = tmp;
+	if (create_node(&a->head, DUMMY) == FAIL || create_node(&b->head, DUMMY) == FAIL)
+		return (FAIL);
+	a->tail = a->head;
+	b->tail = b->head;
 	return (OK);
 }
 
@@ -124,36 +119,89 @@ void	append_node(t_stack *stack, t_node *node)
 	stack->tail = node;
 }
 
-// free all stacks on fail
 void	free_stack(t_stack *stack)
 {
-	t_stack	*p;
+	t_node	*current_node;
+	t_node	*next_node;
 
-	while (stack->head->next != NULL)
+	current_node = stack->head;
+	while (current_node != NULL)
 	{
-		p = stack->head->next;
-		free(stack->head);
-		stack->head = p;
+		next_node = current_node->next;
+		free(current_node);
+		current_node = next_node;
 	}
-	free (stack->tail);
+	stack->head = NULL;
+	stack->tail = NULL;
+}
+
+t_result	free_stacks(t_stack *a, t_stack *b, t_result status)
+{
+	free_stack(a);
+	if (b != NULL)
+		free_stack(b);
+	if (status == FAIL)
+		st_putstr_fd("Error\n", STDERR_FILENO);
+	else
+		st_putstr_fd("OK! - TO DELETE\n", STDOUT_FILENO);
+	return (status);
 }
 
 int	collect_arguments(char *argv[], t_stack *a)
 {
-	int	nbr;
-	t_node	node;
+	int		nbr;
+	int		i;
+	t_node	*node;
 
-	nbr = 0;
-	while (*argv)
+	i = 1;
+	while (argv[i])
 	{
-		if (st_atoi(*arg, &nbr) == FAIL)
+		if (st_atoi(argv[i], &nbr) == FAIL || create_node(&node, nbr) == FAIL)
 			return (FAIL);
-		if (create_node(&node, &nbr) == FAIL)
-			return (FAIL);
-
-		append_node();
-		++argv;
+		append_node(a, node);
+		++i;
 	}
+	return (OK);
+}
+
+void	st_putnbr_fd(int n, int fd)
+{
+	char	chr;
+
+	chr = 0;
+	if (n == -2147483648)
+		write(fd, "-2147483648", 11);
+	else if (n < 0)
+	{
+		write(fd, "-", 1);
+		st_putnbr_fd(-n, fd);
+	}
+	else if (n < 10)
+	{
+		chr = n + '0';
+		write(fd, &chr, 1);
+	}
+	else
+	{
+		st_putnbr_fd(n / 10, fd);
+		chr = n % 10 + '0';
+		write(fd, &chr, 1);
+	}
+}
+
+void	print_stack(t_stack *stack, t_string name)
+{
+	t_node	*current_node;
+
+	current_node = stack->head;
+	st_putstr_fd(name, STDOUT_FILENO);
+	while (current_node != NULL)
+	{
+		st_putnbr_fd(current_node->nbr, STDOUT_FILENO);
+		write(STDOUT_FILENO, "\n", 1);
+		current_node = current_node->next;
+	}
+	st_putstr_fd("---\n", STDOUT_FILENO);
 }
 
 int	main(int argc, char *argv[])
@@ -161,7 +209,10 @@ int	main(int argc, char *argv[])
 	t_stack	a;
 	t_stack	b;
 
-	if (create_stacks(&a, &b) == 0 || collect_arguments(argv[], &a) == 0)
-		return (1);
-	return (ft_putstr_fd("OK!\n", STDOUT_FILENO), 0);
+	if (argc < 2 || create_stacks(&a, &b) == FAIL
+		|| collect_arguments(argv, &a) == FAIL)
+		return (free_stacks(&a, &b, FAIL));
+	print_stack(&a, "Stack A\n");
+	print_stack(&b, "Stack B\n");
+	return (free_stacks(&a, &b, OK));
 }
