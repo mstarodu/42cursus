@@ -31,11 +31,11 @@ typedef struct s_node
 	struct s_node	*next;
 }	t_node;
 
-typedef struct s_stack
+typedef struct s_list
 {
 	t_node	*head;
 	t_node	*tail;
-}	t_stack;
+}	t_list;
 
 // Check is the list has duplicates
 
@@ -104,7 +104,7 @@ t_result	create_node(t_node **node, int nbr)
 	return (OK);
 }
 
-t_result	create_stacks(t_stack *a, t_stack *b)
+t_result	create_stacks(t_list *a, t_list *b)
 {
 	if (create_node(&a->head, DUMMY) == FAIL || create_node(&b->head, DUMMY) == FAIL)
 		return (FAIL);
@@ -113,13 +113,13 @@ t_result	create_stacks(t_stack *a, t_stack *b)
 	return (OK);
 }
 
-void	append_node(t_stack *stack, t_node *node)
+void	append_node(t_list *stack, t_node *node)
 {
 	stack->tail->next = node;
 	stack->tail = node;
 }
 
-void	free_stack(t_stack *stack)
+void	free_stack(t_list *stack)
 {
 	t_node	*current_node;
 	t_node	*next_node;
@@ -135,19 +135,19 @@ void	free_stack(t_stack *stack)
 	stack->tail = NULL;
 }
 
-t_result	free_stacks(t_stack *a, t_stack *b, t_result status)
+t_result	free_stacks(t_list *a, t_list *b, t_result result)
 {
 	free_stack(a);
 	if (b != NULL)
 		free_stack(b);
-	if (status == FAIL)
+	if (result == FAIL)
 		st_putstr_fd("Error\n", STDERR_FILENO);
 	else
 		st_putstr_fd("OK! - TO DELETE\n", STDOUT_FILENO);
-	return (status);
+	return (result);
 }
 
-int	collect_arguments(char *argv[], t_stack *a)
+int	collect_arguments(char *argv[], t_list *a)
 {
 	int		nbr;
 	int		i;
@@ -189,11 +189,11 @@ void	st_putnbr_fd(int n, int fd)
 	}
 }
 
-void	print_stack(t_stack *stack, t_string name)
+void	print_list(t_list *stack, t_string name)
 {
 	t_node	*current_node;
 
-	current_node = stack->head;
+	current_node = stack->head->next;
 	st_putstr_fd(name, STDOUT_FILENO);
 	while (current_node != NULL)
 	{
@@ -204,15 +204,37 @@ void	print_stack(t_stack *stack, t_string name)
 	st_putstr_fd("---\n", STDOUT_FILENO);
 }
 
+void	swap(t_list *stack)
+{
+	t_node	*first;
+	t_node	*second;
+
+	if (stack->head->next == NULL || stack->head->next->next == NULL)
+		return ;
+	first = stack->head->next;
+	second = first->next;
+	first->next = second->next;
+	second->next = first;
+	stack->head->next = second;
+	if (stack->tail == second)
+		stack->tail = first;
+}
+
+#include <stdio.h>
 int	main(int argc, char *argv[])
 {
-	t_stack	a;
-	t_stack	b;
+	t_list	a;
+	t_list	b;
 
 	if (argc < 2 || create_stacks(&a, &b) == FAIL
 		|| collect_arguments(argv, &a) == FAIL)
 		return (free_stacks(&a, &b, FAIL));
-	print_stack(&a, "Stack A\n");
-	print_stack(&b, "Stack B\n");
+	print_list(&a, "Stack A\n");
+	printf("%p -- %p\n", a.head->next, a.tail);
+	
+	swap(&a);
+	
+	print_list(&a, "Stack A\n");
+	printf("%p -- %p\n", a.head->next, a.tail);
 	return (free_stacks(&a, &b, OK));
 }
