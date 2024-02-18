@@ -1,15 +1,6 @@
-#include <stdlib.h>
+#include "push_swap.h"
 
-#define IN 1
-#define OUT 0
-#define FAIL -1
-#define OK 0
-#define EOS 0
-
-typedef char * t_string;
-typedef int t_result;
-
-size_t	word_wc(t_string s, char c, size_t *wc)
+size_t	word_count(t_string s, char c, size_t *wc)
 {
 	size_t	p;
 
@@ -21,7 +12,7 @@ size_t	word_wc(t_string s, char c, size_t *wc)
 			p = IN;
 			++(*wc);	
 		}
-		else if (*s == c)
+		else if (*s == c && p == IN)
 		{
 			p = OUT;
 		}
@@ -30,7 +21,7 @@ size_t	word_wc(t_string s, char c, size_t *wc)
 	return (*wc);
 }
 
-t_result	st_calloc(size_t nmemb, size_t size, t_string **dst)
+t_result	st_malloc(size_t nmemb, size_t size, t_string **dst)
 {
 	*dst = (t_string *)malloc(nmemb * size);
 	if (*dst == NULL)
@@ -44,21 +35,26 @@ void	free_arr(t_string **arr, size_t wc)
 
 	i = 0;
 	while (i < wc)
-		free(arr[i++]);
-	free(arr);	
+		free((*arr)[i++]);
+	free(*arr);	
 }
 
-t_result	create_word(t_string start, t_string end, t_string **dst)
+t_result	create_word(t_string start, t_string end, t_string **dst, size_t word)
 {
 	size_t	i;
+	size_t	edge;
 
-	*dst = malloc((end - start + 1) * sizeof(char));
-	if (dst == NULL)       
+	(*dst)[word] = (t_string) malloc((end - start + 1) * sizeof(char));
+	if ((*dst)[word] == NULL)       
 		return (FAIL);
 	i = 0;
-	while (&start != &end)
-		(*dst)[i++] = *start++;
-	(*dst)[i] = '\0';
+	edge = end - start;
+	while (i <= edge)
+	{
+		(*dst)[word][i] = start[i];
+		++i;
+	}
+	(*dst)[word][i] = '\0';
 	return (OK);	
 }
 
@@ -77,11 +73,11 @@ t_result	collect_words(t_string s, char c, size_t wc, t_string **arr)
 			p = IN;
 			word_start = s;
 		}
-		else if (*s == c || *s == '\0')
+		else if ((*(s + 1) == c || *(s + 1) == EOS) && p == IN)
 		{
 			p = OUT;
-			if(create_word(word_start, s, (*arr)[word]) == FAIL)
-				return(free_arr(*arr, wc), FAIL);
+			if(create_word(word_start, s, arr, word++) == FAIL)
+				return(free_arr(arr, wc), FAIL);
 		}
 		++s;
 	}
@@ -96,8 +92,8 @@ t_string	*st_split(t_string s, char c)
 
 	arr = NULL;
 	if (s ==  NULL
-		|| word_wc(s, c, &wc) == 0
-		|| st_calloc(wc + 1, sizeof(char*), &arr) == FAIL
+		|| word_count(s, c, &wc) == 0
+		|| st_malloc(wc + 1, sizeof(char*), &arr) == FAIL
 		|| collect_words(s, c, wc, &arr) == FAIL)
 		return (NULL);
 	return (arr);	
@@ -105,22 +101,22 @@ t_string	*st_split(t_string s, char c)
 	
 #include <stdio.h>
 
-int	main(int argc, t_string argv[])
+int	main(void)
 {
 	size_t	i;
 	size_t	wc;
 	t_string *words;
+	t_string argv = "  Hello,   world! i  ";
 
-	if (argc < 2)
-		return(printf("No arguments. Try next time\n"), 0);
 	wc = 0;
-	word_wc(argv[1], ' ', &wc);
+	word_count(argv, ' ', &wc);
 
 	printf("%zu\n", wc);
-	words = st_split(argv[1], ' ');
+	words = st_split(argv, ' ');
 	i = 0;
 	while (i < wc)
 		printf("%s\n", words[i++]);
-	printf("%p\n", words[i]);
+	printf("%s\n", words[i]);
+	free_arr(&words, wc);
 	return (0);	
 }
