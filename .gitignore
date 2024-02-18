@@ -3,4 +3,5 @@
 *.o
 *.d
 *.a
-/a.out.dSYM
+*.swp
+*/a.out.dSYM
