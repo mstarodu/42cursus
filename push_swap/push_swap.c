@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:04:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/02/06 18:02:12 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/02/25 00:06:25 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,21 +122,25 @@ t_result	free_stacks(t_list *a, t_list *b, t_result result)
 	return (result);
 }
 
-int	collect_arguments(char *argv[], t_list *a)
+t_result	collect_arguments(t_string argv, t_list *a)
 {
 	int		nbr;
 	int		i;
 	t_node	*node;
+	t_string	*splitted;
 
-	i = 1;
-	while (argv[i])
+	splitted = NULL;
+	if (st_split(argv, ' ', &splitted) == FAIL)
+		return (FAIL);
+	i = 0;
+	while (splitted[i])
 	{
-		if (st_atoi(argv[i], &nbr) == FAIL || create_node(&node, nbr) == FAIL)
-			return (FAIL);
+		if (st_atoi(splitted[i], &nbr) == FAIL || create_node(&node, nbr) == FAIL)
+			return (free(splitted), FAIL);
 		append_node(a, node);
 		++i;
 	}
-	return (OK);
+	return (free(splitted), OK);
 }
 
 void	st_putnbr_fd(int n, int fd)
@@ -201,8 +205,9 @@ int	main(int argc, char *argv[])
 	t_list	a;
 	t_list	b;
 
-	if (argc < 2 || create_stacks(&a, &b) == FAIL
-		|| collect_arguments(argv, &a) == FAIL)
+	if (argc < 2
+		|| create_stacks(&a, &b) == FAIL
+		|| collect_arguments(argv[1], &a) == FAIL)
 		return (free_stacks(&a, &b, FAIL));
 	print_list(&a, "Stack A\n");
 	printf("%p -- %p\n", a.head->next, a.tail);

@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 00:07:20 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/02/19 00:42:47 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/02/24 23:52:06 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,18 +95,32 @@ static t_result	collect_words(t_string s, char c, size_t wc, t_string **arr)
 	return (OK);
 }
 
-t_string	*st_split(t_string s, char c)
+t_result	st_split(t_string s, char c, t_string **arr)
 {
-	t_string	*arr;
 	size_t		wc;
 
-	arr = NULL;
+	wc = 0;
 	if (s == NULL
-		|| count_words(s, c, &wc, &arr) == FAIL
-		|| collect_words(s, c, wc, &arr) == FAIL)
-		return (NULL);
-	return (arr);
+		|| count_words(s, c, &wc, arr) == FAIL
+		|| collect_words(s, c, wc, arr) == FAIL)
+		return (FAIL);
+	return (OK);
 }
+/*
+#include <stdio.h>
+
+int	main(void)
+{
+	t_string	*arr;
+	int	i;
+
+	arr = NULL;
+	i = 0;
+	st_split("one two three", ' ', &arr);
+	while (i < 3)
+		printf("%s\n", arr[i++]);
+}
+*/
 /*
 #include <stdio.h>
 

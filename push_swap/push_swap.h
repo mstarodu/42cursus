@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:16:36 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/02/19 00:51:22 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/02/24 23:29:30 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,7 @@ typedef struct s_list
 	t_node	*head;
 	t_node	*tail;
 }	t_list;
+
+t_result        st_split(t_string s, char c, t_string **arr);
 
 #endif
