@@ -6,14 +6,14 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:04:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/02/25 01:37:37 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/02/25 01:40:28 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include  "push_swap.h"
 
 // Check is the list has duplicates
-
+// Check is no  letters (fix atoi)
 size_t	st_strlen(t_string s)
 {
 	size_t	len;
@@ -208,8 +208,9 @@ int	main(int argc, char *argv[])
 	t_list	a;
 	t_list	b;
 
-	if (argc < 2
-		|| create_stacks(&a, &b) == FAIL
+	if (argc < 2)
+		return (FAIL);
+	if (create_stacks(&a, &b) == FAIL
 		|| collect_arguments(argv[1], &a) == FAIL)
 		return (free_stacks(&a, &b, FAIL));
 	print_list(&a, "Stack A\n");
