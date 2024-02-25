@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:04:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/02/25 01:40:28 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/02/25 03:01:30 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,59 @@ void	swap(t_list *stack)
 		stack->tail = first;
 }
 
+void	push(t_list *from, t_list *to)
+{
+	t_list	temp;
+
+	if (from == NULL)
+		return ;
+	if (to->head == NULL && from->head == from->tail)
+	{
+		to->head = from->head;
+		to->tail = to->head;
+		from->head = NULL;
+	}
+	else if (to->head == NULL && from->head != from->tail)
+	{
+		to->head = from->head;
+		to->tail = to->head;
+		from->head = from->head->next;
+		to->head->next = NULL;
+	}
+	else if (to->head == to->tail && from->head == from->tail)
+	{
+		temp.head = from->head;
+		from->head = NULL;
+		from->tail = NULL;
+		to->head = temp.head;
+		to->head->next = to->tail;
+	}
+	else if (to->head != to->tail && from->head != from->tail)
+	{
+		temp.head = from->head;
+		from->head = from->head->next;
+		temp.tail = to->head;
+		to->head = temp.head;
+		to->head->next = temp.tail;
+	}
+	else if (to->head == to->tail && from->head != from->tail)
+	{
+		temp.head = from->head;
+		from->head = from->head->next;
+		to->head = temp.head;
+		to->head->next = to->tail;
+	}
+	else if (to->head != to->tail && from->head == from->tail)
+	{
+		temp.head = to->head;
+		to->head = from->head;
+		to->head->next = temp.head;
+		from->head = NULL;
+		from->tail = NULL;
+	}
+	
+}
+
 #include <stdio.h>
 int	main(int argc, char *argv[])
 {
@@ -214,11 +267,26 @@ int	main(int argc, char *argv[])
 		|| collect_arguments(argv[1], &a) == FAIL)
 		return (free_stacks(&a, &b, FAIL));
 	print_list(&a, "Stack A\n");
-	printf("%p -- %p\n", a.head, a.tail);
+	print_list(&b, "Stack B\n");
+	printf("a head: %p ===== a tail: %p\n", a.head, a.tail);
+	printf("b head: %p ===== b tail: %p\n", b.head, b.tail);
 	
-	swap(&a);
+	push(&a, &b);
+	push(&a, &b);
+	push(&a, &b);
 	
 	print_list(&a, "Stack A\n");
-	printf("%p -- %p\n", a.head, a.tail);
+	print_list(&b, "Stack B\n");
+	printf("a head: %p ===== a tail: %p\n", a.head, a.tail);
+	printf("b head: %p ===== b tail: %p\n", b.head, b.tail);
+	
+	push(&b, &a);
+	push(&b, &a);
+	push(&b, &a);
+	
+	print_list(&a, "Stack A\n");
+	print_list(&b, "Stack B\n");
+	printf("a head: %p ===== a tail: %p\n", a.head, a.tail);
+	printf("b head: %p ===== b tail: %p\n", b.head, b.tail);
 	return (free_stacks(&a, &b, OK));
 }
