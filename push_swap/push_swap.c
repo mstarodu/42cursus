@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:04:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/02/25 03:01:30 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/02/25 03:05:57 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ void	push(t_list *from, t_list *to)
 {
 	t_list	temp;
 
-	if (from == NULL)
+	if (from->head == NULL)
 		return ;
 	if (to->head == NULL && from->head == from->tail)
 	{
@@ -274,12 +274,14 @@ int	main(int argc, char *argv[])
 	push(&a, &b);
 	push(&a, &b);
 	push(&a, &b);
+	push(&a, &b);
 	
 	print_list(&a, "Stack A\n");
 	print_list(&b, "Stack B\n");
 	printf("a head: %p ===== a tail: %p\n", a.head, a.tail);
 	printf("b head: %p ===== b tail: %p\n", b.head, b.tail);
 	
+	push(&b, &a);
 	push(&b, &a);
 	push(&b, &a);
 	push(&b, &a);
