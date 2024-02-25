@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:04:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/02/25 03:05:57 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/02/25 23:42:10 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,39 @@ void	free_stack(t_list *stack)
 	stack->tail = NULL;
 }
 
+int	st_strcmp(t_string a, t_string b)
+{
+	while (*a && *a == *b)
+	{
+		++a;
+		++b;
+	}
+	return (*a - *b);
+}
+
+int	check_dup(t_string *splitted)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (splitted[i+1])
+	{
+		j = i + 1;
+		while (splitted[j])
+		{
+			if (st_strcmp(splitted[i], splitted[j++]) == 0)
+				return (FAIL);
+		}
+		++i;
+	}
+	return (OK);
+}
+
 t_result	free_stacks(t_list *a, t_list *b, t_result result)
 {
-	free_stack(a);
+	if (a != NULL)
+		free_stack(a);
 	if (b != NULL)
 		free_stack(b);
 	if (result == FAIL)
@@ -133,8 +163,8 @@ t_result	collect_arguments(t_string argv, t_list *a)
 	t_string	*splitted;
 
 	splitted = NULL;
-	if (st_split(argv, ' ', &splitted) == FAIL)
-		return (FAIL);
+	if (st_split(argv, ' ', &splitted) == FAIL || check_dup(splitted) == FAIL)
+		return (free(splitted), FAIL);
 	i = 0;
 	while (splitted[i])
 	{
@@ -202,6 +232,12 @@ void	swap(t_list *stack)
 		stack->tail = first;
 }
 
+void	swap_swap(t_list *a, t_list *b)
+{
+	swap(a);
+	swap(b);
+}
+
 void	push(t_list *from, t_list *to)
 {
 	t_list	temp;
@@ -252,7 +288,46 @@ void	push(t_list *from, t_list *to)
 		from->head = NULL;
 		from->tail = NULL;
 	}
-	
+}
+
+void	rotate(t_list *stack)
+{
+	t_node	*to_move;
+
+	if (stack->head == NULL || stack->head->next == NULL)
+		return ;
+	to_move = stack->head;
+	stack->head = stack->head->next;
+	stack->tail->next = to_move;
+	stack->tail = to_move;
+	stack->tail->next = NULL;
+}
+
+void	rotate_rotate(t_list *a, t_list *b)
+{
+	rotate(a);
+	rotate(b);
+}
+
+void	reverse_rotate(t_list *stack)
+{
+	t_node	*lp;
+
+	if (stack->head == NULL || stack->head->next == NULL)
+		return ;
+	stack->tail->next = stack->head;
+	stack->head = stack->tail;
+	lp = stack->head;
+	while (lp->next != stack->head)
+		lp = lp->next;
+	lp->next = NULL;
+	stack->tail = lp;
+}
+
+void	reverse_rotate_rotate(t_list *a, t_list *b)
+{
+	reverse_rotate(a);
+	reverse_rotate(b);
 }
 
 #include <stdio.h>
@@ -267,25 +342,20 @@ int	main(int argc, char *argv[])
 		|| collect_arguments(argv[1], &a) == FAIL)
 		return (free_stacks(&a, &b, FAIL));
 	print_list(&a, "Stack A\n");
-	print_list(&b, "Stack B\n");
 	printf("a head: %p ===== a tail: %p\n", a.head, a.tail);
-	printf("b head: %p ===== b tail: %p\n", b.head, b.tail);
-	
+
+	swap(&a);	
 	push(&a, &b);
 	push(&a, &b);
 	push(&a, &b);
-	push(&a, &b);
-	
-	print_list(&a, "Stack A\n");
-	print_list(&b, "Stack B\n");
-	printf("a head: %p ===== a tail: %p\n", a.head, a.tail);
-	printf("b head: %p ===== b tail: %p\n", b.head, b.tail);
-	
+	rotate_rotate(&a, &b);
+	reverse_rotate_rotate(&a, &b);
+	swap(&a);	
 	push(&b, &a);
 	push(&b, &a);
 	push(&b, &a);
-	push(&b, &a);
-	
+		
+
 	print_list(&a, "Stack A\n");
 	print_list(&b, "Stack B\n");
 	printf("a head: %p ===== a tail: %p\n", a.head, a.tail);
