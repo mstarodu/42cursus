@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:04:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/02/25 00:06:25 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/02/25 01:37:37 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,19 @@ t_result	create_node(t_node **node, int nbr)
 
 t_result	create_stacks(t_list *a, t_list *b)
 {
-	if (create_node(&a->head, DUMMY) == FAIL || create_node(&b->head, DUMMY) == FAIL)
-		return (FAIL);
-	a->tail = a->head;
-	b->tail = b->head;
+	a->head = NULL;
+	a->tail = NULL;
+	b->head = NULL;
+	b->tail = NULL;
 	return (OK);
 }
 
 void	append_node(t_list *stack, t_node *node)
 {
-	stack->tail->next = node;
+	if (stack->tail != NULL)
+		stack->tail->next = node;
+	else
+		stack->head = node;
 	stack->tail = node;
 }
 
@@ -172,7 +175,7 @@ void	print_list(t_list *stack, t_string name)
 {
 	t_node	*current_node;
 
-	current_node = stack->head->next;
+	current_node = stack->head;
 	st_putstr_fd(name, STDOUT_FILENO);
 	while (current_node != NULL)
 	{
@@ -188,13 +191,13 @@ void	swap(t_list *stack)
 	t_node	*first;
 	t_node	*second;
 
-	if (stack->head->next == NULL || stack->head->next->next == NULL)
+	if (stack->head == NULL || stack->head->next == NULL)
 		return ;
-	first = stack->head->next;
+	first = stack->head;
 	second = first->next;
 	first->next = second->next;
 	second->next = first;
-	stack->head->next = second;
+	stack->head = second;
 	if (stack->tail == second)
 		stack->tail = first;
 }
@@ -210,11 +213,11 @@ int	main(int argc, char *argv[])
 		|| collect_arguments(argv[1], &a) == FAIL)
 		return (free_stacks(&a, &b, FAIL));
 	print_list(&a, "Stack A\n");
-	printf("%p -- %p\n", a.head->next, a.tail);
+	printf("%p -- %p\n", a.head, a.tail);
 	
 	swap(&a);
 	
 	print_list(&a, "Stack A\n");
-	printf("%p -- %p\n", a.head->next, a.tail);
+	printf("%p -- %p\n", a.head, a.tail);
 	return (free_stacks(&a, &b, OK));
 }

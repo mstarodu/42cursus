@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 00:07:20 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/02/24 23:52:06 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/02/25 01:33:34 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,12 @@ static t_result	collect_words(t_string s, char c, size_t wc, t_string **arr)
 			p = IN;
 			word_start = s;
 		}
-		else if ((*(s + 1) == c || *(s + 1) == EOS) && p == IN)
+		if ((*(s + 1) == c || *(s + 1) == EOS) && p == IN)
 		{
 			p = OUT;
 			if (create_word(word_start, s, arr, word++) == FAIL)
 				return (free_arr(arr, wc), FAIL);
-		}
+		}	
 		++s;
 	}
 	(*arr)[word] = NULL;
@@ -116,8 +116,27 @@ int	main(void)
 
 	arr = NULL;
 	i = 0;
-	st_split("one two three", ' ', &arr);
+	printf("1\n");
+	st_split("o  t    three", ' ', &arr);
 	while (i < 3)
+		printf("%s\n", arr[i++]);
+	printf("2\n");
+	free(arr);
+	i=0;
+	st_split("     o t three ", ' ', &arr);
+	while (i < 3)
+		printf("%s\n", arr[i++]);
+	printf("3\n");
+	free(arr);
+	i = 0;
+	st_split("     o t thre e i      ", ' ', &arr);
+	while (i < 5)
+		printf("%s\n", arr[i++]);
+	printf("4\n");
+	free(arr);
+	i = 0;
+	st_split("o t", ' ', &arr);
+	while (i < 2)
 		printf("%s\n", arr[i++]);
 }
 */
