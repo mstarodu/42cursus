@@ -6,13 +6,12 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:04:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/02/26 02:13:23 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/02/28 21:28:06 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include  "push_swap.h"
 
-// Check is the list has duplicates
 // Check is no  letters (fix atoi)
 size_t	st_strlen(t_string s)
 {
@@ -26,27 +25,27 @@ size_t	st_strlen(t_string s)
 	return (len);
 }
 
-t_result	st_putstr_fd(t_string s, int fd)
+int	st_putstr_fd(t_string s, int fd)
 {
 	if (write(fd, s, st_strlen(s)) == FAIL)
 		return (FAIL);
 	return (OK);
 }
 
-t_bool	st_isdigit(int c)
+int	st_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (TRUE);
 	return (FALSE);
 }
 
-t_bool	st_isspace(char c)
+int	st_isspace(char c)
 {
 	return (c == ' ' || c == '\f' || c == '\n'
 		|| c == '\r' || c == '\t' || c == '\v');
 }
 
-t_result	st_atoi(t_string nptr, int *nbr)
+int	st_atoi(t_string nptr, int *nbr)
 {
 	int		sign;
 	long	lnbr;
@@ -69,7 +68,7 @@ t_result	st_atoi(t_string nptr, int *nbr)
 	return (OK);
 }
 
-t_result	create_node(t_node **node, int nbr)
+int	create_node(t_node **node, int nbr)
 {
 	*node = (t_node *) malloc(sizeof(t_node));
 	if (*node == NULL)
@@ -79,7 +78,7 @@ t_result	create_node(t_node **node, int nbr)
 	return (OK);
 }
 
-t_result	create_stacks(t_list *a, t_list *b)
+int	create_stacks(t_list *a, t_list *b)
 {
 	a->head = NULL;
 	a->tail = NULL;
@@ -142,7 +141,7 @@ int	check_dup(t_string argv[])
 	return (OK);
 }
 
-t_result	free_stacks(t_list *a, t_list *b, t_result result)
+int	free_stacks(t_list *a, t_list *b, int result)
 {
 	if (a != NULL)
 		free_stack(a);
@@ -155,7 +154,7 @@ t_result	free_stacks(t_list *a, t_list *b, t_result result)
 	return (result);
 }
 
-t_result	collect_arguments(t_string argv[], t_list *a)
+int	collect_arguments(t_string argv[], t_list *a)
 {
 	int		nbr;
 	int		i;
@@ -341,7 +340,7 @@ void	rb(t_list *stack)
 void	rotate_rotate(t_list *a, t_list *b)
 {
 	rotate(a);
-	rotate(a);
+	rotate(b);
 	st_putstr_fd("rr\n", STDOUT_FILENO);
 }
 
@@ -406,20 +405,27 @@ int	main(int argc, char *argv[])
 
 	if (argc < 2)
 		return (FAIL);
-	if (create_stacks(&a, &b) == FAIL
-		|| collect_arguments(argv, &a) == FAIL)
+	if (create_stacks(&a, &b) == FAIL || collect_arguments(argv, &a) == FAIL)
 		return (free_stacks(&a, &b, FAIL));
 	if (check_sorted(&a) == TRUE)
 		return (free_stacks(&a, &b, OK));
-
-	if (argc <= 4)
+	print_list(&a, "Start Stack A\n");
+	if (argc == 3)
+		sa(&a);
+	else if (argc == 4)
 	{
-		if (a.head->nbr > a.head->next->nbr)
-			sa(&a);
-		else if (
+		while ( check_sorted(&a) == FALSE)
+		{
+			if ((a.head->nbr > a.head->next->nbr && a.tail->nbr > a.head->nbr)
+				|| (a.head->next->nbr > a.head->nbr && a.head->next->nbr > a.tail->nbr))
+				sa(&a);
+			else if (a.head->nbr > a.tail->nbr && a.head->next->nbr > a.head->nbr)
+				rra(&a);
+			else
+				ra(&a);
+		}
 	}
-
+	printf("---\n");
 	print_list(&a, "Stack A\n");
-	printf("a head: %p ===== a tail: %p\n", a.head, a.tail);
 	return (free_stacks(&a, &b, OK));
 }
