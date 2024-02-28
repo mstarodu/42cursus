@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:04:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/02/28 21:28:06 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/02/28 21:37:15 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -402,17 +402,20 @@ int	main(int argc, char *argv[])
 {
 	t_list	a;
 	t_list	b;
+	int	args;
 
-	if (argc < 2)
+	args = argc - 1;
+	if (args < 1)
 		return (FAIL);
 	if (create_stacks(&a, &b) == FAIL || collect_arguments(argv, &a) == FAIL)
 		return (free_stacks(&a, &b, FAIL));
 	if (check_sorted(&a) == TRUE)
 		return (free_stacks(&a, &b, OK));
 	print_list(&a, "Start Stack A\n");
-	if (argc == 3)
+	// Conditions
+	if (args == 2)
 		sa(&a);
-	else if (argc == 4)
+	else if (args == 3)
 	{
 		while ( check_sorted(&a) == FALSE)
 		{
@@ -425,6 +428,12 @@ int	main(int argc, char *argv[])
 				ra(&a);
 		}
 	}
+	else if (args <= 5) // insertion sort
+	{}
+	else if (args < 100) // quick sort
+	{}
+	else if (args >= 100) // radix sort
+	{}
 	printf("---\n");
 	print_list(&a, "Stack A\n");
 	return (free_stacks(&a, &b, OK));
