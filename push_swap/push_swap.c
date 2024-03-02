@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:04:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/03/02 16:21:07 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/03/02 17:16:06 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,6 @@ int	free_stacks(t_list *a, t_list *b, int result)
 		free_stack(b);
 	if (result == FAIL)
 		st_putstr_fd("Error\n", STDERR_FILENO);
-	else
-		st_putstr_fd("OK! - TO DELETE\n", STDOUT_FILENO);
 	return (result);
 }
 
@@ -433,34 +431,37 @@ void	insertion_sort(t_list *a, t_list *b)
 	int	i;
 	t_node	*node;
 
-	nbr = a->head->nbr;
-	plc = 0;
-	i = 0;
-	node = a->head;
-	while (node != NULL)
-	{
-		if (node->nbr < nbr)
-		{
-			nbr = node->nbr;
-			plc = i;
-		}
-		++i;
-		node = node->next;
-	}
-	node = a->head;
-	if (count_nodes(a)/2 <= plc)
-		plc = TOP;
+	if (count_nodes(a) == 3)
+		sort_three_nodes(a);
 	else
-		plc = BOTTOM;
-	while (node->nbr != nbr)
 	{
-		if (plc == TOP)
-			ra(a);
-		else
-			rra(a);
+		nbr = a->head->nbr;
+		plc = 0;
+		i = 0;
 		node = a->head;
+		while (node != NULL)
+		{
+			if (node->nbr < nbr)
+			{
+				nbr = node->nbr;
+				plc = i;
+			}
+			++i;
+			node = node->next;
+		}
+		if (count_nodes(a)/2 >= plc)
+			plc = TOP;
+		else
+			plc = BOTTOM;
+		while (a->head->nbr != nbr)
+		{
+			if (plc == TOP)
+				ra(a);
+			else
+				rra(a);
+		}
+		pb(a, b);
 	}
-	pb(a, b);
 }
 
 #include <stdio.h>
@@ -477,23 +478,25 @@ int	main(int argc, char *argv[])
 		return (free_stacks(&a, &b, FAIL));
 	if (check_sorted(&a) == TRUE)
 		return (free_stacks(&a, &b, OK));
-	print_list(&a, "Start Stack A\n");
+	// print_list(&a, "Start Stack A\n");
 	// Conditions
 	if (args == 2)
 		sa(&a);
 	else if (args == 3)
 		sort_three_nodes(&a);
-	else if (args <= 5) // insertion sort
+	else if (args <= 6) // insertion sort
 	{
-		while (a.head != NULL)
+		while (check_sorted(&a) == FALSE)
 			insertion_sort(&a, &b);
+		while (b.head != NULL)
+			pa(&b, &a);
 	}
 	else if (args < 100) // quick sort
 	{}
 	else if (args >= 100) // radix sort
 	{}
-	printf("---\n");
-	print_list(&a, "Stack A\n");
-	print_list(&b, "Stack B\n");
+	// printf("---\n");
+	// print_list(&a, "Stack A\n");
+	// print_list(&b, "Stack B\n");
 	return (free_stacks(&a, &b, OK));
 }
