@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:16:36 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/03/02 15:20:15 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/03/03 10:57:31 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_node
 {
 	int				nbr;
 	struct s_node	*next;
+	struct s_node	*prev;
 }	t_node;
 typedef struct s_list
 {

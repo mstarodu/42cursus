@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PUSH_SWAP="./a.out"
+PUSH_SWAP="./push_swap"
 
 # 5
 # Use Python to generate all permutations of numbers 1 through 5

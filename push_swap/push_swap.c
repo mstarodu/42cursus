@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:04:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/03/02 17:16:06 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:35:15 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	create_node(t_node **node, int nbr)
 		return (FAIL);
 	(*node)->nbr = nbr;
 	(*node)->next = NULL;
+	(*node)->prev = NULL;
 	return (OK);
 }
 
@@ -89,10 +90,13 @@ int	create_stacks(t_list *a, t_list *b)
 
 void	append_node(t_list *stack, t_node *node)
 {
-	if (stack->tail != NULL)
-		stack->tail->next = node;
-	else
+	if (stack->tail == NULL)
 		stack->head = node;
+	else
+	{
+		stack->tail->next = node;
+		node->prev = stack->tail;
+	}
 	stack->tail = node;
 }
 
@@ -215,13 +219,24 @@ void	swap(t_list *stack)
 {
 	t_node	*first;
 	t_node	*second;
+	t_node	*third;
 
-	if (stack->head == NULL || stack->head->next == NULL)
+	if (stack->head == NULL || stack->head == stack->tail)
 		return ;
+	// replace nodes
 	first = stack->head;
-	second = first->next;
-	first->next = second->next;
+	second = stack->head->next;
+	if (second->next == NULL)
+		third = NULL;
+	else
+		third = second->next;
+	second->prev = NULL;
 	second->next = first;
+	first->prev = second;
+	first->next = third;
+	if (third != NULL)
+		third->prev = second;
+	// update head and tail
 	stack->head = second;
 	if (stack->tail == second)
 		stack->tail = first;
@@ -246,81 +261,57 @@ void	swap_swap(t_list *a, t_list *b)
 	st_putstr_fd("ss\n", STDOUT_FILENO);
 }
 
-void	push(t_list *from, t_list *to)
+void	push(t_list *src, t_list *trg)
 {
-	t_list	temp;
+	t_node	*src_first;
+	t_node	*src_second;
+	t_node	*trg_first;
+	t_node	*trg_second;
 
-	if (from->head == NULL)
+	if (src->head == NULL)
 		return ;
-	if (to->head == NULL && from->head == from->tail)
-	{
-		to->head = from->head;
-		to->tail = to->head;
-		from->head = NULL;
-	}
-	else if (to->head == NULL && from->head != from->tail)
-	{
-		to->head = from->head;
-		to->tail = to->head;
-		from->head = from->head->next;
-		to->head->next = NULL;
-	}
-	else if (to->head == to->tail && from->head == from->tail)
-	{
-		temp.head = from->head;
-		from->head = NULL;
-		from->tail = NULL;
-		to->head = temp.head;
-		to->head->next = to->tail;
-	}
-	else if (to->head != to->tail && from->head != from->tail)
-	{
-		temp.head = from->head;
-		from->head = from->head->next;
-		temp.tail = to->head;
-		to->head = temp.head;
-		to->head->next = temp.tail;
-	}
-	else if (to->head == to->tail && from->head != from->tail)
-	{
-		temp.head = from->head;
-		from->head = from->head->next;
-		to->head = temp.head;
-		to->head->next = to->tail;
-	}
-	else if (to->head != to->tail && from->head == from->tail)
-	{
-		temp.head = to->head;
-		to->head = from->head;
-		to->head->next = temp.head;
-		from->head = NULL;
-		from->tail = NULL;
-	}
+	src_first = src->head;
+	src_second = src_first->next;
+	trg_first = trg->head;
+	if (trg_first != NULL)
+		trg_second = trg_first->next;
+	else
+		trg_second = NULL;
+	// trg 
+	trg->head = src_first;
+	trg->head->next = trg_second;
+	if (trg_second == NULL)
+		trg->tail = trg->head;
+	// src
+	src->head = src_second;
+	if (src_second == NULL)
+		src->tail = src_second;
+	else
+		src->head->prev = NULL;
 }
 
-void	pa(t_list *from, t_list *to)
+void	pa(t_list *a, t_list *b)
 {
-	push(from, to);
+	push(b, a);
 	st_putstr_fd("pa\n", STDOUT_FILENO);
 }
 
-void	pb(t_list *from, t_list *to)
+void	pb(t_list *a, t_list *b)
 {
-	push(from, to);
+	push(a, b);
 	st_putstr_fd("pb\n", STDOUT_FILENO);
 }
 
 void	rotate(t_list *stack)
 {
-	t_node	*to_move;
-
-	if (stack->head == NULL || stack->head->next == NULL)
+	if (stack->head == NULL || stack->head == stack->tail)
 		return ;
-	to_move = stack->head;
+	stack->tail->next = stack->head;
+	stack->tail = stack->head;
+	stack->head->prev = stack->tail;
 	stack->head = stack->head->next;
-	stack->tail->next = to_move;
-	stack->tail = to_move;
-	stack->tail->next = NULL;
+	stack->head->prev = NULL;
+	stack->tail->next = NULL;	
 }
 
 void	ra(t_list *stack)
@@ -344,17 +335,14 @@ void	rotate_rotate(t_list *a, t_list *b)
 
 void	reverse_rotate(t_list *stack)
 {
-	t_node	*lp;
-
-	if (stack->head == NULL || stack->head->next == NULL)
+	if (stack->head == NULL || stack->head == stack->tail)
 		return ;
-	stack->tail->next = stack->head;
+	stack->head->next = stack->tail;
 	stack->head = stack->tail;
-	lp = stack->head;
-	while (lp->next != stack->head)
-		lp = lp->next;
-	lp->next = NULL;
-	stack->tail = lp;
+	stack->tail->prev = stack->head;
+	stack->tail = stack->tail->next;
+	stack->tail->prev = NULL;
+	stack->head->next = NULL;	
 }
 
 void	rra(t_list *stack)
@@ -484,12 +472,12 @@ int	main(int argc, char *argv[])
 		sa(&a);
 	else if (args == 3)
 		sort_three_nodes(&a);
-	else if (args <= 6) // insertion sort
+	else if (args <= 6) // insertion sort + condition check
 	{
 		while (check_sorted(&a) == FALSE)
 			insertion_sort(&a, &b);
 		while (b.head != NULL)
-			pa(&b, &a);
+			pa(&a, &b);
 	}
 	else if (args < 100) // quick sort
 	{}
