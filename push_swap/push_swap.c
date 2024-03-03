@@ -6,13 +6,12 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:04:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/03/03 13:35:15 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/03/03 22:10:49 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include  "push_swap.h"
 
-// Check is no  letters (fix atoi)
 size_t	st_strlen(t_string s)
 {
 	size_t	len;
@@ -23,6 +22,35 @@ size_t	st_strlen(t_string s)
 	while (s[len])
 		++len;
 	return (len);
+}
+
+int	st_strcmp(t_string a, t_string b)
+{
+	while (*a && *a == *b)
+	{
+		++a;
+		++b;
+	}
+	return (*a - *b);
+}
+
+int	check_dup(t_string argv[])
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (argv[i+1])
+	{
+		j = i + 1;
+		while (argv[j])
+		{
+			if (st_strcmp(argv[i], argv[j++]) == 0)
+				return (FAIL);
+		}
+		++i;
+	}
+	return (OK);
 }
 
 int	st_putstr_fd(t_string s, int fd)
@@ -90,71 +118,20 @@ int	create_stacks(t_list *a, t_list *b)
 
 void	append_node(t_list *stack, t_node *node)
 {
-	if (stack->tail == NULL)
+	if (stack->head == NULL)
+	{
+		node->prev = NULL;
 		stack->head = node;
+	}
 	else
 	{
 		stack->tail->next = node;
 		node->prev = stack->tail;
 	}
+	node->next = NULL;
 	stack->tail = node;
 }
 
-void	free_stack(t_list *stack)
-{
-	t_node	*current_node;
-	t_node	*next_node;
-
-	current_node = stack->head;
-	while (current_node != NULL)
-	{
-		next_node = current_node->next;
-		free(current_node);
-		current_node = next_node;
-	}
-	stack->head = NULL;
-	stack->tail = NULL;
-}
-
-int	st_strcmp(t_string a, t_string b)
-{
-	while (*a && *a == *b)
-	{
-		++a;
-		++b;
-	}
-	return (*a - *b);
-}
-
-int	check_dup(t_string argv[])
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (argv[i+1])
-	{
-		j = i + 1;
-		while (argv[j])
-		{
-			if (st_strcmp(argv[i], argv[j++]) == 0)
-				return (FAIL);
-		}
-		++i;
-	}
-	return (OK);
-}
-
-int	free_stacks(t_list *a, t_list *b, int result)
-{
-	if (a != NULL)
-		free_stack(a);
-	if (b != NULL)
-		free_stack(b);
-	if (result == FAIL)
-		st_putstr_fd("Error\n", STDERR_FILENO);
-	return (result);
-}
 
 int	collect_arguments(t_string argv[], t_list *a)
 {
@@ -200,167 +177,129 @@ void	st_putnbr_fd(int n, int fd)
 	}
 }
 
-void	print_list(t_list *stack, t_string name)
+void	swap(t_list *stack, char name)
 {
-	t_node	*current_node;
+	int	t;
 
-	current_node = stack->head;
-	st_putstr_fd(name, STDOUT_FILENO);
-	while (current_node != NULL)
-	{
-		st_putnbr_fd(current_node->nbr, STDOUT_FILENO);
-		write(STDOUT_FILENO, "\n", 1);
-		current_node = current_node->next;
-	}
-	st_putstr_fd("---\n", STDOUT_FILENO);
-}
-
-void	swap(t_list *stack)
-{
-	t_node	*first;
-	t_node	*second;
-	t_node	*third;
-
-	if (stack->head == NULL || stack->head == stack->tail)
+	if (stack->head == NULL || stack->head->next == NULL)
 		return ;
-	// replace nodes
-	first = stack->head;
-	second = stack->head->next;
-	if (second->next == NULL)
-		third = NULL;
-	else
-		third = second->next;
-	second->prev = NULL;
-	second->next = first;
-	first->prev = second;
-	first->next = third;
-	if (third != NULL)
-		third->prev = second;
-	// update head and tail
-	stack->head = second;
-	if (stack->tail == second)
-		stack->tail = first;
-}
-
-void	sa(t_list *stack)
-{
-	swap(stack);
-	st_putstr_fd("sa\n", STDOUT_FILENO);
-}
-
-void	sb(t_list *stack)
-{
-	swap(stack);
-	st_putstr_fd("sb\n", STDOUT_FILENO);
+	t = stack->head->nbr;
+	stack->head->nbr = stack->head->next->nbr;
+	stack->head->next->nbr = t;
+	if (name == 'a')
+		st_putstr_fd("sa\n", STDOUT_FILENO);
+	else if (name == 'b')
+		st_putstr_fd("sb\n", STDOUT_FILENO);
 }
 
 void	swap_swap(t_list *a, t_list *b)
 {
-	swap(a);
-	swap(b);
+	swap(a, 0);
+	swap(b, 0);
 	st_putstr_fd("ss\n", STDOUT_FILENO);
 }
 
-void	push(t_list *src, t_list *trg)
+t_node	*shift(t_list *stack)
 {
-	t_node	*src_first;
-	t_node	*src_second;
-	t_node	*trg_first;
-	t_node	*trg_second;
+	t_node *shifted;
 
-	if (src->head == NULL)
+	shifted = stack->head;
+	if (shifted != NULL)
+	{
+		if (stack->head->next == NULL)
+		{
+			stack->head = NULL;
+			stack->tail = NULL;
+		}
+		else
+		{
+			stack->head = stack->head->next;
+			stack->head->prev = NULL;
+		}
+	}
+	return (shifted);
+}
+
+void	unshift(t_list *stack, t_node *new)
+{
+	if (new == NULL)
 		return ;
-	src_first = src->head;
-	src_second = src_first->next;
-	trg_first = trg->head;
-	if (trg_first != NULL)
-		trg_second = trg_first->next;
+	if (stack->head == NULL)
+	{
+		new->next = NULL;
+		new->prev = NULL;
+		stack->head = new;
+		stack->tail = new;
+	}
 	else
-		trg_second = NULL;
-	// trg 
-	trg->head = src_first;
-	trg->head->next = trg_second;
-	if (trg_second == NULL)
-		trg->tail = trg->head;
-	// src
-	src->head = src_second;
-	if (src_second == NULL)
-		src->tail = src_second;
-	else
-		src->head->prev = NULL;
+	{
+		new->next = stack->head;
+		new->prev = NULL;
+		stack->head = new;
+	}
 }
 
-void	pa(t_list *a, t_list *b)
+void	push(char name, t_list *a, t_list *b)
 {
-	push(b, a);
-	st_putstr_fd("pa\n", STDOUT_FILENO);
+	if (name == 'a')
+	{
+		unshift(a, shift(b));
+		st_putstr_fd("pa\n", STDOUT_FILENO);
+	}
+	else if (name == 'b')
+	{
+		unshift(b, shift(a));
+		st_putstr_fd("pb\n", STDOUT_FILENO);
+	}
 }
 
-void	pb(t_list *a, t_list *b)
-{
-	push(a, b);
-	st_putstr_fd("pb\n", STDOUT_FILENO);
-}
-
-void	rotate(t_list *stack)
+void	rotate(t_list *stack, char name)
 {
 	if (stack->head == NULL || stack->head == stack->tail)
 		return ;
-	stack->tail->next = stack->head;
-	stack->tail = stack->head;
-	stack->head->prev = stack->tail;
-	stack->head = stack->head->next;
-	stack->head->prev = NULL;
-	stack->tail->next = NULL;	
-}
+	append_node(stack, shift(stack));
+	if (name == 'a')
+		st_putstr_fd("ra\n", STDOUT_FILENO);
+	else if (name == 'b')
+		st_putstr_fd("rb\n", STDOUT_FILENO);
 
-void	ra(t_list *stack)
-{
-	rotate(stack);
-	st_putstr_fd("ra\n", STDOUT_FILENO);
-}
-
-void	rb(t_list *stack)
-{
-	rotate(stack);
-	st_putstr_fd("rb\n", STDOUT_FILENO);
 }
 
 void	rotate_rotate(t_list *a, t_list *b)
 {
-	rotate(a);
-	rotate(b);
+	rotate(a, 0);
+	rotate(b, 0);
 	st_putstr_fd("rr\n", STDOUT_FILENO);
 }
 
-void	reverse_rotate(t_list *stack)
+t_node	*pop(t_list *stack)
+{
+	t_node	*popped;
+
+	popped = stack->tail;
+	if (popped != NULL)
+	{
+		stack->tail = stack->tail->prev;
+		stack->tail->next = NULL;
+	}
+	return (popped);
+}
+
+void	reverse_rotate(t_list *stack, char name)
 {
 	if (stack->head == NULL || stack->head == stack->tail)
 		return ;
-	stack->head->next = stack->tail;
-	stack->head = stack->tail;
-	stack->tail->prev = stack->head;
-	stack->tail = stack->tail->next;
-	stack->tail->prev = NULL;
-	stack->head->next = NULL;	
-}
-
-void	rra(t_list *stack)
-{
-	reverse_rotate(stack);
-	st_putstr_fd("rra\n", STDOUT_FILENO);
-}
-
-void	rrb(t_list *stack)
-{
-	reverse_rotate(stack);
-	st_putstr_fd("rrb\n", STDOUT_FILENO);
+	unshift(stack, pop(stack));
+	if (name == 'a')
+		st_putstr_fd("rra\n", STDOUT_FILENO);
+	else if (name == 'b')
+		st_putstr_fd("rrb\n", STDOUT_FILENO);
 }
 
 void	reverse_rotate_rotate(t_list *a, t_list *b)
 {
-	reverse_rotate(a);
-	reverse_rotate(b);
+	reverse_rotate(a, 0);
+	reverse_rotate(b, 0);
 	st_putstr_fd("rrr\n", STDOUT_FILENO);
 }
 
@@ -398,17 +337,26 @@ int	count_nodes(t_list *stack)
 	return (i);
 }
 
-void	sort_three_nodes(t_list *stack)
+void	sort_three_nodes(t_list *stack, char name)
 {
+	int	top;
+	int	mid;
+	int	btm;
+
+	if (stack->head == NULL || stack->head->next == NULL || stack->head->next->next == NULL)
+		return ;
+
 	while (check_sorted(stack) == FALSE)
 	{
-		if ((stack->head->nbr > stack->head->next->nbr && stack->tail->nbr > stack->head->nbr)
-			|| (stack->head->next->nbr > stack->head->nbr && stack->head->next->nbr > stack->tail->nbr))
-			sa(stack);
-		else if (stack->head->nbr > stack->tail->nbr && stack->head->next->nbr > stack->head->nbr)
-			rra(stack);
+		top = stack->head->nbr;
+		mid = stack->head->next->nbr;
+		btm = stack->head->next->next->nbr;
+		if ((top > mid && btm > top) || (mid > top && mid > btm))
+			swap(stack, name);
+		else if (top > btm && mid > top)
+			reverse_rotate(stack, name);
 		else
-			ra(stack);
+			rotate(stack, name);
 	}
 }
 
@@ -420,7 +368,7 @@ void	insertion_sort(t_list *a, t_list *b)
 	t_node	*node;
 
 	if (count_nodes(a) == 3)
-		sort_three_nodes(a);
+		sort_three_nodes(a, 'a');
 	else
 	{
 		nbr = a->head->nbr;
@@ -444,12 +392,56 @@ void	insertion_sort(t_list *a, t_list *b)
 		while (a->head->nbr != nbr)
 		{
 			if (plc == TOP)
-				ra(a);
+				rotate(a, 'a');
 			else
-				rra(a);
+				reverse_rotate(a, 'a');
 		}
-		pb(a, b);
+		push('b', a, b);
 	}
+}
+
+void	free_stack(t_list *stack)
+{
+	t_node	*current_node;
+	t_node	*next_node;
+
+	current_node = stack->head;
+	while (current_node != NULL)
+	{
+		next_node = current_node->next;
+		free(current_node);
+		current_node = next_node;
+	}
+	stack->head = NULL;
+	stack->tail = NULL;
+}
+
+
+int	free_stacks(t_list *a, t_list *b, int result)
+{
+	if (a != NULL)
+		free_stack(a);
+	if (b != NULL)
+		free_stack(b);
+	if (result == FAIL)
+		st_putstr_fd("Error\n", STDERR_FILENO);
+	return (result);
+}
+
+// Service
+void	print_list(t_list *stack, t_string name)
+{
+	t_node	*current_node;
+
+	current_node = stack->head;
+	st_putstr_fd(name, STDOUT_FILENO);
+	while (current_node != NULL)
+	{
+		st_putnbr_fd(current_node->nbr, STDOUT_FILENO);
+		write(STDOUT_FILENO, "\n", 1);
+		current_node = current_node->next;
+	}
+	st_putstr_fd("---\n", STDOUT_FILENO);
 }
 
 #include <stdio.h>
@@ -469,15 +461,15 @@ int	main(int argc, char *argv[])
 	// print_list(&a, "Start Stack A\n");
 	// Conditions
 	if (args == 2)
-		sa(&a);
+		swap(&a, 'a');
 	else if (args == 3)
-		sort_three_nodes(&a);
+		sort_three_nodes(&a, 'a');
 	else if (args <= 6) // insertion sort + condition check
 	{
 		while (check_sorted(&a) == FALSE)
 			insertion_sort(&a, &b);
 		while (b.head != NULL)
-			pa(&a, &b);
+			push('a', &a, &b);
 	}
 	else if (args < 100) // quick sort
 	{}
