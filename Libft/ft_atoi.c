@@ -3,57 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mstarodu <mstarodu@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 15:29:51 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/01/07 01:52:09 by mstarodu         ###   ########.fr       */
+/*   Created: 2024/05/29 21:47:19 by mstarodu          #+#    #+#             */
+/*   Updated: 2024/05/30 01:01:53 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <limits.h>
 
-static int	ft_isspace(char c)
+static int      ft_isspace(int c)
 {
-	return (c == ' ' || c == '\f' || c == '\n'
-		|| c == '\r' || c == '\t' || c == '\v');
+        return (c == ' ' || c == '\f' || c == '\n' || c == '\r' || c == '\t' || c == '\v');
+}
+
+static int      ft_isdigit(int c)
+{
+	return (c >= '0' && c <= '9');
 }
 
 int	ft_atoi(const char *nptr)
 {
-	int	sign;
-	int	nbr;
+	long	sign;
+	long	r;
 
-	sign = 1;
-	nbr = 0;
+	if (nptr == (void *) 0)
+		return (0);
 	while (ft_isspace(*nptr))
-		nptr++;
-	if (*nptr == '-' || *nptr == '+')
-		if (*nptr++ == '-')
-			sign = -1;
-	while (ft_isdigit(*nptr))
-		nbr = nbr * 10 + (*nptr++ - '0');
-	return (nbr * sign);
-}
-/*
-#include <stdio.h>
-#include <limits.h>
-int	main(void)
-{
-	char	*tests[] = {
-		"0", "0123", "f", "+1", "-0", "---+0",
-		"+---+3324", "", "   ", "  454 454 45", "212-"
-	};
-
-	for(int i = 0; i < 11; i++)
+		++nptr;
+	sign = 1;
+	if (*nptr == '+' || *nptr == '-')
 	{
-		if (atoi(tests[i]) != ft_atoi(tests[i]))
-			printf("%s >\nst: >%d<\nft: >%d<\n\n",
-			tests[i], atoi(tests[i]), ft_atoi(tests[i]));
+		if (*nptr == '-')
+			sign = -1;
+		++nptr;
 	}
-	
-	printf("Done\n");
-
-
-	return (0);
+	r = 0;
+	while (ft_isdigit(*nptr))
+	{
+		r = r * 10 + (*nptr++ - '0');
+		if (r < INT_MIN || r > INT_MAX)
+			return (0);
+	}
+	r *= sign;
+	return ((int) r);
 }
-*/
+
+// Unit Testing
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int	main(int argc, char *argv[])
+{
+	if (argc > 1)
+		printf("atoi: %i; ft_atoi: %i\n", atoi(argv[1]), ft_atoi(argv[1]));
+	printf("INT_MIN | atoi: %i; ft_atoi: %i\n", atoi("INT_MIN"), ft_atoi("INT_MIN"));
+	printf("INT_MAX | atoi: %i; ft_atoi: %i\n", atoi("INT_MAX"), ft_atoi("INT_MAX"));
+	printf("LONG_MAX | atoi: %i; ft_atoi: %i\n", atoi("+9223372036854775807"), ft_atoi("LONG_MAX"));
+	printf("-42 | atoi: %i; ft_atoi: %i\n", atoi("-42"), ft_atoi("-42"));
+}
