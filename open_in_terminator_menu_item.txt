@@ -1,0 +1,23 @@
+Steps:
+Install Dependencies:
+sudo apt install python3-nautilus python3-gi terminator
+
+Clone and Install (in Documents or in Other for example):
+git clone https://github.com/bassmanitram/actions-for-nautilus.git
+cd actions-for-nautilus
+make install
+
+run configurator 
+./Other/actions-for-nautilus/configurator/start-configurator.sh
+
+You will see config in the broser
++Action
+label: Open in Termonator
+comand line to execute: terminator
+check Current working dir and populate %f
+
+in file types tab select directory
+
+Save on the top
+
+Next time when you will be inside any folder in a right click pop up menu you will see your action.
