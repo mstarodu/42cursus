@@ -6,18 +6,19 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 21:47:19 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/05/30 01:01:53 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/05/30 20:54:27 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <limits.h>
+#include "push_swap.h"
 
-static int      ft_isspace(int c)
+static int	ft_isspace(int c)
 {
-        return (c == ' ' || c == '\f' || c == '\n' || c == '\r' || c == '\t' || c == '\v');
+	return (c == ' ' || c == '\f' || c == '\n'
+		|| c == '\r' || c == '\t' || c == '\v');
 }
 
-static int      ft_isdigit(int c)
+static int	ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
 }
@@ -49,17 +50,15 @@ int	ft_atoi(const char *nptr)
 	return ((int) r);
 }
 
-// Unit Testing
-
-#include <stdio.h>
-#include <stdlib.h>
-
-int	main(int argc, char *argv[])
-{
-	if (argc > 1)
-		printf("atoi: %i; ft_atoi: %i\n", atoi(argv[1]), ft_atoi(argv[1]));
-	printf("INT_MIN | atoi: %i; ft_atoi: %i\n", atoi("INT_MIN"), ft_atoi("INT_MIN"));
-	printf("INT_MAX | atoi: %i; ft_atoi: %i\n", atoi("INT_MAX"), ft_atoi("INT_MAX"));
-	printf("LONG_MAX | atoi: %i; ft_atoi: %i\n", atoi("+9223372036854775807"), ft_atoi("LONG_MAX"));
-	printf("-42 | atoi: %i; ft_atoi: %i\n", atoi("-42"), ft_atoi("-42"));
-}
+// // Unit Tests
+// #include	<stdio.h>
+// #include	<stdlib.h>
+// int	main(int argc, char *argv[])
+// {
+// 	if (argc > 1)
+// 		printf("atoi: %i; ft_atoi: %i\n", atoi(argv[1]), ft_atoi(argv[1]));
+// 	printf("INT_MIN | atoi: %i; ft_atoi: %i\n", atoi("INT_MIN"), ft_atoi("INT_MIN"));
+// 	printf("INT_MAX | atoi: %i; ft_atoi: %i\n", atoi("INT_MAX"), ft_atoi("INT_MAX"));
+// 	printf("LONG_MAX | atoi: %i; ft_atoi: %i\n", atoi("+9223372036854775807"), ft_atoi("LONG_MAX"));
+// 	printf("-42 | atoi: %i; ft_atoi: %i\n", atoi("-42"), ft_atoi("-42"));
+// }

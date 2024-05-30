@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 14:04:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/05/30 18:26:49 by mstarodu         ###   ########.fr       */
+/*   Created: 2024/05/30 18:08:15 by mstarodu          #+#    #+#             */
+/*   Updated: 2024/05/30 18:09:50 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#ifndef LIBFT_H
+# define LIBFT_H
 
-int	main(int argc, char *argv[])
-{
-	
-}
+#endif

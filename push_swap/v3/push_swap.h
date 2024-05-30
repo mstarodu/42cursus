@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 14:04:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/05/30 18:26:49 by mstarodu         ###   ########.fr       */
+/*   Created: 2024/05/30 18:11:49 by mstarodu          #+#    #+#             */
+/*   Updated: 2024/05/30 18:24:58 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
 
-int	main(int argc, char *argv[])
+# include <limits.h>
+# include <stdlib.h>
+
+typedef struct s_list
 {
-	
-}
+	void			*content;
+	struct s_list	*next;
+}					t_list;
+
+#endif
