@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 21:24:51 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/05/30 20:59:15 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/01 00:21:58 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,24 @@ t_list	*ft_lstnew(void *content)
 	return (node);
 }
 
-// // Unit Tests
+// Unit Tests
 // #include <stdio.h>
 // int	main(void)
 // {
 // 	t_list	*l;
 // 	int	*i;
-// 	i = (int *) malloc(sizeof(i));
-// 	if (i == NULL)
-// 		return (1);
-// 	*i = 343;
-// 	l = ft_lstnew(i);
-// 	if (l == NULL)
-// 		return (free(i), 2);
-// 	printf("Content: %i, Next: %p\n", *((int *)l->content), l->next);
-// 	free(i);
-// 	free(l);
-// 	return (0);
+//     i = (int *) malloc(sizeof(int));
+//     if (i == NULL)
+//         return (1);
+//     *i = 343;
+//     l = ft_lstnew(i);
+//     if (l == NULL)
+//     {
+//         free(i);
+//         return (2);
+//     }
+//     printf("Content: %d, Next: %p\n", *((int *)l->content), (void *)l->next);
+//     free(i);
+//     free(l);
+//     return (0);
 // }
