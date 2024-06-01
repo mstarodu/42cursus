@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 18:11:49 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/01 14:43:58 by mstarodu         ###   ########.fr       */
+/*   Created: 2024/06/01 14:29:32 by mstarodu          #+#    #+#             */
+/*   Updated: 2024/06/01 17:42:12 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
-
-# include <limits.h>
-
-
-typedef struct s_list
+int	ft_isdigit(int c)
 {
-	void			*content;
-	struct s_list	*next;
-}					t_list;
+	return (c >= '0' && c <= '9');
+}
 
-int				ft_atoi(const char *nptr);
-void			ft_lstadd_back(t_list **lst, t_list *new);
-t_list			*ft_lstnew(void *content);
-t_list			*ft_lstlast(t_list *lst);
-
-#endif
+// Unit tests
+/* #include <stdio.h>
+int	main(void)
+{
+	int	digit = '4';
+	int	no_digit = '\n';
+	printf("Digit is digit?    2 == %i\n", ft_isdigit(digit));
+	printf("No digit is digit? 1 == %i\n", ft_isdigit(no_digit));
+	return (1);
+} */

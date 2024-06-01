@@ -1,48 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 14:04:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/01 18:11:30 by mstarodu         ###   ########.fr       */
+/*   Created: 2024/06/01 15:54:16 by mstarodu          #+#    #+#             */
+/*   Updated: 2024/06/01 17:30:08 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-#include <stdio.h>
-
-void	ft_printstck(t_list *stck)
+void	ft_lstdelone(t_list *lst, void (*del)(void*))
 {
-	int	i = 0;
-	
-	while (stck != NULL)
-	{
-		printf("Index: %2i, Content: %2i, Next: %p\n",
-			i++, *((int *)(stck->content)), stck->next);
-		stck = stck->next;
-	}
+	if (lst == NULL || del == NULL)
+		return ;
+	del(lst->content);
+	free(lst);
 	return ;
 }
 
-int	ft_loadstcks(int c, char **argv, t_list **stck_a)
+// Unit tests
+/* int	*ft_itop(int nbr)
 {
-	
+	int	*nptr;
+
+	nptr = (int *)malloc(sizeof(int));
+	if (nptr == NULL)
+		return (NULL);
+	*nptr = nbr;
+	return (nptr);
 }
 
-int	main(int argc, char *argv[])
+int	main(void)
 {
-	t_list	*stck_a;
-
-	if (argc < 2)
+	int		*nptr = ft_itop(55);
+	t_list	*node = ft_lstnew(nptr);
+	if (node == NULL)
 		return (1);
-	if (ft_loadstck() == 0)
-	{
-		write(1, "Error\n", 6)
-		return (0);
-	}
-
+	ft_lstdelone(node, free);
 	return (0);
-}
+} */
