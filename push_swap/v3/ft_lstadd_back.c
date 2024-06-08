@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 12:00:39 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/04 01:27:01 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:54:14 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*node;
 
-	if (lst == NULL || new == NULL)
-		return ;
 	if (*lst == NULL)
 	{
 		*lst = new;

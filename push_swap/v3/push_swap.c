@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:04:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/08 13:13:28 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/08 18:08:49 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_loadstck(int argc, char **argv, t_list **stck_a)
 	}
 	if (ft_hasdup(stck_a))
 	{
-		ft_lstclear(stck_a, free);
+
 		return (4);
 	}
 	return (0);

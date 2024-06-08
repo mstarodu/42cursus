@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 13:00:30 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/08 13:09:14 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:16:27 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,23 @@
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*lstnew;
+	t_list	*node;
 
+	if (del == NULL)
+		return (NULL);
+	lstnew = NULL;
 	while (lst != NULL)
 	{
-		ft_lstnew(lst->content);
+		node = ft_lstnew(lst->content);
+		if (node == NULL)
+		{
+			ft_lstclear(&lstnew, del);
+			return (NULL);
+		}
+		if (f != NULL)
+			node = f(node);
+		ft_lstadd_back(&lstnew, node);
+		lst = lst->next;
 	}
+	return (lstnew);
 }
