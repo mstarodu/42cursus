@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:11:49 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/09 10:51:40 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/09 11:58:09 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void			ft_lstadd_front(t_list **lst, t_list *new);
 void			ft_lstclear(t_list **lst, void (*del)(void*));
 void			ft_lstdelone(t_list *lst, void (*del)(void*));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
-int				ft_hasdup(t_list **stck);
+int				ft_hasdup(t_list *stck);
 char			*strdup(const char *s);
 t_list			*ft_lstnew(void *content);
 t_list			*ft_lstlast(t_list *lst);

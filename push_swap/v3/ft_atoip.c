@@ -6,11 +6,12 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 22:28:14 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/09 10:53:00 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/09 12:44:26 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <stdio.h>
 
 static int	ft_isspace(int c);
 static char	*ft_skipandsign(char *nptr, long *sign);

@@ -12,14 +12,25 @@
 
 #include "push_swap.h"
 
+#include <stdio.h>
+
+void	ft_printstck(t_list *stck)
+{
+	while (stck != NULL)
+	{
+		printf("%2i\n", *((int *)stck->content));
+		stck = stck->next;
+	}
+	return ;
+}
 
 int	ft_puterr(int err, t_list *stck, int *iptr)
 {
 	if (stck != NULL)
-		ft_lstclear(stck, free);
+		ft_lstclear(&stck, free);
 	if (iptr != NULL)
 		free(iptr);
-	write(STDERR_FILENO, "Error\n");
+	write(STDERR_FILENO, "Error\n", 6);
 	exit (err);
 }
 
@@ -29,18 +40,18 @@ int	ft_loadargs(int argc, char **argv, t_list **stck)
 	t_list	*new;
 
 	if (argc-- < 2)
-		exit(1);
+		exit(0);
 	while (argc > 0)
 	{
-		if (ft_atoip(argv[argc], iptr) != 0)
+		if (ft_atoip(argv[argc], &iptr) != 0)
 			ft_puterr(2, *stck, NULL);
 		new = ft_lstnew(iptr);
 		if (new == NULL)
 			ft_puterr(3, *stck, iptr);
-		ft_lstadd_front(stck, new);
+		ft_lstadd_back(stck, new);
 		--argc;
 	}
-	if (ft_hasdup(stck))
+	if (ft_hasdup(*stck))
 		ft_puterr(4, *stck, NULL);
 	return (0);
 }
@@ -55,6 +66,7 @@ int	main(int argc, char *argv[])
 	// stck_b = NULL;
 
 	ft_loadargs(argc, argv, &stck_a);
+	ft_printstck(stck_a);
 	// ft_sortstck(&stck_a, &stck_b);
 	return (0);
 }
