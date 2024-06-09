@@ -6,16 +6,40 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 11:26:16 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/09 12:47:57 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/09 13:12:42 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 static void		*ft_iptrdup(void *iptr);
-static void		ft_swap(t_list *node);
-static void		ft_sortlst(t_list **stck, int lsti);
-static int		ft_cmpint(t_list *stck);
+static void		ft_ptrswap(t_list *node);
+static void		ft_lstsort(t_list **lst, int lstindx);
+static int		ft_intcmp(t_list *lst);
+
+int	ft_hasdup(t_list *lst)
+{
+	t_list	*newlst;
+	t_list	*ptrlst;
+	int		lstindx;
+
+	lstindx = ft_lstsize(lst) - 1;
+	if (lstindx == 0)
+		return (0);
+	newlst = ft_lstmap(lst, ft_iptrdup, free);
+	if (newlst == NULL)
+		return (1);
+	ft_lstsort(&newlst, lstindx);
+	ptrlst = newlst;
+	while (ptrlst->next != NULL)
+	{
+		if (ft_intcmp(ptrlst))
+			return (1);
+		ptrlst = ptrlst->next;
+	}
+	ft_lstclear(&newlst, free);
+	return (0);
+}
 
 static void	*ft_iptrdup(void *iptr)
 {
@@ -28,31 +52,7 @@ static void	*ft_iptrdup(void *iptr)
 	return ((void *) newiptr);
 }
 
-int	ft_hasdup(t_list *stck)
-{
-	t_list	*newstck;
-	t_list	*pstck;
-	int		lsti;
-
-	lsti = ft_lstsize(stck) - 1;
-	if (lsti == 0)
-		return (0);
-	newstck = ft_lstmap(stck, ft_iptrdup, free);
-	if (newstck == NULL)
-		return (1);
-	ft_sortlst(&newstck, lsti);
-	pstck = newstck;
-	while (pstck->next != NULL)
-	{
-		if (ft_cmpint(pstck))
-			return (1);
-		pstck = pstck->next;
-	}
-	ft_lstclear(&newstck, free);
-	return (0);
-}
-
-static void	ft_swap(t_list *node)
+static void	ft_ptrswap(t_list *node)
 {
 	void	*nptr;
 
@@ -64,30 +64,30 @@ static void	ft_swap(t_list *node)
 	return ;
 }
 
-static void	ft_sortlst(t_list **stck, int lsti)
+static void	ft_lstsort(t_list **lst, int lstindx)
 {
 	t_list	*lptr;
 	int		i;
 
-	while (lsti >= 0)
+	while (lstindx >= 0)
 	{
-		lptr = *stck;
+		lptr = *lst;
 		i = 0;
-		while (i <= lsti)
+		while (i <= lstindx)
 		{
 			if (*((int *) lptr->content) > *((int *) lptr->next->content))
-				ft_swap(lptr);
+				ft_ptrswap(lptr);
 			lptr = lptr->next;
 			++i;
 		}
-		--lsti;
+		--lstindx;
 	}
 	return ;
 }
 
-static int	ft_cmpint(t_list *stck)
+static int	ft_intcmp(t_list *lst)
 {
-	if (*((int *) stck->content) == *((int *) stck->next->content))
+	if (*((int *) lst->content) == *((int *) lst->next->content))
 		return (1);
 	return (0);
 }

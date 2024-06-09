@@ -14,27 +14,33 @@
 
 #include <stdio.h>
 
-void	ft_printstck(t_list *stck)
+void	ft_printlst(t_list *lst)
 {
-	while (stck != NULL)
+	while (lst != NULL)
 	{
-		printf("%2i\n", *((int *)stck->content));
-		stck = stck->next;
+		printf("%2i\n", *((int *)lst->content));
+		lst = lst->next;
 	}
 	return ;
 }
 
-int	ft_puterr(int err, t_list *stck, int *iptr)
+int	ft_loadargs(int argc, char **argv, t_list **lst);
+
+int	main(int argc, char *argv[])
 {
-	if (stck != NULL)
-		ft_lstclear(&stck, free);
-	if (iptr != NULL)
-		free(iptr);
-	write(STDERR_FILENO, "Error\n", 6);
-	exit (err);
+	t_list	*lst_a;
+	// t_list	*lst_b;
+
+	lst_a = NULL;
+	// lst_b = NULL;
+
+	ft_loadargs(argc, argv, &lst_a);
+	ft_printlst(lst_a);
+	// ft_lstsort(argc, &stck_a, &stck_b);
+	return (0);
 }
 
-int	ft_loadargs(int argc, char **argv, t_list **stck)
+int	ft_loadargs(int argc, char **argv, t_list **lst)
 {
 	int		*iptr;
 	t_list	*new;
@@ -44,30 +50,15 @@ int	ft_loadargs(int argc, char **argv, t_list **stck)
 	while (argc > 0)
 	{
 		if (ft_atoip(argv[argc], &iptr) != 0)
-			ft_puterr(2, *stck, NULL);
+			ft_puterr(2, *lst, NULL);
 		new = ft_lstnew(iptr);
 		if (new == NULL)
-			ft_puterr(3, *stck, iptr);
-		ft_lstadd_back(stck, new);
+			ft_puterr(3, *lst, iptr);
+		ft_lstadd_front(lst, new);
 		--argc;
 	}
-	if (ft_hasdup(*stck))
-		ft_puterr(4, *stck, NULL);
-	return (0);
-}
-
-
-int	main(int argc, char *argv[])
-{
-	t_list	*stck_a;
-	// t_list	*stck_b;
-
-	stck_a = NULL;
-	// stck_b = NULL;
-
-	ft_loadargs(argc, argv, &stck_a);
-	ft_printstck(stck_a);
-	// ft_sortstck(&stck_a, &stck_b);
+	if (ft_hasdup(*lst))
+		ft_puterr(4, *lst, NULL);
 	return (0);
 }
 
@@ -81,10 +72,10 @@ int	main(int argc, char *argv[])
 - [ ] no relink
 - [ ] first arg on top of the stack
 - [ ] instructions separated by \n
-- [ ] no arguments - promt back
-- [ ] error, "Error\n" on the standard error
-	- [ ] some arguments aren’t integers
-	- [ ] some arguments are bigger than an integer
-	- [ ] there are duplicates
+- [x] no arguments - promt back
+- [x] error, "Error\n" on the standard error
+	- [x] some arguments aren’t integers
+	- [x] some arguments are bigger than an integer
+	- [x] there are duplicates
 
 */
