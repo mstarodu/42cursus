@@ -28,19 +28,20 @@ void	ft_printlst(t_list *lst)
 	return ;
 }
 
-int	ft_loadargs(int argc, char **argv, t_list **lst);
+int		ft_loadargs(int argc, char **argv, t_list **lst);
+void	ft_lstsort(int argc, t_list **lst_a, t_list **lst_b);
 
 int	main(int argc, char *argv[])
 {
 	t_list	*lst_a;
-	// t_list	*lst_b;
+	t_list	*lst_b;
 
 	lst_a = NULL;
-	// lst_b = NULL;
+	lst_b = NULL;
 
 	ft_loadargs(argc, argv, &lst_a);
-	ft_printlst(lst_a);
-	// ft_lstsort(argc, &stck_a, &stck_b);
+	// ft_printlst(lst_a);
+	ft_lstsort(argc, &lst_a, &lst_b);
 	return (0);
 }
 
@@ -65,6 +66,45 @@ int	ft_loadargs(int argc, char **argv, t_list **lst)
 		ft_puterr(4, *lst, NULL);
 	return (0);
 }
+
+void	ft_lstsort(int argc, t_list **lst_a, t_list **lst_b)
+{
+	(void)argc;
+	(void **)lst_a;
+	(void **)lst_b;
+	return ;
+}
+
+// sa (swap a): Swap the first 2 elements at the top of stack a.
+// Do nothing if there is only one or no elements.
+// sb (swap b): Swap the first 2 elements at the top of stack b.
+// Do nothing if there is only one or no elements.
+// ss : sa and sb at the same time.
+// pa (push a): Take the first element at the top of b and put it at the top of a.
+// Do nothing if b is empty.
+// pb (push b): Take the first element at the top of a and put it at the top of b.
+// Do nothing if a is empty.
+// ra (rotate a): Shift up all elements of stack a by 1.
+// The first element becomes the last one.
+// rb (rotate b): Shift up all elements of stack b by 1.
+// The first element becomes the last one.
+// rr : ra and rb at the same time.
+// rra (reverse rotate a): Shift down all elements of stack a by 1.
+// The last element becomes the first one.
+// rrb (reverse rotate b): Shift down all elements of stack b by 1.
+// The last element becomes the first one.
+// rrr : rra and rrb at the same time.
+
+// 4
+// 6
+// 7
+// 1
+// 2
+// 3
+// 0
+// -3
+// 9
+
 
 /*
 # List of tasks:
