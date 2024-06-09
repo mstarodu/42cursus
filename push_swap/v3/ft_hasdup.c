@@ -6,14 +6,13 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 11:26:16 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/09 13:12:42 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/09 21:19:45 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 static void		*ft_iptrdup(void *iptr);
-static void		ft_ptrswap(t_list *node);
 static void		ft_lstsort(t_list **lst, int lstindx);
 static int		ft_intcmp(t_list *lst);
 
@@ -52,18 +51,6 @@ static void	*ft_iptrdup(void *iptr)
 	return ((void *) newiptr);
 }
 
-static void	ft_ptrswap(t_list *node)
-{
-	void	*nptr;
-
-	if (node->next == NULL)
-		return ;
-	nptr = node->content;
-	node->content = node->next->content;
-	node->next->content = nptr;
-	return ;
-}
-
 static void	ft_lstsort(t_list **lst, int lstindx)
 {
 	t_list	*lptr;
@@ -76,7 +63,7 @@ static void	ft_lstsort(t_list **lst, int lstindx)
 		while (i <= lstindx)
 		{
 			if (*((int *) lptr->content) > *((int *) lptr->next->content))
-				ft_ptrswap(lptr);
+				ft_swap(lptr);
 			lptr = lptr->next;
 			++i;
 		}
