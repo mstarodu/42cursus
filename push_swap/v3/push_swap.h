@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:11:49 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/09 22:48:40 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/09 23:20:03 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int				ft_lstsize(t_list *lst);
 int				ft_isdigit(int c);
 int				ft_atoip(char *nptr, int **nbr);
 int				ft_puterr(int err, t_list *lst, int *iptr);
+int				ft_lstsorted(t_list *lst, char order);
 void			ft_lstadd_back(t_list **lst, t_list *new);
 void			ft_lstadd_front(t_list **lst, t_list *new);
 void			ft_lstclear(t_list **lst, void (*del)(void*));

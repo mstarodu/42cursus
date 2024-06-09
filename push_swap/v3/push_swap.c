@@ -41,7 +41,6 @@ int	main(int argc, char *argv[])
 	b = NULL;
 
 	ft_loadargs(argc, argv, &a);
-	// ft_printlst(lst_a);
 	ft_lstsort(argc, &a, &b);
 	return (0);
 }
@@ -75,6 +74,7 @@ void	ft_lstsort(int argc, t_list **a, t_list **b)
 	ft_rotate(a);
 	ft_reverse_rotate(a);
 	ft_reverse_rotate(a);
+	printf("Sorted?: %i\n", ft_lstsorted(*a, 'D'));
 	ft_printlst(*a, "a");
 	ft_printlst(*b, "b");
 	return ;
