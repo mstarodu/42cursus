@@ -16,11 +16,15 @@
 
 void	ft_printlst(t_list *lst)
 {
-	while (lst != NULL)
+	t_list	*ptrlst;
+
+	ptrlst = lst;
+	while (ptrlst != NULL)
 	{
-		printf("%2i\n", *((int *)lst->content));
-		lst = lst->next;
+		printf("%2i\n", *((int *)ptrlst->content));
+		ptrlst = ptrlst->next;
 	}
+	ft_lstclear(&lst, free);
 	return ;
 }
 
