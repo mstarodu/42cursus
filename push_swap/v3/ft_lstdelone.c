@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 15:54:16 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/04 00:32:54 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/09 08:34:59 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	ft_lstdelone(t_list *lst, void (*del)(void*))
 {
-	if (lst == NULL || del == NULL)
+	if (lst == NULL || del == NULL) 
 		return ;
-	del(lst->content);
+	if (lst->content != NULL)
+		del(lst->content);
 	free(lst);
 	return ;
 }

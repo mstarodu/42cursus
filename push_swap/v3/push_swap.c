@@ -6,68 +6,56 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:04:18 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/08 18:51:57 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/09 08:49:46y mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-#include <stdio.h>
 
-void	ft_printstck(t_list *stck)
+int	ft_puterr(int err, t_list *stck, int *iptr)
 {
-	int	i;
-
-	i = 0;
-	while (stck != NULL)
-	{
-		printf("Index: %2i, Content: %3i, Next: %p\n",
-			i++, *((int *)(stck->content)), stck->next);
-		stck = stck->next;
-	}
-	return ;
+	if (stck != NULL)
+		ft_lstclear(stck, free);
+	if (iptr != NULL)
+		free(iptr);
+	write(STDERR_FILENO, "Error\n");
+	exit (err);
 }
 
-int	ft_loadstck(int argc, char **argv, t_list **stck_a)
+int	ft_loadargs(int argc, char **argv, t_list **stck)
 {
-	int		nbr;
-	int		*pnbr;
+	int		*iptr;
 	t_list	*new;
 
-	if (argc < 2)
-		return (1);
-	while (--argc > 0)
+	if (argc-- < 2)
+		exit(1);
+	while (argc > 0)
 	{
-		if (ft_atoi_s(argv[argc], &nbr) != 0)
-		{
-			ft_lstclear(stck_a, free);
-			return (2);
-		}
-		pnbr = ft_itop(nbr);
-		new = ft_lstnew(pnbr);
+		if (ft_atoip(argv[argc], iptr) != 0)
+			ft_puterr(2, *stck, NULL);
+		new = ft_lstnew(iptr);
 		if (new == NULL)
-		{
-			ft_lstclear(stck_a, free);
-			return (3);
-		}
-		ft_lstadd_front(stck_a, new);
+			ft_puterr(3, *stck, iptr);
+		ft_lstadd_front(stck, new);
+		--argc;
 	}
-	if (ft_hasdup(stck_a))
-	{
-
-		return (4);
-	}
+	if (ft_hasdup(stck))
+		ft_puterr(4, *stck, NULL);
 	return (0);
 }
+
 
 int	main(int argc, char *argv[])
 {
 	t_list	*stck_a;
+	// t_list	*stck_b;
 
 	stck_a = NULL;
-	if (ft_loadstck(argc, argv, &stck_a) > 0)
-		return (write(STDERR_FILENO, "Error\n", 6), 1);
-	ft_printstck(stck_a);
+	// stck_b = NULL;
+
+	ft_loadargs(argc, argv, &stck_a);
+	// ft_sortstck(&stck_a, &stck_b);
 	return (0);
 }
 
@@ -86,8 +74,5 @@ int	main(int argc, char *argv[])
 	- [ ] some arguments aren’t integers
 	- [ ] some arguments are bigger than an integer
 	- [ ] there are duplicates
-
-# Logic:
-
 
 */

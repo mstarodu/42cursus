@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 22:47:24 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/04 02:31:27 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/09 08:48:35 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,17 @@
 
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
+	t_list	*lptr;
 	t_list	*todel;
 
-	while (*lst != NULL)
-	{
-		ft_lstdelone(*lst, del);
-		if ((*lst)->next != NULL)
-		{
-			todel = *lst;
-			*lst = (*lst)->next;
-			free (todel);
-		}
-	}
+	lptr = *lst;
 	*lst = NULL;
+	while (lptr->next != NULL)
+	{
+		todel = lptr;
+		lptr = lptr->next;
+		ft_lstdelone(todel, del);
+	}
+	ft_lstdelone(lptr, del);
 	return ;
 }
