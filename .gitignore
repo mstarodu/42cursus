@@ -5,3 +5,4 @@
 *.a
 *.swp
 */a.out.dSYM
+*.gch
