@@ -6,13 +6,13 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 21:09:47 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/09 23:01:52 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/11 23:17:50 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_swap(t_list *lst)
+void	my_swap(t_list *lst)
 {
 	void	*ptrcnt;
 
@@ -24,7 +24,7 @@ void	ft_swap(t_list *lst)
 	return ;
 }
 
-void	ft_push(t_list **f, t_list **t)
+void	my_push(t_list **f, t_list **t)
 {
 	t_list	*ptrlst_f;
 	t_list	*ptrlst_t;
@@ -39,7 +39,7 @@ void	ft_push(t_list **f, t_list **t)
 	return ;
 }
 
-void	ft_rotate(t_list **lst)
+void	my_rotate(t_list **lst)
 {
 	t_list	*ptrlst;
 
@@ -52,7 +52,7 @@ void	ft_rotate(t_list **lst)
 	return ;
 }
 
-void	ft_reverse_rotate(t_list **lst)
+void	my_reverse_rotate(t_list **lst)
 {
 	t_list	*ptrlst;
 	t_list	*last;

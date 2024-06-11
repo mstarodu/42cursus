@@ -14,7 +14,7 @@
 
 #include <stdio.h>
 
-void	ft_printlst(t_list *lst, char *str)
+void	my_printlst(t_list *lst, char *str)
 {
 	t_list	*ptrlst;
 
@@ -29,8 +29,8 @@ void	ft_printlst(t_list *lst, char *str)
 	return ;
 }
 
-int		ft_loadargs(int argc, char **argv, t_list **lst);
-void	ft_lstsort(int argc, t_list **lst_a, t_list **lst_b);
+int		my_loadargs(int argc, char **argv, t_list **lst);
+void	my_lstsort(int argc, t_list **lst_a, t_list **lst_b);
 
 int	main(int argc, char *argv[])
 {
@@ -40,12 +40,12 @@ int	main(int argc, char *argv[])
 	a = NULL;
 	b = NULL;
 
-	ft_loadargs(argc, argv, &a);
-	ft_lstsort(argc, &a, &b);
+	my_loadargs(argc, argv, &a);
+	my_lstsort(argc, &a, &b);
 	return (0);
 }
 
-int	ft_loadargs(int argc, char **argv, t_list **lst)
+int	my_loadargs(int argc, char **argv, t_list **lst)
 {
 	int		*iptr;
 	t_list	*new;
@@ -54,29 +54,29 @@ int	ft_loadargs(int argc, char **argv, t_list **lst)
 		exit(0);
 	while (argc > 0)
 	{
-		if (ft_atoip(argv[argc], &iptr) != 0)
-			ft_puterr(2, *lst, NULL);
+		if (my_atoip(argv[argc], &iptr) != 0)
+			my_puterr(2, *lst, NULL);
 		new = ft_lstnew(iptr);
 		if (new == NULL)
-			ft_puterr(3, *lst, iptr);
+			my_puterr(3, *lst, iptr);
 		ft_lstadd_front(lst, new);
 		--argc;
 	}
-	if (ft_hasdup(*lst))
-		ft_puterr(4, *lst, NULL);
+	if (my_hasdup(*lst))
+		my_puterr(4, *lst, NULL);
 	return (0);
 }
 
-void	ft_lstsort(int argc, t_list **a, t_list **b)
+void	my_lstsort(int argc, t_list **a, t_list **b)
 {
 	(void)argc;
-	ft_rotate(a);
-	ft_rotate(a);
-	ft_reverse_rotate(a);
-	ft_reverse_rotate(a);
-	printf("Sorted?: %i\n", ft_lstsorted(*a, 'D'));
-	ft_printlst(*a, "a");
-	ft_printlst(*b, "b");
+	my_rotate(a);
+	my_rotate(a);
+	my_reverse_rotate(a);
+	my_reverse_rotate(a);
+	// printf("Sorted?: %i\n", ft_lstsorted(*a, 'D'));
+	my_printlst(*a, "a");
+	my_printlst(*b, "b");
 	return ;
 }
 

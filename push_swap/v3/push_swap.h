@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:11:49 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/09 23:20:03 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/11 23:17:42 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,20 @@ typedef struct s_list
 
 int				ft_lstsize(t_list *lst);
 int				ft_isdigit(int c);
-int				ft_atoip(char *nptr, int **nbr);
-int				ft_puterr(int err, t_list *lst, int *iptr);
-int				ft_lstsorted(t_list *lst, char order);
+int				my_atoip(char *nptr, int **nbr);
+int				my_puterr(int err, t_list *lst, int *iptr);
+// int				my_lstsorted(t_list *lst, char order);
 void			ft_lstadd_back(t_list **lst, t_list *new);
 void			ft_lstadd_front(t_list **lst, t_list *new);
 void			ft_lstclear(t_list **lst, void (*del)(void*));
 void			ft_lstdelone(t_list *lst, void (*del)(void*));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
-void			ft_swap(t_list *lst);
-void			ft_push(t_list **f, t_list **t);
-void			ft_rotate(t_list **lst);
-void			ft_reverse_rotate(t_list **lst);
-int				ft_hasdup(t_list *lst);
-char			*strdup(const char *s);
+void			my_swap(t_list *lst);
+void			my_push(t_list **f, t_list **t);
+void			my_rotate(t_list **lst);
+void			my_reverse_rotate(t_list **lst);
+int				my_hasdup(t_list *lst);
+char			*ft_strdup(const char *s);
 t_list			*ft_lstnew(void *content);
 t_list			*ft_lstlast(t_list *lst);
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
