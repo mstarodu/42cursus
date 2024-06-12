@@ -1,46 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_hasdup.c                                        :+:      :+:    :+:   */
+/*   my_has_dup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 11:26:16 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/11 22:58:05 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/12 09:13:32 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void		*my_iptrdup(void *iptr);
-static void		my_lstsort(t_list **lst, int lstindx);
-static int		my_intcmp(t_list *lst);
+static void		*my_int_ptr_dup(void *iptr);
+static void		my_lst_sort(t_list **lst, int lstindx);
+static int		my_int_cmp(t_list *lst);
 
-int	my_hasdup(t_list *lst)
+int	my_has_dup(t_list *lst)
 {
-	t_list	*newlst;
-	t_list	*ptrlst;
-	int		lstindx;
+	t_list	*new_lst;
+	t_list	*ptr_lst;
+	int		indx;
 
-	lstindx = ft_lstsize(lst) - 1;
-	if (lstindx == 0)
+	indx = ft_lstsize(lst) - 1;
+	if (indx == 0)
 		return (0);
-	newlst = ft_lstmap(lst, my_iptrdup, free);
-	if (newlst == NULL)
+	new_lst = ft_lstmap(lst, my_int_ptr_dup, free);
+	if (new_lst == NULL)
 		return (1);
-	my_lstsort(&newlst, lstindx);
-	ptrlst = newlst;
-	while (ptrlst->next != NULL)
+	my_lst_sort(&new_lst, indx);
+	ptr_lst = new_lst;
+	while (ptr_lst->next != NULL)
 	{
-		if (my_intcmp(ptrlst))
+		if (my_int_cmp(ptr_lst))
 			return (1);
-		ptrlst = ptrlst->next;
+		ptr_lst = ptr_lst->next;
 	}
-	ft_lstclear(&newlst, free);
+	ft_lstclear(&new_lst, free);
 	return (0);
 }
 
-static void	*my_iptrdup(void *iptr)
+static void	*my_int_ptr_dup(void *iptr)
 {
 	int	*newiptr;
 
@@ -51,28 +51,28 @@ static void	*my_iptrdup(void *iptr)
 	return ((void *) newiptr);
 }
 
-static void	my_lstsort(t_list **lst, int lstindx)
+static void	my_lst_sort(t_list **lst, int indx)
 {
 	t_list	*lptr;
 	int		i;
 
-	while (lstindx >= 0)
+	while (indx >= 0)
 	{
 		lptr = *lst;
 		i = 0;
-		while (i <= lstindx)
+		while (i <= indx)
 		{
 			if (*((int *) lptr->content) > *((int *) lptr->next->content))
 				my_swap(lptr);
 			lptr = lptr->next;
 			++i;
 		}
-		--lstindx;
+		--indx;
 	}
 	return ;
 }
 
-static int	my_intcmp(t_list *lst)
+static int	my_int_cmp(t_list *lst)
 {
 	if (*((int *) lst->content) == *((int *) lst->next->content))
 		return (1);

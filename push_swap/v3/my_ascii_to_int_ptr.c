@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_atoip.c                                         :+:      :+:    :+:   */
+/*   my_ascii_to_int_ptr.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 22:28:14 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/11 23:18:35 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/12 09:13:34 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
-static int	my_isspace(int c);
-static char	*my_skipandsign(char *nptr, long *sign);
-static int	*my_itop(int nbr);
+static int	my_is_space(int c);
+static char	*my_skip_and_sign(char *ptr, long *sign);
+static int	*my_int_to_ptr(int nbr);
 
-int	my_atoip(char *nptr, int **iptr)
+int	my_ascii_to_int_ptr(char *nbr_ptr, int **int_ptr)
 {
 	long	sign;
 	char	*ptr;
 	long	lnbr;
 
-	if (nptr == NULL)
+	if (nbr_ptr == NULL)
 		return (1);
 	sign = 1;
-	ptr = my_skipandsign(nptr, &sign);
+	ptr = my_skip_and_sign(nbr_ptr, &sign);
 	lnbr = 0;
 	if (ft_isdigit(*ptr) == 0)
 		return (2);
@@ -36,40 +35,40 @@ int	my_atoip(char *nptr, int **iptr)
 		if (lnbr < INT_MIN || lnbr > INT_MAX)
 			return (3);
 	}
-	*iptr = my_itop((int)(lnbr * sign));
-	if (*iptr == NULL)
+	*int_ptr = my_int_to_ptr((int)(lnbr * sign));
+	if (*int_ptr == NULL)
 		return (4);
 	return (0);
 }
 
-static int	my_isspace(int c)
+static int	my_is_space(int c)
 {
 	return (c == ' ' || c == '\f' || c == '\n'
 		|| c == '\r' || c == '\t' || c == '\v');
 }
 
-static int	*my_itop(int nbr)
+static int	*my_int_to_ptr(int nbr)
 {
-	int	*nptr;
+	int	*ptr;
 
-	nptr = (int *)malloc(sizeof(int));
-	if (nptr == NULL)
+	ptr = (int *)malloc(sizeof(int));
+	if (ptr == NULL)
 		return (NULL);
-	*nptr = nbr;
-	return (nptr);
+	*ptr = nbr;
+	return (ptr);
 }
 
-static char	*my_skipandsign(char *nptr, long *sign)
+static char	*my_skip_and_sign(char *ptr, long *sign)
 {
-	while (my_isspace(*nptr))
-		++nptr;
-	if (*nptr == '+' || *nptr == '-')
+	while (my_is_space(*ptr))
+		++ptr;
+	if (*ptr == '+' || *ptr == '-')
 	{
-		if (*nptr == '-')
+		if (*ptr == '-')
 			*sign = -1;
-		nptr++;
+		ptr++;
 	}
-	return (nptr);
+	return (ptr);
 }
 
 // Unit Testing

@@ -14,23 +14,23 @@
 
 #include <stdio.h>
 
-void	my_printlst(t_list *lst, char *str)
+void	my_print_lst(t_list *lst, char *str)
 {
-	t_list	*ptrlst;
+	t_list	*ptr;
 
 	printf("List: %s\n", str);
-	ptrlst = lst;
-	while (ptrlst != NULL)
+	ptr = lst;
+	while (ptr != NULL)
 	{
-		printf("%2i\n", *((int *)ptrlst->content));
-		ptrlst = ptrlst->next;
+		printf("%2i\n", *((int *)ptr->content));
+		ptr = ptr->next;
 	}
 	ft_lstclear(&lst, free);
 	return ;
 }
 
-int		my_loadargs(int argc, char **argv, t_list **lst);
-void	my_lstsort(int argc, t_list **lst_a, t_list **lst_b);
+int		my_load_args(int argc, char **argv, t_list **lst);
+void	my_lst_sort(int argc, t_list **a, t_list **b);
 
 int	main(int argc, char *argv[])
 {
@@ -40,34 +40,35 @@ int	main(int argc, char *argv[])
 	a = NULL;
 	b = NULL;
 
-	my_loadargs(argc, argv, &a);
-	my_lstsort(argc, &a, &b);
+	my_load_args(argc, argv, &a);
+	my_lst_sort(argc, &a, &b);
 	return (0);
 }
 
-int	my_loadargs(int argc, char **argv, t_list **lst)
+int	my_load_args(int argc, char **argv, t_list **lst)
 {
-	int		*iptr;
+	int		*ptr;
 	t_list	*new;
 
 	if (argc-- < 2)
 		exit(0);
+	ptr = NULL;
 	while (argc > 0)
 	{
-		if (my_atoip(argv[argc], &iptr) != 0)
-			my_puterr(2, *lst, NULL);
-		new = ft_lstnew(iptr);
+		if (my_ascii_to_int_ptr(argv[argc], &ptr) != 0)
+			my_put_err(1, *lst, NULL);
+		new = ft_lstnew(ptr);
 		if (new == NULL)
-			my_puterr(3, *lst, iptr);
+			my_put_err(2, *lst, ptr);
 		ft_lstadd_front(lst, new);
 		--argc;
 	}
-	if (my_hasdup(*lst))
-		my_puterr(4, *lst, NULL);
+	if (my_has_dup(*lst))
+		my_put_err(3, *lst, NULL);
 	return (0);
 }
 
-void	my_lstsort(int argc, t_list **a, t_list **b)
+void	my_lst_sort(int argc, t_list **a, t_list **b)
 {
 	(void)argc;
 	my_rotate(a);
@@ -75,8 +76,8 @@ void	my_lstsort(int argc, t_list **a, t_list **b)
 	my_reverse_rotate(a);
 	my_reverse_rotate(a);
 	// printf("Sorted?: %i\n", ft_lstsorted(*a, 'D'));
-	my_printlst(*a, "a");
-	my_printlst(*b, "b");
+	my_print_lst(*a, "a");
+	my_print_lst(*b, "b");
 	return ;
 }
 

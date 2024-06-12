@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_is_sorted.c                                     :+:      :+:    :+:   */
+/*   my_lst_sort.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 23:08:37 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/12 00:24:30 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/12 09:21:35 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-state int	
+/* state int	
 
 static int	my_compare(t_list *lst, int type)
 {
@@ -29,34 +29,31 @@ static int	my_compare(t_list *lst, int type)
 	return (result);
 }
 
-static int	my_find_start_point(t_list *lst, char type)
+static int	my_find_start_point(t_list *lst, int type, int start_index)
 {
 	int	start_point;
-	
-	start_point = 
+
+	start_point = *((int *) lst->content);
 	while (lst->next != NULL)
 	{
-
+		if (!my_compare(lst, type))
+			start_point = *((int *) lst->content);
+		lst = lst->next;
+		++start_index;
 	}
+	return (start_point);
 }
 
 int	my_is_sorted(t_list *lst, int type)
 {
-	int		start_point;
-	t_list	ptr;
+	int			start_index;
+	int			start_point;
+	t_list		ptr;
 
 	if (lst == NULL)
 		return (2);
-	start_point = my_find_start_point(lst, type);
-	ptr = lst;
-	while (*((int) ptr->content) != start_point)
-		ptr = ptr->next;
-	while (ptr->next != NULL)
-	{
-		if (!my_compare(ptr, type))
-			return (0);
-		ptr = ptr->next;
-	}
+	start_index = 0;
+	start_point = my_find_start_point(lst, type, &start_index);
 	ptr = lst;
 	while (*((int) ptr->content) != start_point)
 	{
@@ -65,7 +62,7 @@ int	my_is_sorted(t_list *lst, int type)
 		ptr = ptr->next;
 	}
 	return (1);
-}
+} */
 
 
 /*
@@ -78,7 +75,8 @@ lstsorted(lst, order)
     * if max index == 0
         * return 2
     * if max index != 0
-    * start from the beginibg until we find max
+	* compare last item and the first
+    * start from the begsnibg until we find max
         * return 1
     * else return 0
 
