@@ -69,15 +69,16 @@ int	my_load_args(int argc, char **argv, t_list **lst)
 	return (0);
 }
 
-void	my_lst_sort(int argc, t_list **a, t_list **b)
+void	my_lst_sort(t_list **a, t_list **b)
 {
-	(void)argc;
-	printf("Sorted? %i\n", my_lst_sorted(*a, DESC));
+	while (my_lst_sorted(*a), ASC)
+	{
+		
+	}
 	my_print_lst(*a, "a");
 	my_print_lst(*b, "b");
 	return ;
 }
-
 
 // ra (rotate a): Shift up all elements of stack a by 1.
 // The first element becomes the last one.
