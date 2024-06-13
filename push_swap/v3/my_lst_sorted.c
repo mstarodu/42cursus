@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 23:08:37 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/13 11:41:13 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/13 16:03:41 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,66 @@
 
 static int	my_cmp_by(int order, int a, int b)
 {
-	if (((order == ASC) && (a < b)) || ((order == DESC) && (a > b)))
+	if ((order == ASC && a < b) || (order == DESC && a > b))
 		return (1);
 	return (0);
 }
 
-int	my_lst_sorted(t_list *lst, char order)
+static t_list	*my_find_start_point(char order, t_list *lst)
+{
+	t_list	*start_point;
+
+	start_point = lst;
+	while (lst != NULL)
+	{
+		if (!my_cmp_by(order,
+				*((int *) start_point->content), *((int *) lst->content)))
+			start_point = lst;
+		lst = lst->next;
+	}
+	return (start_point);
+}
+
+static int	my_check_if_sorted(t_list **lst, char order, t_list *end)
 {
 	t_list	*ptr;
 
-	if (lst == NULL || lst->next == NULL)
-		return (1);
-	ptr = lst;
-	while (ptr->next != NULL)
+	ptr = *lst;
+	while (ptr->next != end)
 	{
 		if (!my_cmp_by(order,
 				*((int *) ptr->content), *((int *) ptr->next->content)))
 			return (0);
 		ptr = ptr->next;
 	}
+	return (1);
+}
+
+int	my_lst_sorted(t_list *lst, char order)
+{
+	t_list	*ptr;
+	t_list	*start_point;
+
+	if (lst == NULL || lst->next == NULL)
+		return (2);
+	ptr = lst;
+	start_point = my_find_start_point(order, lst);
+	if (start_point == ptr && my_check_if_sorted(&ptr, order, NULL))
+		return (2);
+	else
+		return (0);
+	while (ptr != start_point)
+		ptr = ptr->next;
+	if (ptr->next != NULL)
+		ptr = ptr->next;
+	if (!my_check_if_sorted(&ptr, order, NULL))
+		return (0);
+	if (!my_cmp_by(order,
+			*((int *) ptr->content), *((int *) lst->content)))
+		return (0);
+	ptr = lst;
+	if (!my_check_if_sorted(&ptr, order, start_point))
+		return (0);
 	return (1);
 }
 

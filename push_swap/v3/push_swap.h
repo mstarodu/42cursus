@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:11:49 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/13 10:54:22 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:05:52 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include <limits.h>
 # include <unistd.h>
 # include <stdlib.h>
-# define DESC 'D'
-# define ASC 'A'
+# define DESC '1'
+# define ASC '0'
 
 typedef struct s_list
 {
