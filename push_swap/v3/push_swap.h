@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:11:49 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/13 12:05:52 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/13 23:19:26 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,21 @@
 # include <stdlib.h>
 # define DESC '1'
 # define ASC '0'
+
+typedef enum e_operations
+{
+	sa,
+	sb,
+	ss,
+	pa,
+	pb,
+	ra,
+	rb,
+	rr,
+	rra,
+	rrb,
+	rrr
+}			t_operations;
 
 typedef struct s_list
 {
@@ -35,16 +50,18 @@ void			ft_lstiter(t_list *lst, void (*f)(void *));
 char			*ft_strdup(const char *s);
 t_list			*ft_lstnew(void *content);
 t_list			*ft_lstlast(t_list *lst);
-t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
-					void (*del)(void *));
+t_list			*ft_lstmap(t_list *lst, 
+					void *(*f)(void *), void (*del)(void *));
+size_t			ft_strlen(const char *s);
 int				my_ascii_to_int_ptr(char *nptr, int **nbr);
 int				my_put_err(int err, t_list *lst, int *iptr);
 int				my_has_dup(t_list *lst);
 // int				my_lstsorted(t_list *lst, char order);
 int				my_lst_sorted(t_list *lst, char order);
-void			my_swap(t_list *lst);
+void			my_swap(t_list **lst);
 void			my_push(t_list **f, t_list **t);
 void			my_rotate(t_list **lst);
 void			my_reverse_rotate(t_list **lst);
+void			my_execute(t_operations op, t_list **a, t_list **b);
 
 #endif

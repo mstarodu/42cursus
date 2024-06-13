@@ -30,7 +30,7 @@ void	my_print_lst(t_list *lst, char *str)
 }
 
 int		my_load_args(int argc, char **argv, t_list **lst);
-void	my_lst_sort(int argc, t_list **a, t_list **b);
+void	my_lst_sort(t_list **a, t_list **b);
 
 int	main(int argc, char *argv[])
 {
@@ -41,7 +41,7 @@ int	main(int argc, char *argv[])
 	b = NULL;
 
 	my_load_args(argc, argv, &a);
-	my_lst_sort(argc, &a, &b);
+	my_lst_sort(&a, &b);
 
 	return (0);
 }
@@ -71,10 +71,11 @@ int	my_load_args(int argc, char **argv, t_list **lst)
 
 void	my_lst_sort(t_list **a, t_list **b)
 {
-	while (my_lst_sorted(*a), ASC)
-	{
-		
-	}
+	my_execute(sa, a, b);
+	my_execute(pb, a, b);
+	my_execute(pb, a, b);
+	my_execute(rr, a, b);
+	my_execute(rrr, a, b);
 	my_print_lst(*a, "a");
 	my_print_lst(*b, "b");
 	return ;

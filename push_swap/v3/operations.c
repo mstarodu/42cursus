@@ -6,22 +6,23 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 21:09:47 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/11 23:17:50 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/13 23:40:09 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <stdio.h>
 
-void	my_swap(t_list *lst)
+void my_swap(t_list **lst)
 {
-	void	*ptrcnt;
+	void *ptr;
 
-	if (lst == NULL || lst->next == NULL)
-		return ;
-	ptrcnt = lst->content;
-	lst->content = lst->next->content;
-	lst->content = ptrcnt;
-	return ;
+	if (*lst == NULL || (*lst)->next == NULL)
+		return;
+
+	ptr = (*lst)->content;
+	(*lst)->content = (*lst)->next->content;
+	(*lst)->next->content = ptr;
 }
 
 void	my_push(t_list **f, t_list **t)
@@ -66,4 +67,30 @@ void	my_reverse_rotate(t_list **lst)
 	ptrlst->next = NULL;
 	ft_lstadd_front(lst, last);
 	return ;
+}
+
+void	my_execute(t_operations op, t_list **a, t_list **b)
+{
+	const char	*str_op[] = {"sa", "sb", "ss", "pa", "pb",
+		"ra", "rb", "rr", "ra", "rrb", "rrr"};
+
+	if (op == sa || op == ss)
+		my_swap(a);
+	if (op == sb || op == ss)
+		my_swap(b);
+	if (op == pa)
+		my_push(b, a);
+	if (op == pb)
+		my_push(a, b);
+	if (op == ra || op == rr)
+		my_rotate(a);
+	if (op == rb || op == rr)
+		my_rotate(b);
+	if (op == rra || op == rrr)
+		my_reverse_rotate(a);
+	if (op == rrb || op == rrr)
+		my_reverse_rotate(a);
+
+	write(STDOUT_FILENO, str_op[op], ft_strlen(str_op[op]));
+	write(STDOUT_FILENO, "\n", 1);
 }

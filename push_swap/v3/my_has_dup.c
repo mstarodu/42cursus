@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 11:26:16 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/12 18:15:13 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/13 23:18:58 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	my_lst_sort(t_list **lst, int indx)
 		while (i <= indx)
 		{
 			if (*((int *) ptr->content) > *((int *) ptr->next->content))
-				my_swap(ptr);
+				my_swap(&ptr);
 			ptr = ptr->next;
 			++i;
 		}
