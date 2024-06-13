@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 11:26:16 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/12 09:13:32 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:15:13 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,18 @@ static void	*my_int_ptr_dup(void *iptr)
 
 static void	my_lst_sort(t_list **lst, int indx)
 {
-	t_list	*lptr;
+	t_list	*ptr;
 	int		i;
 
 	while (indx >= 0)
 	{
-		lptr = *lst;
+		ptr = *lst;
 		i = 0;
 		while (i <= indx)
 		{
-			if (*((int *) lptr->content) > *((int *) lptr->next->content))
-				my_swap(lptr);
-			lptr = lptr->next;
+			if (*((int *) ptr->content) > *((int *) ptr->next->content))
+				my_swap(ptr);
+			ptr = ptr->next;
 			++i;
 		}
 		--indx;

@@ -42,6 +42,7 @@ int	main(int argc, char *argv[])
 
 	my_load_args(argc, argv, &a);
 	my_lst_sort(argc, &a, &b);
+
 	return (0);
 }
 
@@ -71,11 +72,7 @@ int	my_load_args(int argc, char **argv, t_list **lst)
 void	my_lst_sort(int argc, t_list **a, t_list **b)
 {
 	(void)argc;
-	my_rotate(a);
-	my_rotate(a);
-	my_reverse_rotate(a);
-	my_reverse_rotate(a);
-	// printf("Sorted?: %i\n", ft_lstsorted(*a, 'D'));
+	printf("Sorted? %i\n", my_lst_sorted(*a, DESC));
 	my_print_lst(*a, "a");
 	my_print_lst(*b, "b");
 	return ;

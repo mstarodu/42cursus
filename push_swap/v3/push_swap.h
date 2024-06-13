@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:11:49 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/12 09:14:18 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/13 10:54:22 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <limits.h>
 # include <unistd.h>
 # include <stdlib.h>
+# define DESC 'D'
+# define ASC 'A'
 
 typedef struct s_list
 {
@@ -39,6 +41,7 @@ int				my_ascii_to_int_ptr(char *nptr, int **nbr);
 int				my_put_err(int err, t_list *lst, int *iptr);
 int				my_has_dup(t_list *lst);
 // int				my_lstsorted(t_list *lst, char order);
+int				my_lst_sorted(t_list *lst, char order);
 void			my_swap(t_list *lst);
 void			my_push(t_list **f, t_list **t);
 void			my_rotate(t_list **lst);
