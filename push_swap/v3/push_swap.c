@@ -71,11 +71,14 @@ int	my_load_args(int argc, char **argv, t_list **lst)
 
 void	my_lst_sort(t_list **a, t_list **b)
 {
-	my_execute(sa, a, b);
-	my_execute(pb, a, b);
-	my_execute(pb, a, b);
-	my_execute(rr, a, b);
-	my_execute(rrr, a, b);
+	while (!my_lst_sorted(*a, ASC))
+	{
+		if (ft_lstsize(*b) < 3)
+			my_execute(pb, a, b);
+		else
+			break ;
+	}
+
 	my_print_lst(*a, "a");
 	my_print_lst(*b, "b");
 	return ;

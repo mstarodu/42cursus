@@ -6,14 +6,14 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 11:26:16 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/13 23:18:58 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/13 23:55:28 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 static void		*my_int_ptr_dup(void *iptr);
-static void		my_lst_sort(t_list **lst, int lstindx);
+static void		my_sort(t_list **lst, int lstindx);
 static int		my_int_cmp(t_list *lst);
 
 int	my_has_dup(t_list *lst)
@@ -28,7 +28,7 @@ int	my_has_dup(t_list *lst)
 	new_lst = ft_lstmap(lst, my_int_ptr_dup, free);
 	if (new_lst == NULL)
 		return (1);
-	my_lst_sort(&new_lst, indx);
+	my_sort(&new_lst, indx);
 	ptr_lst = new_lst;
 	while (ptr_lst->next != NULL)
 	{
@@ -51,7 +51,7 @@ static void	*my_int_ptr_dup(void *iptr)
 	return ((void *) newiptr);
 }
 
-static void	my_lst_sort(t_list **lst, int indx)
+static void	my_sort(t_list **lst, int indx)
 {
 	t_list	*ptr;
 	int		i;
