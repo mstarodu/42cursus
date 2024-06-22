@@ -30,7 +30,7 @@ void	my_print_lst(t_list *lst, char *str)
 }
 
 int		my_load_args(int argc, char **argv, t_list **lst);
-void	my_lst_sort(t_list **a, t_list **b);
+void	my_sort(t_list **a, t_list **b);
 
 int	main(int argc, char *argv[])
 {
@@ -41,7 +41,7 @@ int	main(int argc, char *argv[])
 	b = NULL;
 
 	my_load_args(argc, argv, &a);
-	my_lst_sort(&a, &b);
+	my_sort(&a, &b);
 
 	return (0);
 }
@@ -69,15 +69,11 @@ int	my_load_args(int argc, char **argv, t_list **lst)
 	return (0);
 }
 
-void	my_lst_sort(t_list **a, t_list **b)
+void	my_sort(t_list **a, t_list **b)
 {
-	while (!my_lst_sorted(*a, ASC))
-	{
-		if (ft_lstsize(*b) < 3)
-			my_execute(pb, a, b);
-		else
-			break ;
-	}
+	printf("Ordered?: %i\n", my_lst_sorted(*a, DESC));
+
+	
 
 	my_print_lst(*a, "a");
 	my_print_lst(*b, "b");
@@ -94,32 +90,3 @@ void	my_lst_sort(t_list **a, t_list **b)
 // rrb (reverse rotate b): Shift down all elements of stack b by 1.
 // The last element becomes the first one.
 // rrr : rra and rrb at the same time.
-
-// 4
-// 6
-// 7
-// 1
-// 2
-// 3
-// 0
-// -3
-// 9
-
-
-/*
-# List of tasks:
-- [ ] args as one argument
-- [ ] args as arguments
-- [ ] ascending order into stack a
-- [ ] no memory leaks
-- [ ] makefile rules
-- [ ] no relink
-- [ ] first arg on top of the stack
-- [ ] instructions separated by \n
-- [x] no arguments - promt back
-- [x] error, "Error\n" on the standard error
-	- [x] some arguments aren’t integers
-	- [x] some arguments are bigger than an integer
-	- [x] there are duplicates
-
-*/

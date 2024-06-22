@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:11:49 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/13 23:19:26 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/22 21:59:31 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define DESC '1'
 # define ASC '0'
 
-typedef enum e_operations
+typedef enum e_operation
 {
 	sa,
 	sb,
@@ -32,7 +32,7 @@ typedef enum e_operations
 	rra,
 	rrb,
 	rrr
-}			t_operations;
+}			t_operation;
 
 typedef struct s_list
 {
@@ -50,7 +50,7 @@ void			ft_lstiter(t_list *lst, void (*f)(void *));
 char			*ft_strdup(const char *s);
 t_list			*ft_lstnew(void *content);
 t_list			*ft_lstlast(t_list *lst);
-t_list			*ft_lstmap(t_list *lst, 
+t_list			*ft_lstmap(t_list *lst,
 					void *(*f)(void *), void (*del)(void *));
 size_t			ft_strlen(const char *s);
 int				my_ascii_to_int_ptr(char *nptr, int **nbr);

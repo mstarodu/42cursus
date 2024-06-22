@@ -6,19 +6,19 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 21:09:47 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/13 23:41:47 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/22 22:01:14 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdio.h>
 
-void my_swap(t_list **lst)
+void	my_swap(t_list **lst)
 {
-	void *ptr;
+	void	*ptr;
 
 	if (*lst == NULL || (*lst)->next == NULL)
-		return;
+		return ;
 
 	ptr = (*lst)->content;
 	(*lst)->content = (*lst)->next->content;
@@ -69,7 +69,7 @@ void	my_reverse_rotate(t_list **lst)
 	return ;
 }
 
-void	my_execute(t_operations op, t_list **a, t_list **b)
+void	my_execute(t_operation op, t_list **a, t_list **b)
 {
 	const char	*str_op[] = {"sa", "sb", "ss", "pa", "pb",
 		"ra", "rb", "rr", "ra", "rrb", "rrr"};
