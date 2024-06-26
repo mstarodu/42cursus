@@ -64,24 +64,30 @@ int	my_load_args(int argc, char **argv, t_list **lst)
 		ft_lstadd_front(lst, new);
 		--argc;
 	}
-	if (my_has_dup(*lst))
+	if (my_lst_has_dup(*lst))
 		my_put_err(3, *lst, NULL);
 	return (0);
 }
 
 void	my_sort(t_list **a, t_list **b)
 {
-	printf("Sorted?: %i\n", my_lst_sorted(*a, DESC));
-	printf("Postion of 5: %i\n",
-		my_find_position(*a, 5, 
-			my_lst_find_extremum(*a, MAX), my_lst_find_extremum(*a, MIN)));
+	t_move	next_move;
 
-
-
+	my_execute(pb, a, b);
+	my_execute(pb, a, b);
+	my_execute(pb, a, b);
+	printf("Sorted?: %i\n", my_lst_sorted(*b, DESC));
+	my_calc_next_move(*a, *b, &next_move);
 	my_print_lst(*a, "a");
 	my_print_lst(*b, "b");
+	printf("a_idx: %i, a_size: %i, b_idx: %i, b_size: %i, moves: %i\n",
+		next_move.a_idx, next_move.a_size,
+		next_move.b_idx, next_move.b_size,
+		next_move.nbr_of_moves);
 	return ;
 }
+
+// 
 
 // ra (rotate a): Shift up all elements of stack a by 1.
 // The first element becomes the last one.

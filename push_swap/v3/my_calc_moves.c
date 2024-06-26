@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   my_calc_moves.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/01 14:09:40 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/26 18:29:23 by mstarodu         ###   ########.fr       */
+/*   Created: 2024/06/26 17:06:25 by mstarodu          #+#    #+#             */
+/*   Updated: 2024/06/26 17:22:50 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_lstsize(t_list *lst)
+int	my_calc_moves(int a_idx, int a_size, int b_idx, int b_size)
 {
-	int	size;
+	int	moves;
 
-	size = 0;
-	if (lst == NULL)
-		return (size);
-	while (lst != NULL)
-	{
-		++size;
-		lst = lst->next;
-	}
-	return (size);
+	moves = 0;
+	if (a_idx < (a_size - a_idx))
+		moves += a_idx;
+	else
+		moves += a_size - a_idx;
+	if (b_idx < (b_size - b_idx))
+		moves += b_idx;
+	else
+		moves += b_size - b_idx;
+	return (moves);
 }

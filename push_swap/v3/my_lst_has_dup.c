@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_has_dup.c                                       :+:      :+:    :+:   */
+/*   my_lst_has_dup.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 11:26:16 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/22 23:30:39 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/26 18:32:05 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void		*my_int_ptr_dup(void *iptr);
 static void		my_sort(t_list **lst, int lstindx);
 static int		my_int_cmp(t_list *lst);
 
-int	my_has_dup(t_list *lst)
+int	my_lst_has_dup(t_list *lst)
 {
 	t_list	*new_lst;
 	t_list	*ptr_lst;
@@ -56,11 +56,11 @@ static void	my_sort(t_list **lst, int indx)
 	t_list	*ptr;
 	int		i;
 
-	while (indx >= 0)
+	while (indx > 0)
 	{
 		ptr = *lst;
 		i = 0;
-		while (i <= indx)
+		while (i < indx)
 		{
 			if (*((int *) ptr->content) > *((int *) ptr->next->content))
 				my_swap(&ptr);
