@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:11:49 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/22 21:59:31 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/26 10:46:04 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdlib.h>
 # define DESC '1'
 # define ASC '0'
+# define MAX '1'
+# define MIN '0'
 
 typedef enum e_operation
 {

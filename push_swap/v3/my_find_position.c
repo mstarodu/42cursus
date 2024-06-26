@@ -6,53 +6,72 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 22:08:01 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/22 23:06:31 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:15:06 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	my_lst_min_and_max(t_list *lst, int *min, int *max)
+static int	my_lst_find_extremum(t_list *lst, char type)
 {
-	if (lst == NULL)
-		return (-1);
-	while (lst != NULL)
+	int	nbr;
+
+	nbr = *((int *) lst->content);
+	while (*lst != NULL)
 	{
-		if (*((int *) lst->content) < *min)
-			min = *((int *) lst->content);
-		if (*((int *) lst->content) > *max)
-			max = *((int *) lst->content);
-		lst = lst->next;
+		if (type == MAX)
+		{
+			if (nbr < *((int *) lst->next->content))
+				nbr = *((int *) lst->content);
+		}
+		else
+		{
+			if (nbr < *((int *) lst->next->content))
+				nbr = *((int *) lst->content);
+		}
+		lst = *lst->next;
 	}
+	return (nbr);
+}
+
+static int	my_is_new_extremum(t_list *lst, int nbr)
+{
+	int min;
+	int max;
+	int	i;
+
+	min = my_lst_find_extremum(lst, MIN);
+	max = my_lst_find_extremum(lst, MAX);
+	i = 0;
+	if (nbr < min || nbr > max)
+		return (1);
 	return (0);
 }
 
 int	my_find_position(t_list *lst, int nbr, int min, int max)
 {
-	int	size;
 	int	i;
 
-	if (lst == NULL)
-		return (-1);
-	size = ft_lstsize(lst);
 	i = 0;
-	if (my_lst_min_and_max(lst, &min, &max) < 0)
-		return (0);
-	if (nbr < min || nbr > max)
+	if (lst == NULL)
+		return (i);
+	// if NBR is an EXTREMUM
+	if (my_is_new_extremum(lst, nbr))
 	{
-		while (*((int *) lst->content) != min)
-			++i;
-		if (i == size - 1)
-			return (0);
-		else
-			++i;
+		// then between MAX and MIN
 	}
-	else
-	{
+	// else beetween bigger && smaller number. If smaller is the first element, then 0
+
+
+
+	j{
 		while (!(*((int *) lst->content) > nbr
-				&& *((int *) lst->next->content) < nbr))
+				&& *((int *) lst->next->content) < nbr)
+			|| NULL != *((int *) lst->next->content))
 			++i;
-		++i; /// case with number at edges
+		if (*((int *) lst->next->content) == NULL)
+			return (0);
+		++i;
 	}
 	return (i);
 }
