@@ -69,6 +69,37 @@ int	my_load_args(int argc, char **argv, t_list **lst)
 	return (0);
 }
 
+void	execute_next_move(t_list **a, t_list **b, t_move next_move)
+{
+	if (next_move->nbr_of_moves < 0)
+		return ;
+	else if (next_move->nbr_of_moves == 0)
+		my_execute(pb, a, b);
+	else
+	{
+		if (next_move.a_idx < (next_move.a_size - next_move.a_idx))
+		{
+			next_move.ra = next_move.a_idx;
+			next_move.rra = 0;
+		}
+		else
+		{
+			next_move.ra = 0;
+			next_move.rra = a_size - a_idx;
+		}
+		if (next_move.b_idx < (next_move.b_size - next_move.b_idx))
+		{
+			next_move.rb = next_move.b_idx;
+			next_move.rrb = 0;
+		}
+		else
+		{
+			next_move.rb = 0;
+			next_move.rrb = b_size - b_idx;
+		}
+	}
+}
+
 void	my_sort(t_list **a, t_list **b)
 {
 	t_move	next_move;
@@ -76,8 +107,8 @@ void	my_sort(t_list **a, t_list **b)
 	my_execute(pb, a, b);
 	my_execute(pb, a, b);
 	my_execute(pb, a, b);
-	printf("Sorted?: %i\n", my_lst_sorted(*b, DESC));
 	my_calc_next_move(*a, *b, &next_move);
+	
 	my_print_lst(*a, "a");
 	my_print_lst(*b, "b");
 	printf("a_idx: %i, a_size: %i, b_idx: %i, b_size: %i, moves: %i\n",

@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:11:49 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/26 18:00:25 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/26 23:04:43 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,12 @@ typedef struct s_move
 	int			b_idx;
 	int			b_size;
 	int			nbr_of_moves;
+	int			ra;
+	int			rb;
+	int			rr;
+	int			rra;
+	int			rrb;
+	int			rrr;
 }					t_move;
 
 int				ft_lstsize(t_list *lst);
@@ -69,7 +75,7 @@ int				my_ascii_to_int_ptr(char *nptr, int **nbr);
 int				my_put_err(int err, t_list *lst, int *iptr);
 int				my_lst_has_dup(t_list *lst);
 int				my_lst_sorted(t_list *lst, char order);
-int				my_find_position(t_list *lst, int nbr, int max, int min);
+int				my_find_position(t_list *dst, t_list *src, int max, int min);
 int				my_calc_moves(int a_idx, int a_size, int b_idx, int b_size);
 void			my_swap(t_list **lst);
 void			my_push(t_list **f, t_list **t);

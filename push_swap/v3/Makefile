@@ -1,6 +1,6 @@
 test_: all
 	clear
-	./a.out 8 6 7 4 3 2 1 0
+	./a.out 7 8 3
 	@echo '1 ======================================================'
 all:
 	cc -Wall -Werror -Werror -g my_ascii_to_int_ptr.c ft_isdigit.c ft_lstadd_front.c ft_lstdelone.c \

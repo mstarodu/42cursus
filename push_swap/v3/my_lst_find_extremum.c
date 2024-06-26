@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 11:25:00 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/26 18:17:51 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/26 22:47:42 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	my_lst_find_extremum(t_list *lst, char type)
 {
 	int	nbr;
 
+	if (lst == NULL)
+		return (-1);
 	nbr = *((int *) lst->content);
 	while (lst != NULL)
 	{
