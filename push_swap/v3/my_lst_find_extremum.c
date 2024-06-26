@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_find_position.c                                 :+:      :+:    :+:   */
+/*   my_lst_find_extremum.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/22 22:08:01 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/26 13:10:04 by mstarodu         ###   ########.fr       */
+/*   Created: 2024/06/26 11:25:00 by mstarodu          #+#    #+#             */
+/*   Updated: 2024/06/26 12:48:12 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	my_find_position(t_list *lst, int nbr, int max, int min)
+int	my_lst_find_extremum(t_list *lst, char type)
 {
-	int	i;
+	int	nbr;
 
-	i = 0;
-	if (lst == NULL || lst->next == NULL || max == min)
-		;
-	else if (nbr > max || nbr < min)
+	nbr = *((int *) lst->content);
+	while (lst != NULL)
 	{
-		while (*((int *) lst->content) != max && ++i)
-			lst = lst->next;
-	}
-	else
-	{
-		while (++i && !(*((int *) lst->content) > nbr
-				&& *((int *) lst->next->content) < nbr))
+		if (type == MAX)
 		{
-			lst = lst->next;
-			if (lst->next == NULL)
-				return (0);
+			if (nbr < *((int *) lst->content))
+				nbr = *((int *) lst->content);
 		}
+		else
+		{
+			if (nbr > *((int *) lst->content))
+				nbr = *((int *) lst->content);
+		}
+		lst = lst->next;
 	}
-	return (i);
+	return (nbr);
 }

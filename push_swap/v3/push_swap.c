@@ -71,9 +71,12 @@ int	my_load_args(int argc, char **argv, t_list **lst)
 
 void	my_sort(t_list **a, t_list **b)
 {
-	printf("Ordered?: %i\n", my_lst_sorted(*a, DESC));
+	printf("Sorted?: %i\n", my_lst_sorted(*a, DESC));
+	printf("Postion of 5: %i\n",
+		my_find_position(*a, 5, 
+			my_lst_find_extremum(*a, MAX), my_lst_find_extremum(*a, MIN)));
 
-	
+
 
 	my_print_lst(*a, "a");
 	my_print_lst(*b, "b");

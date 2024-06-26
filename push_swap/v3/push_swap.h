@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:11:49 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/26 10:46:04 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/26 12:37:15 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,16 @@ t_list			*ft_lstlast(t_list *lst);
 t_list			*ft_lstmap(t_list *lst,
 					void *(*f)(void *), void (*del)(void *));
 size_t			ft_strlen(const char *s);
+int				my_lst_find_extremum(t_list *lst, char type);
 int				my_ascii_to_int_ptr(char *nptr, int **nbr);
 int				my_put_err(int err, t_list *lst, int *iptr);
 int				my_has_dup(t_list *lst);
-// int				my_lstsorted(t_list *lst, char order);
 int				my_lst_sorted(t_list *lst, char order);
+int				my_find_position(t_list *lst, int nbr, int max, int min);
 void			my_swap(t_list **lst);
 void			my_push(t_list **f, t_list **t);
 void			my_rotate(t_list **lst);
 void			my_reverse_rotate(t_list **lst);
-void			my_execute(t_operations op, t_list **a, t_list **b);
+void			my_execute(t_operation op, t_list **a, t_list **b);
 
 #endif
