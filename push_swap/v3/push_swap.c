@@ -69,6 +69,32 @@ int	my_load_args(int argc, char **argv, t_list **lst)
 	return (0);
 }
 
+int	my_find_position(t_list *dst, int nbr, int max, int min)
+{
+	int	i;
+
+	i = 0;
+	if (dst == NULL || dst->next == NULL)
+		return (i);
+	if (nbr > max || nbr < min)
+	{
+		if (*((int *) dst->content) == min)
+			return (i);
+		while (*((int *) dst->content) != max
+			&& *((int *) dst->next->content) != min && ++i)
+			dst = dst->next;
+	}
+	else
+	{
+		while (dst->next != NULL && *((int *) dst->content) > nbr
+			&& *((int *) dst->next->content) < nbr && ++i)
+			dst = dst->next;
+		if (dst->next == NULL)
+			return (0);
+	}
+	return (i);
+}
+
 int	my_lst_find_idx(t_list *lst, int nbr)
 {
 	int	idx;
@@ -272,16 +298,3 @@ void	my_sort(t_list **a, t_list **b)
 	my_print_lst(*b, "b");
 	return ;
 }
-
-// 
-
-// ra (rotate a): Shift up all elements of stack a by 1.
-// The first element becomes the last one.
-// rb (rotate b): Shift up all elements of stack b by 1.
-// The first element becomes the last one.
-// rr : ra and rb at the same time.
-// rra (reverse rotate a): Shift down all elements of stack a by 1.
-// The last element becomes the first one.
-// rrb (reverse rotate b): Shift down all elements of stack b by 1.
-// The last element becomes the first one.
-// rrr : rra and rrb at the same time.
