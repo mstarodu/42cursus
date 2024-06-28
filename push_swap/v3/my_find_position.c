@@ -6,21 +6,19 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 22:08:01 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/26 22:47:59 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:30:58 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	my_find_position(t_list *dst, t_list *src, int max, int min)
+int	my_find_position(t_list *dst, int nbr, int max, int min)
 {
 	int	i;
-	int	nbr;
 
 	i = 0;
 	if (src == NULL)
 		return (-1);
-	nbr = *((int *) src->content);
 	if (dst == NULL || dst->next == NULL || max == min)
 		;
 	else if (nbr > max || nbr < min)
