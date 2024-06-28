@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 22:08:01 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/28 15:30:58 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:53:48 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	my_find_position(t_list *dst, int nbr, int max, int min)
 	int	i;
 
 	i = 0;
-	if (src == NULL)
-		return (-1);
 	if (dst == NULL || dst->next == NULL || max == min)
 		;
 	else if (nbr > max || nbr < min)

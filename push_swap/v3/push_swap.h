@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:11:49 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/28 15:32:04 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/28 16:12:44 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_move
 	int	rra;
 	int	rrb;
 	int	rrr;
-	int	number_of_moves;		
+	int	nbr_of_moves;		
 }					t_move;
 
 int				ft_lstsize(t_list *lst);

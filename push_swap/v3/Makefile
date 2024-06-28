@@ -1,11 +1,7 @@
 test_: all
 	clear
-	./a.out 8 3 7
-	@echo '1 ======================================================'
-	./a.out 3 5 7
-	@echo '1 ======================================================'
-	./a.out 8 9 3
-	@echo '1 ======================================================'
+	./a.out  10 12 11 1 2
+	@echo '======================================================'
 all:
 	cc -Wall -Werror -Werror -g my_ascii_to_int_ptr.c ft_isdigit.c ft_lstadd_front.c ft_lstdelone.c \
 	ft_lstnew.c ft_strdup.c push_swap.h ft_lstadd_back.c \
