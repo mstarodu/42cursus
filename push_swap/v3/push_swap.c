@@ -96,35 +96,69 @@ int	my_load_args(int argc, char **argv, t_list **lst)
 	return (0);
 }
 
-int	my_find_position(t_list *dst, int nbr, int max, int min)
+int	my_find_position(t_list *dst, int nbr, char sort)
 {
 	int	i;
+	int	max;
+	int	min;
 
+	max = my_lst_find_extremum(dst, MAX);
+	min = my_lst_find_extremum(dst, MIN);
 	i = 0;
 	if (dst == NULL || dst->next == NULL)
 		return (i);
-	if (nbr > max || nbr < min)
+	if (sort == ASC)
 	{
-		while (dst != NULL)
+		if (nbr > max || nbr < min)
 		{
-			if (*((int *) dst->content) == min)
-				return (++i);
-			dst = dst->next;
-			++i;
+			while (dst != NULL)
+			{
+				if (*((int *) dst->content) == max)
+					return (++i);
+				dst = dst->next;
+				++i;
+			}
+		}
+		else
+		{
+			while (dst->next != NULL)
+			{
+				if (*((int *) dst->content) < nbr
+					&& *((int *) dst->next->content) > nbr)
+					return (++i);
+				dst = dst->next;
+				++i;
+			}
+			if (dst->next == NULL)
+				return (0);
 		}
 	}
 	else
 	{
-		while (dst->next != NULL)
+		if (nbr > max || nbr < min)
 		{
-			if (*((int *) dst->content) > nbr
-				&& *((int *) dst->next->content) < nbr)
-				return (++i);
-			dst = dst->next;
-			++i;
+			while (dst != NULL)
+			{
+				if (*((int *) dst->content) == min)
+					return (++i);
+				dst = dst->next;
+				++i;
+			}
 		}
-		if (dst->next == NULL)
-			return (0);
+		else
+		{
+			while (dst->next != NULL)
+			{
+				if (*((int *) dst->content) > nbr
+					&& *((int *) dst->next->content) < nbr)
+					return (++i);
+				dst = dst->next;
+				++i;
+			}
+			if (dst->next == NULL)
+				return (0);
+		}
+
 	}
 	return (i);
 }
@@ -174,36 +208,63 @@ void	my_init_move(t_move *move)
 	move->nbr_of_moves = INT_MAX;
 }
 
-void	my_calc_moves_a(t_move *move, int i, int a_size)
+void	my_calc_moves_a(t_move *move, int i, int size, char to)
 {
-	if (i <= a_size / 2)
+	if (to == B)
 	{
-		move->ra = i;
-		move->rra = 0;
+		if (i <= size / 2)
+		{
+			move->ra = i;
+			move->rra = 0;
+		}
+		else
+		{
+			move->ra = 0;
+			move->rra = size - i;
+		}
 	}
 	else
 	{
-		move->ra = 0;
-		move->rra = a_size - i;
+		if (i <= size / 2)
+		{
+			move->rb = i;
+			move->rrb = 0;
+		}
+		else
+		{
+			move->rb = 0;
+			move->rrb = size - i;
+		}
 	}
 }
 
-void	my_calc_moves_b(t_move *move, int nbr, t_list *b, int b_size)
+void	my_calc_moves_b(t_move *move, int idx, int size, char sort, char to)
 {
-	int	b_idx;
-
-	b_idx = my_find_position(b, nbr,
-			my_lst_find_extremum(b, MAX), my_lst_find_extremum(b, MIN));
-	// printf("b_idx: %i\n", b_idx);
-	if (b_idx <= b_size / 2)
+	if (to == B)
 	{
-		move->rb = b_idx;
-		move->rrb = 0;
+		if (idx <= size / 2)
+		{
+			move->rb = idx;
+			move->rrb = 0;
+		}
+		else
+		{
+			move->rb = 0;
+			move->rrb = size - idx;
+		}
 	}
 	else
 	{
-		move->rb = 0;
-		move->rrb = b_size - b_idx;
+		if (idx <= size / 2)
+		{
+			move->ra = idx;
+			move->rra = 0;
+		}
+		else
+		{
+			move->ra = 0;
+			move->rra = size - idx;
+		}
 	}
 }
 
@@ -247,54 +308,58 @@ void	my_compare_moves(t_move *move, t_move *next_move)
 	}
 }
 
-void	my_calc_next_move(t_list **a, t_list **b, t_move *next_move)
+void	my_calc_next_move(t_list **src, t_list **dst, t_move *next_move, char sort, char to)
 {
-	t_list	*a_ptr;
-	int		a_size;
-	int		b_size;
+	t_list	*src_ptr;
+	int		src_size;
+	int		dst_size;
 	t_move	move;
 	int		i;
 
-	a_ptr = *a;
-	a_size = ft_lstsize(*a);
-	b_size = ft_lstsize(*b);
+	src_ptr = *src;
+	src_size = ft_lstsize(*src);
+	dst_size = ft_lstsize(*dst);
 	i = 0;
-	while (a_ptr != NULL)
+	while (src_ptr != NULL)
 	{
 		my_init_move(&move);
-		my_calc_moves_a(&move, i, a_size);
-		my_calc_moves_b(&move, *((int *)(a_ptr->content)), *b, b_size);
+		my_calc_moves_a(&move, i, src_size, to);
+		my_calc_moves_b(&move, my_find_position(*dst,
+				*((int *) src_ptr->content), sort), dst_size, sort, to);
 		my_calc_number_of_moves(&move);
 		my_compare_moves(&move, next_move);
-		a_ptr = a_ptr->next;
+		src_ptr = src_ptr->next;
 		++i;
 	}
 }
 
-void	my_execute_next_move(t_move *next_move, t_list **a, t_list **b)
+void	my_execute_next_move(t_move *next_move, t_list **src, t_list **dst, char to)
 {
 	while ((next_move->ra)-- > 0)
-		my_execute(ra, a, b);
+		my_execute(ra, src, dst);
 	while ((next_move->rb)-- > 0)
-		my_execute(rb, a, b);
+		my_execute(rb, src, dst);
 	while ((next_move->rr)-- > 0)
-		my_execute(rr, a, b);
+		my_execute(rr, src, dst);
 	while ((next_move->rra)-- > 0)
-		my_execute(rra, a, b);
+		my_execute(rra, src, dst);
 	while ((next_move->rrb)-- > 0)
-		my_execute(rrb, a, b);
+		my_execute(rrb, src, dst);
 	while ((next_move->rrr)-- > 0)
-		my_execute(rrr, a, b);
-	my_execute(pb, a, b);
+		my_execute(rrr, src, dst);
+	if (to == A)
+		my_execute(pb, src, dst);
+	else
+		my_execute(pa, src, dst);
 }
 
-void	my_next_move (t_list **a, t_list **b)
+void	my_next_move (t_list **src, t_list **dst, char sort, char to)
 {
 	t_move	next_move;
 
 	my_init_move(&next_move);
-	my_calc_next_move(a, b, &next_move);
-	my_execute_next_move(&next_move, a, b);
+	my_calc_next_move(src, dst, &next_move, sort, to);
+	my_execute_next_move(&next_move, src, dst, to);
 }
 
 void	my_three_sort(t_list **lst)
@@ -316,9 +381,9 @@ void	my_six_sort(t_list **a, t_list **b)
 	while (ft_lstsize(*a) != 3)
 		my_execute(pb, a, b);
 	my_three_sort(a);
-	my_print_stacks(*a, *b);
+	// my_print_stacks(*a, *b);
 	while (*b != NULL)
-		my_next_move(b, a);
+		my_next_move(b, a, ASC, A);
 	my_rotate_sort(a, ASC);
 }
 
@@ -339,15 +404,15 @@ void	my_sort(int argc, t_list **a, t_list **b)
 	{
 		while (*a != NULL)
 		{
-			my_next_move(a, b);
+			my_next_move(a, b, DESC, B);
 			// my_print_stacks(*a, *b);
 		}
 		while (*b != NULL)
 			my_execute(pa, a, b);
 		my_rotate_sort(a, ASC);
 	}
-	printf("Sorted? %i\n", my_lst_sorted(*a, ASC));
-	my_print_stacks(*a, *b);
+	// printf("Sorted? %i\n", my_lst_sorted(*a, ASC));
+	// my_print_stacks(*a, *b);
 	ft_lstclear(a, free);
 	return ;
 }

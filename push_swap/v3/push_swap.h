@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:11:49 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/28 16:12:44 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/29 23:54:20 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # define ASC '0'
 # define MAX '1'
 # define MIN '0'
+# define A '0'
+# define B '1'
 
 typedef enum e_operation
 {
@@ -71,7 +73,6 @@ int				my_ascii_to_int_ptr(char *nptr, int **nbr);
 int				my_put_err(int err, t_list *lst, int *iptr);
 int				my_lst_has_dup(t_list *lst);
 int				my_lst_sorted(t_list *lst, char order);
-int				my_find_position(t_list *dst, int nbr, int max, int min);
 void			my_swap(t_list **lst);
 void			my_push(t_list **f, t_list **t);
 void			my_rotate(t_list **lst);
