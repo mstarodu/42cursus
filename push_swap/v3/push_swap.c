@@ -25,7 +25,6 @@ void	my_print_lst(t_list *lst, char *str)
 		printf("%2i\n", *((int *)ptr->content));
 		ptr = ptr->next;
 	}
-	//ft_lstclear(&lst, free);
 	return ;
 }
 
@@ -78,16 +77,15 @@ int	my_find_position(t_list *dst, int nbr, int max, int min)
 		return (i);
 	if (nbr > max || nbr < min)
 	{
-		if (*((int *) dst->content) == min)
+		if (*((int *) dst->content) == min && ++i)
 			return (i);
-		while (*((int *) dst->content) != max
-			&& *((int *) dst->next->content) != min && ++i)
+		while (++i && *((int *) dst->content) != min)
 			dst = dst->next;
 	}
 	else
 	{
-		while (dst->next != NULL && *((int *) dst->content) > nbr
-			&& *((int *) dst->next->content) < nbr && ++i)
+		while (++i && dst->next != NULL && !(*((int *) dst->content) > nbr
+				&& *((int *) dst->next->content) < nbr))
 			dst = dst->next;
 		if (dst->next == NULL)
 			return (0);
@@ -115,7 +113,7 @@ void	my_rotate_sort(t_list **lst, char type)
 	int		size;
 	int		side;
 
-	extremum = my_lst_find_extremum(*lst, MIN);
+	extremum = my_lst_find_extremum(*lst, type);
 	position = my_lst_find_idx(*lst, extremum);
 	size = ft_lstsize(*lst);
 	side = (position < (size / 2));
@@ -129,15 +127,15 @@ void	my_rotate_sort(t_list **lst, char type)
 	return ;
 }
 
-void	my_init_next_move(t_move *next_move)
+void	my_init_move(t_move *move)
 {
-	next_move->ra = 0;
-	next_move->rb = 0;
-	next_move->rr = 0;
-	next_move->rra = 0;
-	next_move->rrb = 0;
-	next_move->rrr = 0;
-	next_move->nbr_of_moves = INT_MAX;
+	move->ra = 0;
+	move->rb = 0;
+	move->rr = 0;
+	move->rra = 0;
+	move->rrb = 0;
+	move->rrr = 0;
+	move->nbr_of_moves = INT_MAX;
 }
 
 void	my_calc_moves_a(t_move *move, int i, int a_size)
@@ -175,28 +173,19 @@ void	my_calc_moves_b(t_move *move, int nbr, t_list *b, int b_size)
 void	my_calc_common_moves(int *one, int *two, int *common)
 {
 	if (*one == 0 && *two == 0)
-	{
 		*common = 0;
-	}
-	if ((*one - *two) > 0)
+	else if (*one > *two)
 	{
 		*common += *two;
-		*one = *one - *two;
+		*one -= *two;
 		*two = 0;
-	}
-	else if (((*one - *two) < 0))
-	{
-		*common += *one;
-		*two = *two - *one;
-		*one = 0;
 	}
 	else
 	{
 		*common += *one;
+		*two -= *one;
 		*one = 0;
-		*two = 0;
 	}
-	return ;
 }
 
 void	my_calc_number_of_moves(t_move *move)
@@ -233,16 +222,15 @@ void	my_calc_next_move(t_list **a, t_list **b, t_move *next_move)
 	a_size = ft_lstsize(*a);
 	b_size = ft_lstsize(*b);
 	i = 0;
-	move.rr = 0;
-	move.rrr = 0;
-	move.nbr_of_moves = 0;
 	while (a_ptr != NULL)
 	{
+		my_init_move(&move);
 		my_calc_moves_a(&move, i, a_size);
 		my_calc_moves_b(&move, *((int *)(a_ptr->content)), *b, b_size);
 		my_calc_number_of_moves(&move);
 		my_compare_moves(&move, next_move);
 		a_ptr = a_ptr->next;
+		++i;
 	}
 }
 
@@ -267,7 +255,7 @@ void	my_next_move (t_list **a, t_list **b)
 {
 	t_move	next_move;
 
-	my_init_next_move(&next_move);
+	my_init_move(&next_move);
 	my_calc_next_move(a, b, &next_move);
 	my_execute_next_move(&next_move, a, b);
 }
@@ -286,15 +274,14 @@ void	my_sort(t_list **a, t_list **b)
 	{
 		while (*a != NULL)
 		{
-			my_next_move(a, b);
-			my_print_lst(*a, "a");
 			my_print_lst(*b, "b");
-			printf("\n");
-			printf("\n");
-			printf("\n");
+			my_next_move(a, b);
 		}
 	}
-	my_print_lst(*a, "a");
-	my_print_lst(*b, "b");
+	while (*b != NULL)
+		my_execute(pa, a, b);
+	my_rotate_sort(a, ASC);
+	printf("Sorted? %i\n", my_lst_sorted(*a, ASC));
+	ft_lstclear(a, free);
 	return ;
 }
