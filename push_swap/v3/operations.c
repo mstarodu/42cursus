@@ -6,12 +6,11 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 21:09:47 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/22 22:01:14 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/29 20:05:08 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
 void	my_swap(t_list **lst)
 {
@@ -89,8 +88,7 @@ void	my_execute(t_operation op, t_list **a, t_list **b)
 	if (op == rra || op == rrr)
 		my_reverse_rotate(a);
 	if (op == rrb || op == rrr)
-		my_reverse_rotate(a);
-
+		my_reverse_rotate(b);
 	write(STDOUT_FILENO, str_op[op], ft_strlen(str_op[op]));
 	write(STDOUT_FILENO, "\n", 1);
 }

@@ -28,6 +28,31 @@ void	my_print_lst(t_list *lst, char *str)
 	return ;
 }
 
+void	my_print_stacks(t_list *a, t_list *b)
+{
+	printf("_   _\n");
+	while (a != NULL || b != NULL)
+	{
+		if (a != NULL && b != NULL)
+		{
+			printf("%i   %i\n", *((int *) a->content), (*((int *) b->content)));
+			a = a->next;
+			b = b->next;
+		}
+		else if (a != NULL)
+		{
+			printf("%i\n", *((int *) a->content));
+			a = a->next;
+		}
+		else
+		{
+			printf("    %i\n", *((int *) b->content));
+			b = b->next;
+		}
+	}
+	printf("_   _\na   b\n");
+}
+
 int		my_load_args(int argc, char **argv, t_list **lst);
 void	my_sort(t_list **a, t_list **b);
 
@@ -77,16 +102,24 @@ int	my_find_position(t_list *dst, int nbr, int max, int min)
 		return (i);
 	if (nbr > max || nbr < min)
 	{
-		if (*((int *) dst->content) == min && ++i)
-			return (i);
-		while (++i && *((int *) dst->content) != min)
+		while (dst != NULL)
+		{
+			if (*((int *) dst->content) == min)
+				return (++i);
 			dst = dst->next;
+			++i;
+		}
 	}
 	else
 	{
-		while (++i && dst->next != NULL && !(*((int *) dst->content) > nbr
-				&& *((int *) dst->next->content) < nbr))
+		while (dst->next != NULL)
+		{
+			if (*((int *) dst->content) > nbr
+				&& *((int *) dst->next->content) < nbr)
+				return (++i);
 			dst = dst->next;
+			++i;
+		}
 		if (dst->next == NULL)
 			return (0);
 	}
@@ -97,8 +130,8 @@ int	my_lst_find_idx(t_list *lst, int nbr)
 {
 	int	idx;
 
-	idx = -1;
-	while (*((int *) lst->content) != nbr)
+	idx = 0;
+	while (lst != NULL && *((int *) lst->content) != nbr)
 	{
 		++idx;
 		lst = lst->next;
@@ -158,6 +191,7 @@ void	my_calc_moves_b(t_move *move, int nbr, t_list *b, int b_size)
 
 	b_idx = my_find_position(b, nbr,
 			my_lst_find_extremum(b, MAX), my_lst_find_extremum(b, MIN));
+	// printf("b_idx: %i\n", b_idx);
 	if (b_idx <= b_size / 2)
 	{
 		move->rb = b_idx;
@@ -274,14 +308,15 @@ void	my_sort(t_list **a, t_list **b)
 	{
 		while (*a != NULL)
 		{
-			my_print_lst(*b, "b");
 			my_next_move(a, b);
+			// my_print_stacks(*a, *b);
 		}
 	}
 	while (*b != NULL)
 		my_execute(pa, a, b);
 	my_rotate_sort(a, ASC);
-	printf("Sorted? %i\n", my_lst_sorted(*a, ASC));
+	// printf("Sorted? %i\n", my_lst_sorted(*a, ASC));
+	// my_print_stacks(*a, *b);
 	ft_lstclear(a, free);
 	return ;
 }
