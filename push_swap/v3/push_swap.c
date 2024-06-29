@@ -298,6 +298,7 @@ void	my_sort(t_list **a, t_list **b)
 {
 	int	is_sorted;
 
+	// my_print_stacks(*a, *b);
 	is_sorted = my_lst_sorted(*a, ASC);
 	if (is_sorted)
 	{

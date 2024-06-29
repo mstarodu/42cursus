@@ -6,7 +6,7 @@
 /*   By: mstarodu <mstarodu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 21:09:47 by mstarodu          #+#    #+#             */
-/*   Updated: 2024/06/29 20:05:08 by mstarodu         ###   ########.fr       */
+/*   Updated: 2024/06/29 20:30:12 by mstarodu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	my_reverse_rotate(t_list **lst)
 void	my_execute(t_operation op, t_list **a, t_list **b)
 {
 	const char	*str_op[] = {"sa", "sb", "ss", "pa", "pb",
-		"ra", "rb", "rr", "ra", "rrb", "rrr"};
+		"ra", "rb", "rr", "rra", "rrb", "rrr"};
 
 	if (op == sa || op == ss)
 		my_swap(a);
