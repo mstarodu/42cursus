@@ -53,8 +53,10 @@ void	my_print_stacks(t_list *a, t_list *b)
 	printf("_   _\na   b\n");
 }
 
+
+
 int		my_load_args(int argc, char **argv, t_list **lst);
-void	my_sort(t_list **a, t_list **b);
+void	my_sort(int argc, t_list **a, t_list **b);
 
 int	main(int argc, char *argv[])
 {
@@ -65,7 +67,8 @@ int	main(int argc, char *argv[])
 	b = NULL;
 
 	my_load_args(argc, argv, &a);
-	my_sort(&a, &b);
+
+	my_sort(argc, &a, &b);
 
 	return (0);
 }
@@ -294,17 +297,44 @@ void	my_next_move (t_list **a, t_list **b)
 	my_execute_next_move(&next_move, a, b);
 }
 
-void	my_sort(t_list **a, t_list **b)
+void	my_three_sort(t_list **lst)
+{
+	if (*((int *)(*lst)->content)
+		> *((int *)((*lst)->next->content)))
+		my_execute(sa, lst, NULL);
+	if (*((int *)(*lst)->content)
+		> *((int *)(*lst)->next->next->content))
+		my_execute(rra, lst, NULL);
+	if (*((int *)(*lst)->next->content)
+		> *((int *)(*lst)->next->next->content))
+		my_execute(sa, lst, NULL);
+	my_rotate_sort(lst, ASC);
+}
+
+void	my_six_sort(t_list **a, t_list **b)
+{
+	while (ft_lstsize(*a) != 3)
+		my_execute(pb, a, b);
+	my_three_sort(a);
+	my_print_stacks(*a, *b);
+	while (*b != NULL)
+		my_next_move(b, a);
+	my_rotate_sort(a, ASC);
+}
+
+void	my_sort(int argc, t_list **a, t_list **b)
 {
 	int	is_sorted;
-
 	// my_print_stacks(*a, *b);
 	is_sorted = my_lst_sorted(*a, ASC);
-	if (is_sorted)
-	{
-		if (is_sorted == 1)
-			my_rotate_sort(a, ASC);
-	}
+	if (is_sorted > 0)
+		my_rotate_sort(a, ASC);
+	else if (argc == 3)
+		my_rotate_sort(a, ASC);
+	else if (argc == 4)
+		my_three_sort(a);
+	else if (argc < 7)
+		my_six_sort(a, b);
 	else
 	{
 		while (*a != NULL)
@@ -312,12 +342,12 @@ void	my_sort(t_list **a, t_list **b)
 			my_next_move(a, b);
 			// my_print_stacks(*a, *b);
 		}
+		while (*b != NULL)
+			my_execute(pa, a, b);
+		my_rotate_sort(a, ASC);
 	}
-	while (*b != NULL)
-		my_execute(pa, a, b);
-	my_rotate_sort(a, ASC);
-	// printf("Sorted? %i\n", my_lst_sorted(*a, ASC));
-	// my_print_stacks(*a, *b);
+	printf("Sorted? %i\n", my_lst_sorted(*a, ASC));
+	my_print_stacks(*a, *b);
 	ft_lstclear(a, free);
 	return ;
 }
