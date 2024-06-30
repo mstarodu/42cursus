@@ -53,8 +53,6 @@ void	my_print_stacks(t_list *a, t_list *b)
 	printf("_   _\na   b\n");
 }
 
-
-
 int		my_load_args(int argc, char **argv, t_list **lst);
 void	my_sort(int argc, t_list **a, t_list **b);
 
@@ -194,7 +192,6 @@ void	my_calc_moves_b(t_move *move, int nbr, t_list *b, int b_size)
 
 	b_idx = my_find_position(b, nbr,
 			my_lst_find_extremum(b, MAX), my_lst_find_extremum(b, MIN));
-	// printf("b_idx: %i\n", b_idx);
 	if (b_idx <= b_size / 2)
 	{
 		move->rb = b_idx;
@@ -311,43 +308,49 @@ void	my_three_sort(t_list **lst)
 	my_rotate_sort(lst, ASC);
 }
 
-void	my_six_sort(t_list **a, t_list **b)
+void	my_simple_sort(t_list **a, t_list **b)
 {
+	int	size;
+	int	idx;
+
 	while (ft_lstsize(*a) != 3)
+	{
+		size = ft_lstsize(*a);
+		idx = my_lst_find_idx(*a, my_lst_find_extremum(*a, MIN));
+		if (idx <= size / 2)
+		{
+			while (idx-- > 0)
+				my_execute(ra, a, b);
+		}
+		else
+		{
+			idx = size - idx;
+			while (idx-- > 0)
+				my_execute(rra, a, b);
+		}
 		my_execute(pb, a, b);
+	}
 	my_three_sort(a);
-	my_print_stacks(*a, *b);
 	while (*b != NULL)
-		my_next_move(b, a);
-	my_rotate_sort(a, ASC);
+		my_execute(pa, a, b);
 }
 
 void	my_sort(int argc, t_list **a, t_list **b)
 {
-	int	is_sorted;
-	// my_print_stacks(*a, *b);
-	is_sorted = my_lst_sorted(*a, ASC);
-	if (is_sorted > 0)
-		my_rotate_sort(a, ASC);
-	else if (argc == 3)
-		my_rotate_sort(a, ASC);
+	if (my_lst_sorted(*a, ASC) > 0)
+		;
 	else if (argc == 4)
 		my_three_sort(a);
-	else if (argc < 7)
-		my_six_sort(a, b);
+	else if (argc <= 10)
+		my_simple_sort(a, b);
 	else
 	{
 		while (*a != NULL)
-		{
 			my_next_move(a, b);
-			// my_print_stacks(*a, *b);
-		}
 		while (*b != NULL)
 			my_execute(pa, a, b);
-		my_rotate_sort(a, ASC);
 	}
-	printf("Sorted? %i\n", my_lst_sorted(*a, ASC));
-	my_print_stacks(*a, *b);
+	my_rotate_sort(a, ASC);
 	ft_lstclear(a, free);
 	return ;
 }
